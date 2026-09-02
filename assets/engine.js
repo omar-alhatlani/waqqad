@@ -36,8 +36,9 @@ window.Engine = (function(){
 
   /* ---------- أدوات ---------- */
   var $ = function(id){ return mount.querySelector('#'+id); };
-  function enCls(){ return lesson.lang==='en' ? ' en' : ''; }   // خطّ إنجليزي + LTR
-  function ltrCls(){ return lesson.lang==='en' ? ' ltr' : ''; } // اتجاه الكلمات/الفتحة LTR للإنجليزية
+  // en: خطّ إنجليزي + LTR (Poppins). ltr (رياضيات): اتجاه LTR مع الخطّ العربي (أرقام عربية-هندية).
+  function enCls(){ return lesson.lang==='en' ? ' en' : (lesson.dir==='ltr' ? ' ltr' : ''); }
+  function ltrCls(){ return (lesson.lang==='en' || lesson.dir==='ltr') ? ' ltr' : ''; }
   function shuffle(a){ a=a.slice(); for(var i=a.length-1;i>0;i--){ var j=Math.floor(Math.random()*(i+1)); var t=a[i];a[i]=a[j];a[j]=t; } return a; }
   function starStr(n,max){ max=max||3; var s=''; for(var i=0;i<max;i++) s+=(i<n?'★':'<span class="off">★</span>'); return s; }
   var AC=null;
@@ -188,7 +189,8 @@ window.Engine = (function(){
       return;
     }
     if(st.type==='order'){
-      A.innerHTML='<div class="qcard"><div class="qhint">كوّن جملة صحيحة من هذه الكلمات</div></div><div class="slot'+ltrCls()+'" id="engSlot"></div><div class="words'+ltrCls()+'" id="engBank"></div>';
+      var oAsk = q.ask ? '<div class="qhint ask">'+q.ask+'</div>' : '<div class="qhint">كوّن جملة صحيحة من هذه الكلمات</div>';
+      A.innerHTML='<div class="qcard">'+oAsk+'</div><div class="slot'+ltrCls()+'" id="engSlot"></div><div class="words'+ltrCls()+'" id="engBank"></div>';
       var bank=$('engBank');
       var mixed=shuffle(q.sol), guard=0; while(mixed.join(' ')===q.sol.join(' ') && guard++<20) mixed=shuffle(q.sol);
       mixed.forEach(function(wd){ var b=document.createElement('button'); b.className='word'+enCls(); b.textContent=wd; b.dataset.w=wd; b.onclick=function(){ pickWord(b); }; bank.appendChild(b); });

@@ -81,16 +81,16 @@
         {sol:['My','name','is','Omar','.'],     w:'<code>my name</code> فاعل مفرد ← <code>is</code>.', f:'My name is Omar.'}
       ]},
       { type:'mixed', name:'التحدي النهائي', hint:'كلّ ما تعلّمته — مختلطًا', final:true, qs:[
-        {p:'Sara and I ___ classmates.', o:['am','is','are'], a:2, w:'<code>Sara and I</code> اثنان = <code>we</code> ← <code>are</code>.', f:'Sara and I <u>are</u> classmates.'},
-        {p:'He',   o:['am','is','are'], a:1, w:WHY_IS, f:'He <u>is</u>'},
-        {p:'I am not  →  ?', o:["I'm not","I amn't","I aren't","I isn't"], a:0, w:"لا وجود لـ <code>amn't</code> — الصواب <code>I'm not</code>.", f:"I am not → <u>I'm not</u>"},
-        {p:'You are ready.  →  السؤال؟', o:['Are you ready?','You are ready?','Do you are ready?','Are ready you?'], a:0, w:'يتقدّم الفعل <code>be</code> في السؤال، ولا <code>do</code> مع <code>be</code>.', f:'<u>Are you</u> ready?'},
-        {p:'My name ___ Faisal.', o:['am','is','are'], a:1, w:'<code>My name</code> اسم مفرد ← <code>is</code>.', f:'My name <u>is</u> Faisal.'},
-        {p:'___ she your sister?', o:['Is','Are','Am','Do'], a:0, w:WHY_IS + ' والفعل يتقدّم في السؤال.', f:'<u>Is</u> she your sister?'},
-        {p:'They are students.  →  النفي؟', o:['They are not students.','They not are students.','They are no students.',"They don't are students."], a:0, w:"<code>not</code> بعد <code>are</code> — ولا <code>don't</code> مع <code>be</code>.", f:'They are <u>not</u> students.'},
-        {p:'Ali and Omar ___ students.', o:['am','is','are'], a:2, w:'جمع يعادل <code>they</code> ← <code>are</code>.', f:'Ali and Omar <u>are</u> students.'},
-        {p:'You', o:['am','is','are'], a:2, w:WHY_ARE, f:'You <u>are</u>'},
-        {p:'Yes, ___ .  (Are you a student?)', o:['I am','I are','I is','am I'], a:0, w:'الإجابة القصيرة: الضمير ثم الفعل — <code>Yes, I am</code>.', f:'Yes, <u>I am</u>.'}
+        {p:'Sara and I ___ classmates.', ask:'اختر الشكل الصحيح من الفعل be', o:['am','is','are'], a:2, w:'<code>Sara and I</code> اثنان = <code>we</code> ← <code>are</code>.', f:'Sara and I <u>are</u> classmates.'},
+        {p:'He',   ask:'اختر الشكل الصحيح من الفعل be', o:['am','is','are'], a:1, w:WHY_IS, f:'He <u>is</u>'},
+        {p:'I am not  →  ?', ask:'اختر الاختصار الصحيح', o:["I'm not","I amn't","I aren't","I isn't"], a:0, w:"لا وجود لـ <code>amn't</code> — الصواب <code>I'm not</code>.", f:"I am not → <u>I'm not</u>"},
+        {p:'You are ready.', ask:'حوّل الجملة إلى سؤال', o:['Are you ready?','You are ready?','Do you are ready?','Are ready you?'], a:0, w:'يتقدّم الفعل <code>be</code> في السؤال، ولا <code>do</code> مع <code>be</code>.', f:'<u>Are you</u> ready?'},
+        {p:'My name ___ Faisal.', ask:'اختر الشكل الصحيح من الفعل be', o:['am','is','are'], a:1, w:'<code>My name</code> اسم مفرد ← <code>is</code>.', f:'My name <u>is</u> Faisal.'},
+        {p:'___ she your sister?', ask:'اختر الشكل الصحيح من الفعل be', o:['Is','Are','Am','Do'], a:0, w:WHY_IS + ' والفعل يتقدّم في السؤال.', f:'<u>Is</u> she your sister?'},
+        {p:'They are students.', ask:'حوّل الجملة إلى النفي', o:['They are not students.','They not are students.','They are no students.',"They don't are students."], a:0, w:"<code>not</code> بعد <code>are</code> — ولا <code>don't</code> مع <code>be</code>.", f:'They are <u>not</u> students.'},
+        {p:'Ali and Omar ___ students.', ask:'اختر الشكل الصحيح من الفعل be', o:['am','is','are'], a:2, w:'جمع يعادل <code>they</code> ← <code>are</code>.', f:'Ali and Omar <u>are</u> students.'},
+        {p:'You', ask:'اختر الشكل الصحيح من الفعل be', o:['am','is','are'], a:2, w:WHY_ARE, f:'You <u>are</u>'},
+        {p:'Yes, ___ .  (Are you a student?)', ask:'أكمل الإجابة القصيرة', o:['I am','I are','I is','am I'], a:0, w:'الإجابة القصيرة: الضمير ثم الفعل — <code>Yes, I am</code>.', f:'Yes, <u>I am</u>.'}
       ]}
     ]
   };

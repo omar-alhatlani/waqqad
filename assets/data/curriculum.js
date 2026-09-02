@@ -16,7 +16,7 @@ window.CURRICULUM = {
   ],
   subjects:[
     {id:'ar',   name:'اللغة العربية',   en:'لغتي الخالدة', icon:'ar',   c:'--s-ar',   cd:'--s-ar-deep',   cs:'--s-ar-soft',   units:8},
-    {id:'math', name:'الرياضيات',       en:'Mathematics',  icon:'math', c:'--s-math', cd:'--s-math-deep', cs:'--s-math-soft', units:7},
+    {id:'math', name:'الرياضيات',       en:'Mathematics',  icon:'math', c:'--s-math', cd:'--s-math-deep', cs:'--s-math-soft', units:4},
     {id:'sci',  name:'العلوم',          en:'Science',      icon:'sci',  c:'--s-sci',  cd:'--s-sci-deep',  cs:'--s-sci-soft',  units:6},
     {id:'en',   name:'اللغة الإنجليزية', en:'Super Goal 1', icon:'en',   c:'--s-en',   cd:'--s-en-deep',   cs:'--s-en-soft',   units:10}
   ],
@@ -45,13 +45,16 @@ window.CURRICULUM = {
       { t:'الوطن', s:'دروس الوحدة الثالثة', lessons:[] }
     ]},
     'g1.s1.math':{ eyebrow:'رياضيات · الأول متوسط', units:[
-      { t:'الأعداد الصحيحة', s:'التمثيل والعمليات', lessons:[
-        { t:'تمثيل الأعداد الصحيحة', tag:'مفاهيم', ref:null },
-        { t:'جمع وطرح الأعداد الصحيحة', tag:'عمليات', ref:null },
-        { t:'الضرب والقسمة', tag:'عمليات', ref:null }
+      { t:'الجبر والدوال', s:'الفصل الأول — دروسه اللغوية والحسابية', lessons:[
+        { t:'الخطوات الأربع لحل المسألة', tag:'مهارة', ref:null },
+        { t:'القوى والأسس', tag:'أعداد', ref:null },
+        { t:'ترتيب العمليات', tag:'عمليات', ref:'MATH_G1_U1_ORDER' },
+        { t:'المتغيرات والعبارات الجبرية', tag:'جبر', ref:null },
+        { t:'المعادلات', tag:'جبر', ref:null }
       ]},
-      { t:'الجبر والدوال', s:'العبارات والمعادلات', lessons:[] },
-      { t:'النسبة والتناسب', s:'المعدّلات والنسب المئوية', lessons:[] }
+      { t:'الأعداد الصحيحة', s:'القيمة المطلقة والعمليات', lessons:[] },
+      { t:'المعادلات الخطية والدوال', s:'الفصل الثالث', lessons:[] },
+      { t:'النسبة والتناسب', s:'الفصل الرابع', lessons:[] }
     ]},
     'g1.s1.sci':{ eyebrow:'علوم · الأول متوسط', units:[
       { t:'الكائنات الحية', s:'الخصائص والخلية', lessons:[
