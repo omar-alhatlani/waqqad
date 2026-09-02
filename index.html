@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>منصّة وقّاد</title>
+<meta name="description" content="منصّة تعليمية تفاعلية مجانية لطلاب المرحلة المتوسطة في المملكة العربية السعودية">
+<meta name="theme-color" content="#4B45C6">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icons/icon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@600;700;800;900&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Poppins:wght@500;600;700&display=swap">
+<link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="inner">
+    <button class="brand" id="brandHome" aria-label="الصفحة الرئيسية">
+      <span class="mark" id="brandMark"></span>
+      <span><b id="brandName">وقّاد</b><small id="brandTag">حيث يتّقد الذهن</small></span>
+    </button>
+    <nav class="crumbs" id="crumbs" aria-label="مسار التنقّل"></nav>
+    <div class="tools">
+      <span class="chip" title="مجموع نجومك"><span class="st">★</span> <span id="starTotal">0</span></span>
+      <button class="iconbtn" id="themeBtn" title="تبديل الوضع الليلي/النهاري" aria-label="تبديل الوضع"></button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <!-- الرئيسية -->
+  <section class="screen active" data-screen="home">
+    <div class="hero">
+      <div>
+        <span class="eyebrow">منصّة تعليمية للمرحلة المتوسطة</span>
+        <h1>تعلّم بطريقة <span class="accent">تفاعلية</span>،<br>وأتقِن كل درس بثقة.</h1>
+        <p>دروس محوسبة تشرح، وتُدرّب، وتصحّح لك خطوة بخطوة — مقسّمة على صفوفك وموادّك، تبدأها متى شئت وبلا أي تسجيل.</p>
+        <div class="trust">
+          <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round"/></svg> مجانية بالكامل</span>
+          <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round"/></svg> بلا تسجيل ولا بيانات</span>
+          <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round"/></svg> تعمل على الجوّال</span>
+        </div>
+        <div style="margin-top:22px;max-width:340px">
+          <input id="playerName" placeholder="اكتب اسمك (اختياري — يظهر في شهادتك)" maxlength="28" autocomplete="off"
+            style="width:100%;background:var(--surface);border:1px solid var(--line-strong);color:var(--ink);border-radius:12px;padding:12px 14px;font-family:var(--ar);font-size:15px;outline:none;box-shadow:var(--shadow)">
+        </div>
+        <div class="cta-row">
+          <button class="btn" id="startBtn">
+            ابدأ رحلتك
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M14 6l-6 6 6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+        <button class="resume" id="resumeBtn">
+          <span class="ic"><svg viewBox="0 0 24 24" fill="none"><path d="M8 5v14l11-7z" fill="currentColor"/></svg></span>
+          <span class="meta"><b>جرّب درسًا الآن</b><span class="en">English · Unit 1 · Grammar: Verb be</span></span>
+          <span class="go">ابدأ ←</span>
+        </button>
+      </div>
+      <div class="hero-art" aria-hidden="true">
+        <div class="tile t1"><span class="g" id="gEn"></span><b class="en">English</b><span>اللغة الإنجليزية</span></div>
+        <div class="tile t2"><span class="g" id="gMath"></span><b>الرياضيات</b><span>Mathematics</span></div>
+        <div class="tile t3"><span class="g" id="gSci"></span><b>العلوم</b><span>Science</span></div>
+        <div class="tile t4"><span class="g" id="gAr"></span><b>لغتي</b><span>اللغة العربية</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="screen" data-screen="grade">
+    <div class="section-head"><span class="eyebrow">الخطوة ١ من ٤</span><h2 class="h-title">اختر صفّك</h2><p class="h-sub">المرحلة المتوسطة — اختر الصف لتظهر لك الفصول الدراسية.</p></div>
+    <div class="grid g3" id="gradeGrid"></div>
+  </section>
+
+  <section class="screen" data-screen="sem">
+    <div class="section-head"><span class="eyebrow">الخطوة ٢ من ٤</span><h2 class="h-title" id="semTitle">الفصل الدراسي</h2><p class="h-sub">اختر الفصل الدراسي لتظهر لك المواد.</p></div>
+    <div class="grid g2" id="semGrid"></div>
+  </section>
+
+  <section class="screen" data-screen="subject">
+    <div class="section-head"><span class="eyebrow">الخطوة ٣ من ٤</span><h2 class="h-title">المواد الدراسية</h2><p class="h-sub" id="subjSub">اختر المادة لتبدأ رحلة وحداتها.</p></div>
+    <div class="grid g4" id="subjectGrid"></div>
+  </section>
+
+  <section class="screen" data-screen="units">
+    <div class="section-head"><span class="eyebrow" id="unitsEyebrow">الوحدات</span><h2 class="h-title" id="unitsTitle">الوحدات</h2><p class="h-sub">أنجز كل وحدة لتُفتح التي بعدها — رحلتك تتقدّم معك.</p></div>
+    <div class="path" id="unitsPath"></div>
+  </section>
+
+  <section class="screen" data-screen="lessons">
+    <div class="section-head"><span class="eyebrow" id="lessonsEyebrow">الدروس</span><h2 class="h-title" id="lessonsTitle">الدروس</h2></div>
+    <div class="lessons" id="lessonsList"></div>
+  </section>
+
+  <section class="screen" data-screen="lesson">
+    <div id="lessonMount"></div>
+  </section>
+</main>
+
+<footer class="foot">
+  إعداد وإشراف المعلّم: <b id="footTeacher">—</b> · <b id="footSchool">—</b><br>
+  منصّة تعليمية مجانية · التقدّم محفوظ على جهازك فقط · <a id="aboutLink">عن المنصّة</a>
+</footer>
+
+<!-- عن المنصّة -->
+<div class="modal" id="aboutModal" role="dialog" aria-modal="true" aria-label="عن المنصّة">
+  <div class="box">
+    <span class="mk" id="aboutMark"></span>
+    <h3>عن منصّة وقّاد</h3>
+    <p>«وقّاد» منصّة تعليمية تفاعلية مجانية لطلاب المرحلة المتوسطة، تشرح الدرس وتُدرّب عليه وتصحّح للطالب خطوة بخطوة. لا تتطلّب تسجيلًا، ويُحفظ تقدّم الطالب على جهازه فقط حفاظًا على خصوصيته.</p>
+    <div class="credit">إعداد وإشراف المعلّم<b id="aboutTeacher">—</b><span id="aboutSchool" style="color:var(--muted);font-size:13px"></span></div>
+    <button class="btn sm close" id="aboutClose">حسنًا</button>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="assets/icons.js"></script>
+<script src="assets/data/curriculum.js"></script>
+<script src="assets/data/en-sg1-u1.js"></script>
+<script src="assets/engine.js"></script>
+<script src="assets/app.js"></script>
+</body>
+</html>
