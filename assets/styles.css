@@ -64,7 +64,8 @@ body{
 }
 .en{font-family:var(--en);direction:ltr;unicode-bidi:isolate;letter-spacing:0}
 .ltr{direction:ltr;unicode-bidi:isolate} /* اتجاه LTR مع الإبقاء على الخطّ العربي (للرياضيات) */
-sup{font-size:.62em;vertical-align:super;line-height:0} /* الأُس: عربيّ صغير، وفي RTL يظهر أعلى يسار الأساس */
+/* الأُس: عربيّ صغير معزول بيديًّا لينفصل عن رقم الأساس فيظهر أعلى يسار الأساس في RTL */
+sup{font-size:.62em;vertical-align:super;line-height:0;unicode-bidi:isolate}
 button{font-family:inherit}
 img{max-width:100%}
 ::selection{background:var(--subject);color:#fff}
