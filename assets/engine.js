@@ -182,13 +182,15 @@ window.Engine = (function(){
     $('engFb').innerHTML=''; $('engActions').innerHTML='';
     var A=$('engPlay');
 
-    if(st.type==='error'){
-      A.innerHTML='<div class="qcard"><div class="qhint">انقر الكلمة <b>الخاطئة</b> في هذه الجملة</div></div><div class="words'+ltrCls()+'" id="engWordRow"></div>';
+    // النوع يُحدَّد بحقول السؤال نفسه (لا بنوع المرحلة) كي تعمل مرحلة mixed بأسئلة مختلطة
+    if(q.words){
+      var eAsk = q.ask ? '<div class="qhint ask">'+q.ask+'</div>' : '<div class="qhint">انقر الكلمة <b>الخاطئة</b> في هذه الجملة</div>';
+      A.innerHTML='<div class="qcard">'+eAsk+'</div><div class="words'+ltrCls()+'" id="engWordRow"></div>';
       var row=$('engWordRow');
       q.words.forEach(function(wd,idx){ var b=document.createElement('button'); b.className='word'+enCls(); b.innerHTML=wd; b.onclick=function(){ answerError(idx,b); }; row.appendChild(b); });
       return;
     }
-    if(st.type==='order'){
+    if(q.sol){
       var oAsk = q.ask ? '<div class="qhint ask">'+q.ask+'</div>' : '<div class="qhint">كوّن جملة صحيحة من هذه الكلمات</div>';
       A.innerHTML='<div class="qcard">'+oAsk+'</div><div class="slot'+ltrCls()+'" id="engSlot"></div><div class="words'+ltrCls()+'" id="engBank"></div>';
       var bank=$('engBank');
@@ -198,7 +200,7 @@ window.Engine = (function(){
       $('engUndo').onclick=undoWord; $('engCheck').onclick=function(){ answerOrder(q); };
       return;
     }
-    // choice / gap / mixed
+    // اختيار / إكمال فراغ (السؤال يملك q.o)
     var txt = q.p.indexOf('___')>-1 ? q.p.replace('___','<span class="blank">&nbsp;?&nbsp;</span>') : q.p;
     var longest=Math.max.apply(null,q.o.map(function(x){return x.length;}));
     var isLong=longest>15;
