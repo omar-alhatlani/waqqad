@@ -18,7 +18,7 @@ window.CURRICULUM = {
     {id:'ar',   name:'اللغة العربية',   en:'لغتي الخالدة', icon:'ar',   c:'--s-ar',   cd:'--s-ar-deep',   cs:'--s-ar-soft',   units:8},
     {id:'math', name:'الرياضيات',       en:'Mathematics',  icon:'math', c:'--s-math', cd:'--s-math-deep', cs:'--s-math-soft', units:4},
     {id:'sci',  name:'العلوم',          en:'Science',      icon:'sci',  c:'--s-sci',  cd:'--s-sci-deep',  cs:'--s-sci-soft',  units:6},
-    {id:'en',   name:'اللغة الإنجليزية', en:'Super Goal 1', icon:'en',   c:'--s-en',   cd:'--s-en-deep',   cs:'--s-en-soft',   units:16}
+    {id:'en',   name:'اللغة الإنجليزية', en:'Super Goal 1', icon:'en',   c:'--s-en',   cd:'--s-en-deep',   cs:'--s-en-soft',   units:8}
   ],
 
   /* فهرس المحتوى: المفتاح = "grade.sem.subject" */
@@ -27,12 +27,16 @@ window.CURRICULUM = {
       { t:'Good Morning!', s:'التحية والتعارف', lessons:[
         { t:'Grammar — الفعل be (am/is/are)', tag:'قواعد', ref:'EN_SG1_U1_VERBBE' },
         { t:'Grammar — صفات الملكية (my/your/his/her)', tag:'قواعد', ref:'EN_SG1_U1_POSS' },
-        { t:'Vocabulary — Greetings & Introductions', tag:'مفردات', ref:null },
-        { t:'Reading — A New Student', tag:'قراءة', ref:null }
+        { t:'Vocabulary — Greetings & Introductions', tag:'مفردات', ref:'EN_SG1_U1_GREET' },
+        { t:'Reading — A New Student', tag:'قراءة', ref:'EN_SG1_U1_READ' }
       ]},
-      { t:'What Day Is Today?', s:'الأيام والأعداد', lessons:[] },
+      { t:'What Day Is Today?', s:'الأيام والأعداد والوقت', lessons:[] },
       { t:"What's That?", s:'الأشياء وأدوات المدرسة', lessons:[] },
-      { t:'Around the World', s:'الدول والجنسيات', lessons:[] }
+      { t:'Around the World', s:'الدول والجنسيات', lessons:[] },
+      { t:'Families, Families', s:'العائلة وأفرادها', lessons:[] },
+      { t:'Is There a View?', s:'البيت والغرف', lessons:[] },
+      { t:'Where Do You Live?', s:'المدينة والاتجاهات', lessons:[] },
+      { t:'What Are You Doing?', s:'المضارع المستمر', lessons:[] }
     ]},
     'g1.s1.ar':{ eyebrow:'لغتي الخالدة · الأول متوسط', units:[
       { t:'القيم الإسلامية', s:'الدروس اللغوية للوحدة', lessons:[
