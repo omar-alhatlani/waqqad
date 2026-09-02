@@ -1,0 +1,28 @@
+# إعداد نشر منصّة وقّاد على Netlify
+# موقع ثابت بلا خطوة بناء — يُنشر الجذر كما هو.
+
+[build]
+  publish = "."
+  command = ""
+
+# عامل الخدمة والصفحة الرئيسية: لا تُخزَّن في المتصفّح كي يصل التحديث فورًا.
+[[headers]]
+  for = "/sw.js"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+[[headers]]
+  for = "/index.html"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+[[headers]]
+  for = "/manifest.webmanifest"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+# ملفّات الكود والبيانات: راجِعها عند كل زيارة (النسخ تُدار برقم CACHE في sw.js).
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
