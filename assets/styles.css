@@ -256,23 +256,27 @@ main{max-width:1080px;margin:0 auto;padding:26px 18px 40px}
 .opts{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(120px,1fr))}
 .opts.stack{grid-template-columns:1fr}
 .opt{background:var(--surface);border:2px solid var(--line);border-radius:14px;padding:16px 10px;font-size:20px;font-weight:700;
-  cursor:pointer;transition:.14s;color:var(--ink);font-family:var(--en)}
+  cursor:pointer;transition:.14s;color:var(--ink);font-family:var(--ar)}
+.opt.en{font-family:var(--en);direction:ltr}
 .opt:hover:not(:disabled){border-color:var(--subject);transform:translateY(-3px);box-shadow:var(--shadow)}
 .opt:disabled{cursor:default}
 .opt.right{background:var(--ok-bg);border-color:var(--ok);color:var(--ok)}
 .opt.wrong{background:var(--bad-bg);border-color:var(--bad);color:var(--bad)}
-.opt.long{font-size:15.5px;padding:14px 12px;line-height:1.55;text-align:left}
+.opt.long{font-size:15.5px;padding:14px 12px;line-height:1.55;text-align:start}
 
-/* كلمات: اكتشف الخطأ / ابنِ الجملة (الإنجليزية LTR) */
-.words{display:flex;flex-wrap:wrap;gap:9px;justify-content:center;direction:ltr}
+/* كلمات: اكتشف الخطأ / ابنِ الجملة — عربية RTL افتراضًا، والإنجليزية بإضافة ltr/en */
+.words{display:flex;flex-wrap:wrap;gap:9px;justify-content:center;direction:rtl}
+.words.ltr{direction:ltr}
 .word{background:var(--surface);border:2px solid var(--line);border-radius:12px;padding:11px 16px;font-size:19px;font-weight:600;
-  cursor:pointer;transition:.13s;color:var(--ink);font-family:var(--en)}
+  cursor:pointer;transition:.13s;color:var(--ink);font-family:var(--ar)}
+.word.en{font-family:var(--en)}
 .word:hover:not(:disabled){border-color:var(--subject);transform:translateY(-2px)}
 .word.right{background:var(--ok-bg);border-color:var(--ok);color:var(--ok)}
 .word.wrong{background:var(--bad-bg);border-color:var(--bad);color:var(--bad)}
 .word.used{opacity:.28;pointer-events:none}
 .slot{min-height:62px;background:var(--surface-2);border:2px dashed var(--line-strong);border-radius:14px;padding:11px;
-  display:flex;flex-wrap:wrap;gap:8px;justify-content:center;align-items:center;margin-bottom:12px;direction:ltr}
+  display:flex;flex-wrap:wrap;gap:8px;justify-content:center;align-items:center;margin-bottom:12px;direction:rtl}
+.slot.ltr{direction:ltr}
 .slot:empty::after{content:'انقر الكلمات بالترتيب لبناء الجملة';color:var(--muted);font-size:13px;font-family:var(--ar)}
 
 .fb{border-radius:15px;padding:16px 18px;margin-top:16px;animation:fade .25s;border:1px solid}
@@ -284,7 +288,8 @@ main{max-width:1080px;margin:0 auto;padding:26px 18px 40px}
 .fb .fw b{color:var(--subject-deep)}
 .fb .fw code{background:color-mix(in srgb,var(--ink) 8%,transparent);padding:2px 7px;border-radius:6px;font-family:var(--en);direction:ltr;display:inline-block;font-size:13.5px}
 .fb .fix{margin-top:10px;padding-top:10px;border-top:1px solid color-mix(in srgb,var(--ink) 12%,transparent);
-  font-family:var(--en);direction:ltr;text-align:left;font-size:17px;font-weight:600}
+  font-family:var(--ar);direction:rtl;text-align:right;font-size:17px;font-weight:600}
+.fb .fix.en{font-family:var(--en);direction:ltr;text-align:left}
 .fb .fix u{color:var(--ember-deep);text-decoration:none;border-bottom:3px solid var(--gold)}
 .lp-actions{display:flex;gap:10px;margin-top:16px;justify-content:flex-end;flex-wrap:wrap}
 
