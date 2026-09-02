@@ -66,19 +66,45 @@ window.Engine = (function(){
   function open(lessonModule, options){
     lesson = lessonModule; opts = options || {}; mount = opts.mount;
     toastFn = opts.toast || function(){};
-    loadProg(); G=null; renderMap();
+    loadProg(); G=null; renderIntro();
   }
 
   function ruleHTML(){
     if(!lesson.rule) return '';
-    var r=lesson.rule, rows='';
-    (r.table||[]).forEach(function(row){
-      rows += '<div class="berow"><span class="subj'+enCls()+'">'+row[0]+'</span><span class="arw">◀</span><span class="be'+enCls()+'">'+row[1]+'</span></div>';
-    });
-    return '<div class="rule"><button class="rh" id="engRuleHead"><span class="tag">'+(r.tag||'القاعدة')+'</span>'+
-      '<span class="rt">'+(r.title||'القاعدة')+'</span><span style="color:var(--muted)">▾</span></button>'+
-      '<div class="rc" id="engRuleBody" hidden><div class="betable">'+rows+'</div>'+
-      (r.trick?'<div class="trick"><b>🔑 حيلة الحفظ:</b> '+r.trick+'</div>':'')+'</div></div>';
+    var r=lesson.rule;
+    var out='<div class="rule open"><div class="rh"><span class="tag">'+(r.tag||'القاعدة')+'</span>'+
+      '<span class="rt">'+(r.title||'القاعدة')+'</span></div><div class="rc">';
+    if(r.intro) out+='<p class="intro">'+r.intro+'</p>';
+    if(r.table && r.table.length){
+      var rows='';
+      r.table.forEach(function(row){ rows+='<div class="berow"><span class="subj'+enCls()+'">'+row[0]+'</span><span class="arw">◀</span><span class="be'+enCls()+'">'+row[1]+'</span></div>'; });
+      out+='<div class="betable">'+rows+'</div>';
+    }
+    if(r.examples && r.examples.length){
+      var ex='';
+      r.examples.forEach(function(e){ ex+='<div class="example'+enCls()+'">'+e+'</div>'; });
+      out+='<div class="examples">'+ex+'</div>';
+    }
+    if(r.trick) out+='<div class="trick"><b>🔑 حيلة الحفظ:</b> '+r.trick+'</div>';
+    out+='</div></div>';
+    return out;
+  }
+
+  /* شاشة القاعدة الإجبارية — تُعرض عند فتح الدرس قبل المراحل */
+  function renderIntro(){
+    G=null;
+    mount.innerHTML='<div class="lesson-wrap">'+
+      '<div class="section-head"><span class="eyebrow">'+I.book+' القاعدة أوّلًا</span>'+
+      '<h2 class="h-title">'+lesson.title+'</h2>'+
+      '<p class="h-sub">اقرأ القاعدة والأمثلة جيّدًا، ثم انتقل إلى المراحل.</p></div>'+
+      ruleHTML()+
+      '<div class="lp-actions" style="justify-content:space-between;margin-top:18px">'+
+      '<button class="btn ghost sm" id="engBackIntro">'+I.chev+' عودة إلى الدروس</button>'+
+      '<button class="btn" id="engStartStages">فهمتُ — إلى المراحل '+I.chev+'</button></div>'+
+      '</div>';
+    $('engBackIntro').onclick=function(){ if(opts.onExit) opts.onExit(); };
+    $('engStartStages').onclick=function(){ renderMap(); };
+    if(opts.scrollTop) opts.scrollTop();
   }
 
   function renderMap(){
@@ -89,7 +115,7 @@ window.Engine = (function(){
     h += '<div class="section-head"><span class="eyebrow">'+I.target+' درس تفاعليّ</span>'+
          '<h2 class="h-title">'+lesson.title+'</h2>'+
          '<p class="h-sub">أنجِز كلّ مرحلة بنجمة على الأقلّ لتُفتح التي بعدها. صفر أخطاء = ثلاث نجوم ★★★</p></div>';
-    h += ruleHTML();
+    h += '<div style="margin-bottom:14px"><button class="btn ghost sm" id="engReviewRule">'+I.book+' راجع القاعدة</button></div>';
     h += '<div class="pbar" style="margin-top:4px"><i style="width:'+Math.round(totalStars()/maxStars()*100)+'%"></i></div>';
     h += '<div class="lessons" id="engStageList"></div>';
     if(done){
@@ -101,9 +127,9 @@ window.Engine = (function(){
     h += '</div>';
     mount.innerHTML = h;
 
-    // القاعدة (طيّ)
-    var head=$('engRuleHead');
-    if(head){ head.onclick=function(){ var b=$('engRuleBody'); b.hidden=!b.hidden; }; }
+    // مراجعة القاعدة
+    var rev=$('engReviewRule');
+    if(rev){ rev.onclick=function(){ renderIntro(); }; }
 
     // قائمة المراحل
     var list=$('engStageList');
@@ -196,7 +222,7 @@ window.Engine = (function(){
   /* ---------- التغذية الراجعة ---------- */
   function feedback(ok,q,extraWhy){
     var box=document.createElement('div'); box.className='fb '+(ok?'ok':'no');
-    box.innerHTML='<div class="ft">'+(ok?I.check+' أحسنت! إجابة صحيحة':'✕ ليست صحيحة')+'</div>'+
+    box.innerHTML='<div class="ft">'+(ok?'✓ أحسنت! إجابة صحيحة':'✕ ليست صحيحة')+'</div>'+
       '<div class="fw">'+(extraWhy||q.w)+'</div>'+(q.f?'<div class="fix'+enCls()+'">'+q.f+'</div>':'');
     $('engFb').innerHTML=''; $('engFb').appendChild(box);
     beep(ok);

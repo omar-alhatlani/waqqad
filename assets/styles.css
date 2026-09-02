@@ -233,10 +233,17 @@ main{max-width:1080px;margin:0 auto;padding:26px 18px 40px}
 .hearts{letter-spacing:2px;font-size:15px;white-space:nowrap}
 
 .rule{background:var(--surface);border:1px solid var(--line);border-radius:18px;overflow:hidden;margin-bottom:18px;box-shadow:var(--shadow)}
-.rule .rh{display:flex;align-items:center;gap:10px;padding:15px 18px;cursor:pointer;font-weight:800;font-family:var(--display);background:none;border:0;width:100%;color:inherit;text-align:start}
+.rule .rh{display:flex;align-items:center;gap:10px;padding:15px 18px;font-weight:800;font-family:var(--display);background:none;border:0;width:100%;color:inherit;text-align:start}
+.rule.open .rh{border-bottom:1px solid var(--line)}
 .rule .rh .rt{flex:1}
 .rule .rh .tag{background:var(--subject);color:#fff;padding:3px 10px;border-radius:99px;font-size:11px;font-weight:800}
-.rule .rc{padding:0 18px 18px}
+.rule .rc{padding:16px 18px 18px}
+.rule .intro{color:var(--ink);font-size:15px;line-height:1.95;margin-bottom:12px}
+.rule .intro b{color:var(--subject-deep)}
+.rule .examples{display:grid;gap:8px;margin-top:12px}
+.rule .example{background:var(--subject-soft);border-inline-start:3px solid var(--subject);border-radius:10px;padding:9px 13px;font-size:15.5px}
+.rule .example.en{font-family:var(--en);direction:ltr;text-align:left}
+.rule .example b{color:var(--subject-deep)}
 .betable{display:grid;gap:9px}
 .berow{display:flex;align-items:center;gap:12px;background:var(--subject-soft);border:1px solid color-mix(in srgb,var(--subject) 25%,transparent);border-radius:12px;padding:11px 15px}
 .berow .subj{flex:1;font-weight:700}
