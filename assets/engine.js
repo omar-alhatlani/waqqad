@@ -200,7 +200,8 @@ window.Engine = (function(){
     var txt = q.p.indexOf('___')>-1 ? q.p.replace('___','<span class="blank">&nbsp;?&nbsp;</span>') : q.p;
     var longest=Math.max.apply(null,q.o.map(function(x){return x.length;}));
     var isLong=longest>15;
-    A.innerHTML='<div class="qcard"><div class="qhint">اختر الإجابة الصحيحة</div><div class="qtext'+enCls()+'">'+txt+'</div></div>'+
+    var askLine = q.ask ? '<div class="qhint ask">'+q.ask+'</div>' : '<div class="qhint">اختر الإجابة الصحيحة</div>';
+    A.innerHTML='<div class="qcard">'+askLine+'<div class="qtext'+enCls()+'">'+txt+'</div></div>'+
       '<div class="opts'+(isLong?' stack':'')+'" id="engOpts"></div>';
     var opts_=$('engOpts');
     shuffle(q.o.map(function(v,i){return i;})).forEach(function(oi){

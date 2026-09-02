@@ -257,6 +257,7 @@ main{max-width:1080px;margin:0 auto;padding:26px 18px 40px}
 .pbar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--subject),var(--subject-deep));border-radius:99px;transition:width .4s}
 .qcard{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:28px 20px;text-align:center;margin-bottom:16px;box-shadow:var(--shadow);min-height:96px;display:flex;flex-direction:column;justify-content:center;gap:8px}
 .qhint{font-size:13px;color:var(--muted)}
+.qhint.ask{color:var(--subject-deep);font-weight:800;font-size:15.5px;margin-bottom:2px}
 .qtext{font-size:26px;font-weight:600;line-height:1.7}
 .blank{display:inline-block;min-width:74px;border-bottom:3px dashed var(--subject);color:var(--subject);margin:0 6px;font-weight:700}
 
