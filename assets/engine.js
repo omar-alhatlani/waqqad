@@ -185,7 +185,7 @@ window.Engine = (function(){
     if(st.type==='error'){
       A.innerHTML='<div class="qcard"><div class="qhint">انقر الكلمة <b>الخاطئة</b> في هذه الجملة</div></div><div class="words'+ltrCls()+'" id="engWordRow"></div>';
       var row=$('engWordRow');
-      q.words.forEach(function(wd,idx){ var b=document.createElement('button'); b.className='word'+enCls(); b.textContent=wd; b.onclick=function(){ answerError(idx,b); }; row.appendChild(b); });
+      q.words.forEach(function(wd,idx){ var b=document.createElement('button'); b.className='word'+enCls(); b.innerHTML=wd; b.onclick=function(){ answerError(idx,b); }; row.appendChild(b); });
       return;
     }
     if(st.type==='order'){
@@ -193,7 +193,7 @@ window.Engine = (function(){
       A.innerHTML='<div class="qcard">'+oAsk+'</div><div class="slot'+ltrCls()+'" id="engSlot"></div><div class="words'+ltrCls()+'" id="engBank"></div>';
       var bank=$('engBank');
       var mixed=shuffle(q.sol), guard=0; while(mixed.join(' ')===q.sol.join(' ') && guard++<20) mixed=shuffle(q.sol);
-      mixed.forEach(function(wd){ var b=document.createElement('button'); b.className='word'+enCls(); b.textContent=wd; b.dataset.w=wd; b.onclick=function(){ pickWord(b); }; bank.appendChild(b); });
+      mixed.forEach(function(wd){ var b=document.createElement('button'); b.className='word'+enCls(); b.innerHTML=wd; b.dataset.w=wd; b.onclick=function(){ pickWord(b); }; bank.appendChild(b); });
       $('engActions').innerHTML='<button class="btn ghost sm" id="engUndo">↶ تراجع</button><button class="btn sm" id="engCheck" disabled>تحقّق ✓</button>';
       $('engUndo').onclick=undoWord; $('engCheck').onclick=function(){ answerOrder(q); };
       return;
@@ -207,7 +207,7 @@ window.Engine = (function(){
       '<div class="opts'+(isLong?' stack':'')+'" id="engOpts"></div>';
     var opts_=$('engOpts');
     shuffle(q.o.map(function(v,i){return i;})).forEach(function(oi){
-      var b=document.createElement('button'); b.className='opt'+enCls()+(isLong?' long':''); b.textContent=q.o[oi];
+      var b=document.createElement('button'); b.className='opt'+enCls()+(isLong?' long':''); b.innerHTML=q.o[oi]; b.dataset.oi=oi;
       b.onclick=function(){ answerChoice(oi,q,b); }; opts_.appendChild(b);
     });
   }
@@ -215,7 +215,7 @@ window.Engine = (function(){
   /* بناء الجملة */
   function renderSlot(){
     var slot=$('engSlot'); slot.innerHTML='';
-    G.built.forEach(function(item,i){ var chip=document.createElement('button'); chip.className='word'+enCls(); chip.textContent=item.w; chip.onclick=function(){ removeAt(i); }; slot.appendChild(chip); });
+    G.built.forEach(function(item,i){ var chip=document.createElement('button'); chip.className='word'+enCls(); chip.innerHTML=item.w; chip.onclick=function(){ removeAt(i); }; slot.appendChild(chip); });
     $('engCheck').disabled=(G.built.length!==G.qs[G.qi].sol.length);
   }
   function pickWord(btn){ if(G.answered) return; btn.classList.add('used'); G.built.push({w:btn.dataset.w,el:btn}); renderSlot(); }
@@ -244,7 +244,7 @@ window.Engine = (function(){
   function answerChoice(oi,q,btn){
     if(G.answered) return; G.answered=true;
     var ok=(oi===q.a), row=$('engOpts');
-    Array.prototype.forEach.call(row.children,function(b){ b.disabled=true; if(b.textContent===q.o[q.a]) b.classList.add('right'); });
+    Array.prototype.forEach.call(row.children,function(b){ b.disabled=true; if(+b.dataset.oi===q.a) b.classList.add('right'); });
     if(!ok) btn.classList.add('wrong');
     feedback(ok,q);
   }
