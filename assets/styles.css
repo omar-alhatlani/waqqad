@@ -64,6 +64,9 @@ body{
 }
 .en{font-family:var(--en);direction:ltr;unicode-bidi:isolate;letter-spacing:0}
 .ltr{direction:ltr;unicode-bidi:isolate} /* اتجاه LTR مع الإبقاء على الخطّ العربي (للرياضيات) */
+/* عزل تعبيرٍ رقميّ (أرقام عربية-هندية + إشارات) كوحدة LTR داخل نصٍّ عربيّ RTL،
+   فتظهر الإشارة السالبة يسار الرقم صحيحةً. يُوَلَّد بالمحرّك عند mathdir. */
+.mx{unicode-bidi:isolate;direction:ltr}
 /* الأُس: عربيّ صغير معزول بيديًّا لينفصل عن رقم الأساس فيظهر أعلى يسار الأساس في RTL */
 sup{font-size:.62em;vertical-align:super;line-height:0;unicode-bidi:isolate}
 button{font-family:inherit}

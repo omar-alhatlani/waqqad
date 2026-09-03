@@ -39,6 +39,17 @@ window.Engine = (function(){
   // en: خطّ إنجليزي + LTR (Poppins). ltr (رياضيات): اتجاه LTR مع الخطّ العربي (أرقام عربية-هندية).
   function enCls(){ return lesson.lang==='en' ? ' en' : (lesson.dir==='ltr' ? ' ltr' : ''); }
   function ltrCls(){ return (lesson.lang==='en' || lesson.dir==='ltr') ? ' ltr' : ''; }
+  /* عزل التعبيرات الرقمية (أرقام عربية-هندية + رموز) داخل نصٍّ عربيّ RTL كي تُعرض LTR
+     فتظهر الإشارة السالبة يسار الرقم صحيحةً. يُفعَّل فقط عند lesson.mathdir=true. */
+  function M(s){
+    if(!lesson.mathdir || typeof s!=='string' || s.indexOf('class="mx"')>-1) return s;
+    return s.replace(/(<[^>]+>)|([^<]+)/g, function(_,tag,text){
+      if(tag) return tag;
+      return text.replace(/[+\-−(]*\s*[٠-٩][+\-−()|×÷=.,،٠-٩\s]*/g, function(m){
+        return '<span class="mx">'+m+'</span>';
+      });
+    });
+  }
   function shuffle(a){ a=a.slice(); for(var i=a.length-1;i>0;i--){ var j=Math.floor(Math.random()*(i+1)); var t=a[i];a[i]=a[j];a[j]=t; } return a; }
   function starStr(n,max){ max=max||3; var s=''; for(var i=0;i<max;i++) s+=(i<n?'★':'<span class="off">★</span>'); return s; }
   var AC=null;
@@ -75,18 +86,18 @@ window.Engine = (function(){
     var r=lesson.rule;
     var out='<div class="rule open"><div class="rh"><span class="tag">'+(r.tag||'القاعدة')+'</span>'+
       '<span class="rt">'+(r.title||'القاعدة')+'</span></div><div class="rc">';
-    if(r.intro) out+='<p class="intro">'+r.intro+'</p>';
+    if(r.intro) out+='<p class="intro">'+M(r.intro)+'</p>';
     if(r.table && r.table.length){
       var rows='';
-      r.table.forEach(function(row){ rows+='<div class="berow"><span class="subj'+enCls()+'">'+row[0]+'</span><span class="arw">◀</span><span class="be'+enCls()+'">'+row[1]+'</span></div>'; });
+      r.table.forEach(function(row){ rows+='<div class="berow"><span class="subj'+enCls()+'">'+M(row[0])+'</span><span class="arw">◀</span><span class="be'+enCls()+'">'+M(row[1])+'</span></div>'; });
       out+='<div class="betable">'+rows+'</div>';
     }
     if(r.examples && r.examples.length){
       var ex='';
-      r.examples.forEach(function(e){ ex+='<div class="example'+enCls()+'">'+e+'</div>'; });
+      r.examples.forEach(function(e){ ex+='<div class="example'+enCls()+'">'+M(e)+'</div>'; });
       out+='<div class="examples">'+ex+'</div>';
     }
-    if(r.trick) out+='<div class="trick"><b>🔑 حيلة الحفظ:</b> '+r.trick+'</div>';
+    if(r.trick) out+='<div class="trick"><b>🔑 حيلة الحفظ:</b> '+M(r.trick)+'</div>';
     out+='</div></div>';
     return out;
   }
@@ -184,18 +195,18 @@ window.Engine = (function(){
 
     // النوع يُحدَّد بحقول السؤال نفسه (لا بنوع المرحلة) كي تعمل مرحلة mixed بأسئلة مختلطة
     if(q.words){
-      var eAsk = q.ask ? '<div class="qhint ask">'+q.ask+'</div>' : '<div class="qhint">انقر الكلمة <b>الخاطئة</b> في هذه الجملة</div>';
+      var eAsk = q.ask ? '<div class="qhint ask">'+M(q.ask)+'</div>' : '<div class="qhint">انقر الكلمة <b>الخاطئة</b> في هذه الجملة</div>';
       A.innerHTML='<div class="qcard">'+eAsk+'</div><div class="words'+ltrCls()+'" id="engWordRow"></div>';
       var row=$('engWordRow');
-      q.words.forEach(function(wd,idx){ var b=document.createElement('button'); b.className='word'+enCls(); b.innerHTML=wd; b.onclick=function(){ answerError(idx,b); }; row.appendChild(b); });
+      q.words.forEach(function(wd,idx){ var b=document.createElement('button'); b.className='word'+enCls(); b.innerHTML=M(wd); b.onclick=function(){ answerError(idx,b); }; row.appendChild(b); });
       return;
     }
     if(q.sol){
-      var oAsk = q.ask ? '<div class="qhint ask">'+q.ask+'</div>' : '<div class="qhint">كوّن جملة صحيحة من هذه الكلمات</div>';
+      var oAsk = q.ask ? '<div class="qhint ask">'+M(q.ask)+'</div>' : '<div class="qhint">كوّن جملة صحيحة من هذه الكلمات</div>';
       A.innerHTML='<div class="qcard">'+oAsk+'</div><div class="slot'+ltrCls()+'" id="engSlot"></div><div class="words'+ltrCls()+'" id="engBank"></div>';
       var bank=$('engBank');
       var mixed=shuffle(q.sol), guard=0; while(mixed.join(' ')===q.sol.join(' ') && guard++<20) mixed=shuffle(q.sol);
-      mixed.forEach(function(wd){ var b=document.createElement('button'); b.className='word'+enCls(); b.innerHTML=wd; b.dataset.w=wd; b.onclick=function(){ pickWord(b); }; bank.appendChild(b); });
+      mixed.forEach(function(wd){ var b=document.createElement('button'); b.className='word'+enCls(); b.innerHTML=M(wd); b.dataset.w=wd; b.onclick=function(){ pickWord(b); }; bank.appendChild(b); });
       $('engActions').innerHTML='<button class="btn ghost sm" id="engUndo">↶ تراجع</button><button class="btn sm" id="engCheck" disabled>تحقّق ✓</button>';
       $('engUndo').onclick=undoWord; $('engCheck').onclick=function(){ answerOrder(q); };
       return;
@@ -204,12 +215,12 @@ window.Engine = (function(){
     var txt = q.p.indexOf('___')>-1 ? q.p.replace('___','<span class="blank">&nbsp;?&nbsp;</span>') : q.p;
     var longest=Math.max.apply(null,q.o.map(function(x){return x.length;}));
     var isLong=longest>15;
-    var askLine = q.ask ? '<div class="qhint ask">'+q.ask+'</div>' : '<div class="qhint">اختر الإجابة الصحيحة</div>';
-    A.innerHTML='<div class="qcard">'+askLine+'<div class="qtext'+enCls()+'">'+txt+'</div></div>'+
+    var askLine = q.ask ? '<div class="qhint ask">'+M(q.ask)+'</div>' : '<div class="qhint">اختر الإجابة الصحيحة</div>';
+    A.innerHTML='<div class="qcard">'+askLine+'<div class="qtext'+enCls()+'">'+M(txt)+'</div></div>'+
       '<div class="opts'+(isLong?' stack':'')+'" id="engOpts"></div>';
     var opts_=$('engOpts');
     shuffle(q.o.map(function(v,i){return i;})).forEach(function(oi){
-      var b=document.createElement('button'); b.className='opt'+enCls()+(isLong?' long':''); b.innerHTML=q.o[oi]; b.dataset.oi=oi;
+      var b=document.createElement('button'); b.className='opt'+enCls()+(isLong?' long':''); b.innerHTML=M(q.o[oi]); b.dataset.oi=oi;
       b.onclick=function(){ answerChoice(oi,q,b); }; opts_.appendChild(b);
     });
   }
@@ -217,7 +228,7 @@ window.Engine = (function(){
   /* بناء الجملة */
   function renderSlot(){
     var slot=$('engSlot'); slot.innerHTML='';
-    G.built.forEach(function(item,i){ var chip=document.createElement('button'); chip.className='word'+enCls(); chip.innerHTML=item.w; chip.onclick=function(){ removeAt(i); }; slot.appendChild(chip); });
+    G.built.forEach(function(item,i){ var chip=document.createElement('button'); chip.className='word'+enCls(); chip.innerHTML=M(item.w); chip.onclick=function(){ removeAt(i); }; slot.appendChild(chip); });
     $('engCheck').disabled=(G.built.length!==G.qs[G.qi].sol.length);
   }
   function pickWord(btn){ if(G.answered) return; btn.classList.add('used'); G.built.push({w:btn.dataset.w,el:btn}); renderSlot(); }
@@ -228,7 +239,7 @@ window.Engine = (function(){
   function feedback(ok,q,extraWhy){
     var box=document.createElement('div'); box.className='fb '+(ok?'ok':'no');
     box.innerHTML='<div class="ft">'+(ok?'✓ أحسنت! إجابة صحيحة':'✕ ليست صحيحة')+'</div>'+
-      '<div class="fw">'+(extraWhy||q.w)+'</div>'+(q.f?'<div class="fix'+enCls()+'">'+q.f+'</div>':'');
+      '<div class="fw">'+M(extraWhy||q.w)+'</div>'+(q.f?'<div class="fix'+enCls()+'">'+M(q.f)+'</div>':'');
     $('engFb').innerHTML=''; $('engFb').appendChild(box);
     beep(ok);
     if(!ok){ G.errs++; G.hearts--; updateHearts(); var w=mount.querySelector('.lesson-wrap'); w.classList.add('shake'); setTimeout(function(){ w.classList.remove('shake'); },360); }
