@@ -201,6 +201,19 @@ window.BRAND = {
      رقمٌ إجماليٌّ فقط (بلا بيانات شخصية) عبر خدمة Abacus المجّانية.
      يُحسب مرّةً لكلّ جلسة، ويختفي بهدوءٍ إن تعذّر الاتصال (أوفلاين مثلًا). */
   function toAr(n){ return String(n).replace(/[0-9]/g,function(d){ return '٠١٢٣٤٥٦٧٨٩'[d]; }); }
+  /* عدٌّ تصاعديٌّ متحرّك للرقم حتى القيمة النهائية (يحترم تقليل الحركة) */
+  function countUp(el, target){
+    var reduce=false; try{ reduce=matchMedia('(prefers-reduced-motion:reduce)').matches; }catch(e){}
+    if(reduce || !target || target<2 || typeof requestAnimationFrame!=='function'){ el.textContent=toAr(target); return; }
+    var t0=0, dur=1100, from=Math.max(0, target-Math.min(target, 60));
+    function step(now){
+      if(!t0) t0=now;
+      var p=Math.min(1,(now-t0)/dur), e=1-Math.pow(1-p,3);
+      el.textContent=toAr(Math.round(from+(target-from)*e));
+      if(p<1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
   function visitorCounter(){
     var box=$('#visitBox'), num=$('#visitCount'); if(!box||!num) return;
     var base='https://abacus.jasoncameron.dev', ns='waqqad-app-1448', key='visitors';
@@ -208,7 +221,7 @@ window.BRAND = {
     var url=base+(counted?'/get/':'/hit/')+ns+'/'+key;
     fetch(url).then(function(r){ return r.json(); }).then(function(d){
       if(d && typeof d.value==='number'){
-        num.textContent=toAr(d.value); box.hidden=false;
+        box.hidden=false; countUp(num, d.value);
         try{ sessionStorage.setItem('waqqad_visited','1'); }catch(e){}
       }
     }).catch(function(){ /* بلا اتصال: يبقى مخفيًّا */ });
