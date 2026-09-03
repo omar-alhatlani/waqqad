@@ -66,7 +66,12 @@ window.CURRICULUM = {
         { t:'Vocabulary — أماكن المدينة والاتجاهات', tag:'مفردات', ref:'EN_SG1_U7_VOCAB' },
         { t:'Reading — Famous Neighborhoods', tag:'قراءة', ref:'EN_SG1_U7_READ' }
       ]},
-      { t:'What Are You Doing?', s:'المضارع المستمر', lessons:[] }
+      { t:'What Are You Doing?', s:'المضارع المستمر', lessons:[
+        { t:'Grammar — المضارع المستمر (Present Progressive)', tag:'قواعد', ref:'EN_SG1_U8_PRESPROG' },
+        { t:'Grammar — الرغبة المؤدَّبة (would like)', tag:'قواعد', ref:'EN_SG1_U8_WOULDLIKE' },
+        { t:'Vocabulary — الأنشطة (verb + -ing)', tag:'مفردات', ref:'EN_SG1_U8_VOCAB' },
+        { t:"Reading — Teenagers' Favorite Place", tag:'قراءة', ref:'EN_SG1_U8_READ' }
+      ]}
     ]},
     'g1.s1.ar':{ eyebrow:'لغتي الخالدة · الأول متوسط', units:[
       { t:'القيم الإسلامية', s:'الدروس اللغوية للوحدة', lessons:[
