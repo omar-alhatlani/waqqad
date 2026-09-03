@@ -30,7 +30,12 @@ window.CURRICULUM = {
         { t:'Vocabulary — Greetings & Introductions', tag:'مفردات', ref:'EN_SG1_U1_GREET' },
         { t:'Reading — A New Student', tag:'قراءة', ref:'EN_SG1_U1_READ' }
       ]},
-      { t:'What Day Is Today?', s:'الأيام والأعداد والوقت', lessons:[] },
+      { t:'What Day Is Today?', s:'الأيام والأعداد والوقت', lessons:[
+        { t:'Grammar — صفات الملكية للجمع (our/your/their)', tag:'قواعد', ref:'EN_SG1_U2_POSS2' },
+        { t:'Grammar — أدوات السؤال What/When/How old', tag:'قواعد', ref:'EN_SG1_U2_QW' },
+        { t:'Vocabulary — الأيّام والأشهر والأعداد', tag:'مفردات', ref:'EN_SG1_U2_VOCAB' },
+        { t:'Reading — How Old Are They?', tag:'قراءة', ref:'EN_SG1_U2_READ' }
+      ]},
       { t:"What's That?", s:'الأشياء وأدوات المدرسة', lessons:[] },
       { t:'Around the World', s:'الدول والجنسيات', lessons:[] },
       { t:'Families, Families', s:'العائلة وأفرادها', lessons:[] },
