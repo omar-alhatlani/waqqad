@@ -116,7 +116,10 @@ window.CURRICULUM = {
       { t:'النسبة والتناسب', s:'الفصل الرابع', lessons:[
         { t:'النسبة', tag:'نسبة', ref:'MATH_G1_U4_RATIO' },
         { t:'المعدَّل', tag:'نسبة', ref:'MATH_G1_U4_RATE' },
+        { t:'التحويل بين الوحدات الإنجليزية', tag:'قياس', ref:'MATH_G1_U4_ENGUNITS' },
+        { t:'التحويل بين الوحدات المترية', tag:'قياس', ref:'MATH_G1_U4_METRIC' },
         { t:'حل التناسبات', tag:'تناسب', ref:'MATH_G1_U4_PROP' },
+        { t:'استراتيجية: الرسم', tag:'مهارة', ref:'MATH_G1_U4_DRAW' },
         { t:'مقياس الرسم', tag:'تناسب', ref:'MATH_G1_U4_SCALE' }
       ]}
     ]},
