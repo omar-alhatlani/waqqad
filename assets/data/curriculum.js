@@ -60,7 +60,12 @@ window.CURRICULUM = {
         { t:'Vocabulary — غرف البيت والأثاث', tag:'مفردات', ref:'EN_SG1_U6_VOCAB' },
         { t:'Reading — Unusual Houses', tag:'قراءة', ref:'EN_SG1_U6_READ' }
       ]},
-      { t:'Where Do You Live?', s:'المدينة والاتجاهات', lessons:[] },
+      { t:'Where Do You Live?', s:'المدينة والاتجاهات', lessons:[
+        { t:'Grammar — حروف المكان و live', tag:'قواعد', ref:'EN_SG1_U7_PLACE' },
+        { t:'Grammar — المقارنة والتفضيل', tag:'قواعد', ref:'EN_SG1_U7_COMPARE' },
+        { t:'Vocabulary — أماكن المدينة والاتجاهات', tag:'مفردات', ref:'EN_SG1_U7_VOCAB' },
+        { t:'Reading — Famous Neighborhoods', tag:'قراءة', ref:'EN_SG1_U7_READ' }
+      ]},
       { t:'What Are You Doing?', s:'المضارع المستمر', lessons:[] }
     ]},
     'g1.s1.ar':{ eyebrow:'لغتي الخالدة · الأول متوسط', units:[
