@@ -1,7 +1,7 @@
 /* عامل الخدمة — وقّاد
    يخزّن قشرة التطبيق ليعمل بلا إنترنت بعد أول زيارة.
    عند تعديل الملفّات: ارفع رقم النسخة CACHE لإجبار التحديث. */
-var CACHE = 'waqqad-v31';
+var CACHE = 'waqqad-v32';
 var ASSETS = [
   './',
   './index.html',
@@ -50,6 +50,10 @@ var ASSETS = [
   './assets/data/ar-lughati-u2-nasikha.js',
   './assets/data/ar-lughati-u2-istifham.js',
   './assets/data/ar-lughati-u2-qat.js',
+  './assets/data/ar-lughati-u3-jam.js',
+  './assets/data/ar-lughati-u3-inna.js',
+  './assets/data/ar-lughati-u3-nida.js',
+  './assets/data/ar-lughati-u3-taa.js',
   './assets/data/ar-math-u1-order.js',
   './assets/data/ar-math-u1-steps.js',
   './assets/data/ar-math-u1-powers.js',
