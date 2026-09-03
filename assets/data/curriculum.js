@@ -15,7 +15,7 @@ window.CURRICULUM = {
     {id:'s2', name:'الفصل الدراسي الثاني', desc:'وحدات النصف الثاني من العام'}
   ],
   subjects:[
-    {id:'ar',   name:'اللغة العربية',   en:'لغتي الخالدة', icon:'ar',   c:'--s-ar',   cd:'--s-ar-deep',   cs:'--s-ar-soft',   units:8},
+    {id:'ar',   name:'اللغة العربية',   en:'لغتي الخالدة', icon:'ar',   c:'--s-ar',   cd:'--s-ar-deep',   cs:'--s-ar-soft',   units:3},
     {id:'math', name:'الرياضيات',       en:'Mathematics',  icon:'math', c:'--s-math', cd:'--s-math-deep', cs:'--s-math-soft', units:4},
     {id:'sci',  name:'العلوم',          en:'Science',      icon:'sci',  c:'--s-sci',  cd:'--s-sci-deep',  cs:'--s-sci-soft',  units:6},
     {id:'en',   name:'اللغة الإنجليزية', en:'Super Goal 1', icon:'en',   c:'--s-en',   cd:'--s-en-deep',   cs:'--s-en-soft',   units:8}
@@ -80,7 +80,12 @@ window.CURRICULUM = {
         { t:'الرسم الإملائي — رسم همزة الوصل', tag:'إملاء', ref:'AR_LUGHATI_U1_HAMZA' },
         { t:'الوظيفة النحوية — المبتدأ والخبر', tag:'نحو', ref:'AR_LUGHATI_U1_MUBTADA' }
       ]},
-      { t:'الأعلام', s:'دروس الوحدة الثانية', lessons:[] },
+      { t:'الأعلام', s:'الدروس اللغوية للوحدة الثانية', lessons:[
+        { t:'الصنف اللغوي — المفرد والمثنى', tag:'صنف لغوي', ref:'AR_LUGHATI_U2_MUFRAD' },
+        { t:'الوظيفة النحوية — الأفعال الناسخة (كان وأخواتها)', tag:'نحو', ref:'AR_LUGHATI_U2_NASIKHA' },
+        { t:'الأسلوب اللغوي — الاستفهام', tag:'أسلوب', ref:'AR_LUGHATI_U2_ISTIFHAM' },
+        { t:'الرسم الإملائي — همزة القطع', tag:'إملاء', ref:'AR_LUGHATI_U2_QAT' }
+      ]},
       { t:'الوطن', s:'دروس الوحدة الثالثة', lessons:[] }
     ]},
     'g1.s1.math':{ eyebrow:'رياضيات · الأول متوسط', units:[
