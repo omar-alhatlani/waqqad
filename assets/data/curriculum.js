@@ -54,7 +54,12 @@ window.CURRICULUM = {
         { t:'Vocabulary — أفراد العائلة', tag:'مفردات', ref:'EN_SG1_U5_VOCAB' },
         { t:'Reading — Family Values and Society', tag:'قراءة', ref:'EN_SG1_U5_READ' }
       ]},
-      { t:'Is There a View?', s:'البيت والغرف', lessons:[] },
+      { t:'Is There a View?', s:'البيت والغرف', lessons:[
+        { t:'Grammar — There is / There are', tag:'قواعد', ref:'EN_SG1_U6_THERE' },
+        { t:'Grammar — حروف المكان و and/but/or', tag:'قواعد', ref:'EN_SG1_U6_PREP' },
+        { t:'Vocabulary — غرف البيت والأثاث', tag:'مفردات', ref:'EN_SG1_U6_VOCAB' },
+        { t:'Reading — Unusual Houses', tag:'قراءة', ref:'EN_SG1_U6_READ' }
+      ]},
       { t:'Where Do You Live?', s:'المدينة والاتجاهات', lessons:[] },
       { t:'What Are You Doing?', s:'المضارع المستمر', lessons:[] }
     ]},
