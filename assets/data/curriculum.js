@@ -48,7 +48,12 @@ window.CURRICULUM = {
         { t:'Vocabulary — الدول والجنسيات والعواصم', tag:'مفردات', ref:'EN_SG1_U4_VOCAB' },
         { t:'Reading — Lapland: The Midnight Sun', tag:'قراءة', ref:'EN_SG1_U4_READ' }
       ]},
-      { t:'Families, Families', s:'العائلة وأفرادها', lessons:[] },
+      { t:'Families, Families', s:'العائلة وأفرادها', lessons:[
+        { t:'Grammar — الفعل have والكمّية', tag:'قواعد', ref:'EN_SG1_U5_HAVE' },
+        { t:"Grammar — الجمع والملكية 's", tag:'قواعد', ref:'EN_SG1_U5_PLURAL' },
+        { t:'Vocabulary — أفراد العائلة', tag:'مفردات', ref:'EN_SG1_U5_VOCAB' },
+        { t:'Reading — Family Values and Society', tag:'قراءة', ref:'EN_SG1_U5_READ' }
+      ]},
       { t:'Is There a View?', s:'البيت والغرف', lessons:[] },
       { t:'Where Do You Live?', s:'المدينة والاتجاهات', lessons:[] },
       { t:'What Are You Doing?', s:'المضارع المستمر', lessons:[] }
