@@ -36,7 +36,12 @@ window.CURRICULUM = {
         { t:'Vocabulary — الأيّام والأشهر والأعداد', tag:'مفردات', ref:'EN_SG1_U2_VOCAB' },
         { t:'Reading — How Old Are They?', tag:'قراءة', ref:'EN_SG1_U2_READ' }
       ]},
-      { t:"What's That?", s:'الأشياء وأدوات المدرسة', lessons:[] },
+      { t:"What's That?", s:'الأشياء وأدوات المدرسة', lessons:[
+        { t:'Grammar — أسماء الإشارة (this/that/these/those)', tag:'قواعد', ref:'EN_SG1_U3_DEMO' },
+        { t:'Grammar — الأوامر (Imperatives)', tag:'قواعد', ref:'EN_SG1_U3_IMPER' },
+        { t:'Vocabulary — أشياء المتحف و a/an', tag:'مفردات', ref:'EN_SG1_U3_VOCAB' },
+        { t:'Reading — Museum of Science', tag:'قراءة', ref:'EN_SG1_U3_READ' }
+      ]},
       { t:'Around the World', s:'الدول والجنسيات', lessons:[] },
       { t:'Families, Families', s:'العائلة وأفرادها', lessons:[] },
       { t:'Is There a View?', s:'البيت والغرف', lessons:[] },
