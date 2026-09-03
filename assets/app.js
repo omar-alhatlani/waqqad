@@ -197,6 +197,23 @@ window.BRAND = {
   function closeAbout(){ $('#aboutModal').classList.remove('open'); }
 
   /* ============ الإقلاع ============ */
+  /* ---------- عدّاد الزوّار ----------
+     رقمٌ إجماليٌّ فقط (بلا بيانات شخصية) عبر خدمة Abacus المجّانية.
+     يُحسب مرّةً لكلّ جلسة، ويختفي بهدوءٍ إن تعذّر الاتصال (أوفلاين مثلًا). */
+  function toAr(n){ return String(n).replace(/[0-9]/g,function(d){ return '٠١٢٣٤٥٦٧٨٩'[d]; }); }
+  function visitorCounter(){
+    var box=$('#visitBox'), num=$('#visitCount'); if(!box||!num) return;
+    var base='https://abacus.jasoncameron.dev', ns='waqqad-app-1448', key='visitors';
+    var counted=false; try{ counted=sessionStorage.getItem('waqqad_visited')==='1'; }catch(e){}
+    var url=base+(counted?'/get/':'/hit/')+ns+'/'+key;
+    fetch(url).then(function(r){ return r.json(); }).then(function(d){
+      if(d && typeof d.value==='number'){
+        num.textContent=toAr(d.value); box.hidden=false;
+        try{ sessionStorage.setItem('waqqad_visited','1'); }catch(e){}
+      }
+    }).catch(function(){ /* بلا اتصال: يبقى مخفيًّا */ });
+  }
+
   function boot(){
     // أيقونات الهيرو
     $('#gEn').innerHTML=I.en; $('#gMath').innerHTML=I.math; $('#gSci').innerHTML=I.sci; $('#gAr').innerHTML=I.ar;
@@ -232,6 +249,7 @@ window.BRAND = {
     renderGrades();
     refreshTotals();
     go('home');
+    visitorCounter();
 
     // PWA
     if('serviceWorker' in navigator){ window.addEventListener('load',function(){ navigator.serviceWorker.register('sw.js').catch(function(){}); }); }

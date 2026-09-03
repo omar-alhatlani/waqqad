@@ -338,6 +338,8 @@ main{max-width:1080px;margin:0 auto;padding:26px 18px 40px}
 .foot{text-align:center;color:var(--muted);font-size:12px;padding:24px 18px;border-top:1px solid var(--line);margin-top:10px;line-height:1.9}
 .foot b{color:var(--ink-soft)}
 .foot a{color:var(--subject);text-decoration:none;font-weight:700;cursor:pointer}
+.visits{margin-top:10px;display:inline-flex;align-items:center;gap:6px;font-size:12px;color:var(--muted);background:var(--card,rgba(0,0,0,.03));border:1px solid var(--line);border-radius:999px;padding:5px 13px}
+.visits b{color:var(--subject-deep,var(--ink-soft));font-variant-numeric:tabular-nums}
 
 .modal{position:fixed;inset:0;z-index:60;display:none;align-items:center;justify-content:center;padding:18px;
   background:rgba(15,17,32,.5);backdrop-filter:blur(3px)}
