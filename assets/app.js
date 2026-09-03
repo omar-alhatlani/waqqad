@@ -204,15 +204,17 @@ window.BRAND = {
   /* عدٌّ تصاعديٌّ متحرّك للرقم حتى القيمة النهائية (يحترم تقليل الحركة) */
   function countUp(el, target){
     var reduce=false; try{ reduce=matchMedia('(prefers-reduced-motion:reduce)').matches; }catch(e){}
-    if(reduce || !target || target<2 || typeof requestAnimationFrame!=='function'){ el.textContent=toAr(target); return; }
-    var t0=0, dur=1100, from=Math.max(0, target-Math.min(target, 60));
+    /* تبويبٌ مخفيٌّ يُجمّد requestAnimationFrame، فنضبط الرقم النهائيّ فورًا بلا حركة */
+    if(reduce || !target || target<2 || document.hidden || typeof requestAnimationFrame!=='function'){ el.textContent=toAr(target); return; }
+    var t0=0, dur=1100, from=Math.max(0, target-Math.min(target, 60)), done=false;
     function step(now){
       if(!t0) t0=now;
       var p=Math.min(1,(now-t0)/dur), e=1-Math.pow(1-p,3);
       el.textContent=toAr(Math.round(from+(target-from)*e));
-      if(p<1) requestAnimationFrame(step);
+      if(p<1) requestAnimationFrame(step); else done=true;
     }
     requestAnimationFrame(step);
+    setTimeout(function(){ if(!done) el.textContent=toAr(target); }, dur+700); /* ضمانٌ نهائيّ */
   }
   function visitorCounter(){
     var box=$('#visitBox'), num=$('#visitCount'); if(!box||!num) return;
