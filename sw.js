@@ -1,7 +1,7 @@
 /* عامل الخدمة — وقّاد
    يخزّن قشرة التطبيق ليعمل بلا إنترنت بعد أول زيارة.
    عند تعديل الملفّات: ارفع رقم النسخة CACHE لإجبار التحديث. */
-var CACHE = 'waqqad-v26';
+var CACHE = 'waqqad-v27';
 var ASSETS = [
   './',
   './index.html',
@@ -82,6 +82,8 @@ var ASSETS = [
   './assets/data/ar-sci-u2-motion.js',
   './assets/data/ar-sci-u2-newton.js',
   './assets/data/ar-sci-u2-machines.js',
+  './assets/data/ar-sci-u3-physical.js',
+  './assets/data/ar-sci-u3-chemical.js',
   './icons/icon.svg',
   './manifest.webmanifest'
 ];
