@@ -42,7 +42,12 @@ window.CURRICULUM = {
         { t:'Vocabulary — أشياء المتحف و a/an', tag:'مفردات', ref:'EN_SG1_U3_VOCAB' },
         { t:'Reading — Museum of Science', tag:'قراءة', ref:'EN_SG1_U3_READ' }
       ]},
-      { t:'Around the World', s:'الدول والجنسيات', lessons:[] },
+      { t:'Around the World', s:'الدول والجنسيات', lessons:[
+        { t:'Grammar — be: النفي والسؤال + Where', tag:'قواعد', ref:'EN_SG1_U4_BE' },
+        { t:'Grammar — الطلبات والعروض (Can/Will)', tag:'قواعد', ref:'EN_SG1_U4_CANWILL' },
+        { t:'Vocabulary — الدول والجنسيات والعواصم', tag:'مفردات', ref:'EN_SG1_U4_VOCAB' },
+        { t:'Reading — Lapland: The Midnight Sun', tag:'قراءة', ref:'EN_SG1_U4_READ' }
+      ]},
       { t:'Families, Families', s:'العائلة وأفرادها', lessons:[] },
       { t:'Is There a View?', s:'البيت والغرف', lessons:[] },
       { t:'Where Do You Live?', s:'المدينة والاتجاهات', lessons:[] },
