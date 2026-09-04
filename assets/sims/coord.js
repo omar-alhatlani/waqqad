@@ -86,7 +86,7 @@ window.SIMS['coord'] = (function(){
       ctx.fillStyle=css('--ember','#F2892E'); ctx.beginPath(); ctx.arc(sx,sy,6,0,6.2832); ctx.fill();
       ctx.fillStyle='#fff'; ctx.beginPath(); ctx.arc(sx-1.6,sy-1.8,2,0,6.2832); ctx.fill();
       // البطاقة: تُرسم حرفًا حرفًا يسارًا→يمينًا لمنع إعادة ترتيب bidi للأرقام العربية
-      ctx.save(); ctx.fillStyle=css('--ink','#1C2143'); ctx.font='800 12px Cairo,sans-serif'; ctx.textAlign='left'; ctx.textBaseline='alphabetic';
+      ctx.save(); ctx.fillStyle=css('--ink','#1C2143'); ctx.font='800 12px Cairo,sans-serif'; ctx.textAlign='left'; ctx.textBaseline='alphabetic'; ctx.direction='ltr';
       var chars=('('+sig(x)+' ، '+sig(y)+')').split('');
       var ws=chars.map(function(ch){ return ctx.measureText(ch).width; });
       var total=ws.reduce(function(a,b){return a+b;},0);
