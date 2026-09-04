@@ -85,8 +85,14 @@ window.SIMS['coord'] = (function(){
       // النقطة
       ctx.fillStyle=css('--ember','#F2892E'); ctx.beginPath(); ctx.arc(sx,sy,6,0,6.2832); ctx.fill();
       ctx.fillStyle='#fff'; ctx.beginPath(); ctx.arc(sx-1.6,sy-1.8,2,0,6.2832); ctx.fill();
-      ctx.save(); ctx.fillStyle=css('--ink','#1C2143'); ctx.font='800 12px Cairo,sans-serif'; ctx.textAlign='center'; ctx.direction='ltr';
-      ctx.fillText('('+sig(x)+'، '+sig(y)+')', sx, sy>OY? sy+18 : sy-11); ctx.restore();
+      // البطاقة: تُرسم حرفًا حرفًا يسارًا→يمينًا لمنع إعادة ترتيب bidi للأرقام العربية
+      ctx.save(); ctx.fillStyle=css('--ink','#1C2143'); ctx.font='800 12px Cairo,sans-serif'; ctx.textAlign='left'; ctx.textBaseline='alphabetic';
+      var chars=('('+sig(x)+' ، '+sig(y)+')').split('');
+      var ws=chars.map(function(ch){ return ctx.measureText(ch).width; });
+      var total=ws.reduce(function(a,b){return a+b;},0);
+      var lx=sx-total/2, ly=(sy>OY? sy+18 : sy-11);
+      for(var ci=0;ci<chars.length;ci++){ ctx.fillText(chars[ci], lx, ly); lx+=ws[ci]; }
+      ctx.restore();
     }
     function refresh(){
       var x=+xIn.value, y=+yIn.value;
