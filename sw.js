@@ -1,7 +1,7 @@
 /* عامل الخدمة — وقّاد
    يخزّن قشرة التطبيق ليعمل بلا إنترنت بعد أول زيارة.
    عند تعديل الملفّات: ارفع رقم النسخة CACHE لإجبار التحديث. */
-var CACHE = 'waqqad-v63';
+var CACHE = 'waqqad-v64';
 var ASSETS = [
   './',
   './index.html',
@@ -16,6 +16,10 @@ var ASSETS = [
   './assets/sims/lever.js',
   './assets/sims/ph.js',
   './assets/sims/coord.js',
+  './assets/sims/graph.js',
+  './assets/sims/perimeter.js',
+  './assets/sims/pythagoras.js',
+  './assets/sims/energy.js',
   './assets/engine.js',
   './assets/app.js',
   './assets/data/curriculum.js',
@@ -239,6 +243,21 @@ var ASSETS = [
   './assets/data/ar-sci-g2-u6-digestion.js',
   './assets/data/ar-sci-g2-u6-respiration.js',
   './assets/data/ar-sci-g3-u1-ohm.js',
+  './assets/data/ar-sci-g3s1-u1-method.js',
+  './assets/data/ar-sci-g3s1-u1-work.js',
+  './assets/data/ar-sci-g3s1-u1-society.js',
+  './assets/data/ar-sci-g3s1-u2-quakes.js',
+  './assets/data/ar-sci-g3s1-u2-volcanoes.js',
+  './assets/data/ar-sci-g3s1-u2-plates.js',
+  './assets/data/ar-sci-g3s1-u3-cell.js',
+  './assets/data/ar-sci-g3s1-u3-division.js',
+  './assets/data/ar-sci-g3s1-u4-dna.js',
+  './assets/data/ar-sci-g3s1-u4-genetics.js',
+  './assets/data/ar-sci-g3s1-u5-models.js',
+  './assets/data/ar-sci-g3s1-u5-nucleus.js',
+  './assets/data/ar-sci-g3s1-u6-periodic.js',
+  './assets/data/ar-sci-g3s1-u6-representative.js',
+  './assets/data/ar-sci-g3s1-u6-transition.js',
   './icons/icon.svg',
   './manifest.webmanifest'
 ];

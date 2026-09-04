@@ -55,7 +55,7 @@ window.SIMS['perimeter'] = (function(){
       var rx=(W-pw)/2, ry=(H-ph)/2-4;
       // المستطيل + مربعات الوحدة
       ctx.fillStyle=css('--subject-soft','#E2F5F5'); ctx.fillRect(rx,ry,pw,ph);
-      ctx.strokeStyle=color(css('--subject','#0FA3AA'),0.35); ctx.lineWidth=1;
+      ctx.strokeStyle=css('--line-strong','#D6D9EC'); ctx.lineWidth=1;
       for(var i=1;i<l;i++){ ctx.beginPath(); ctx.moveTo(rx+i*CELL,ry); ctx.lineTo(rx+i*CELL,ry+ph); ctx.stroke(); }
       for(var j=1;j<w;j++){ ctx.beginPath(); ctx.moveTo(rx,ry+j*CELL); ctx.lineTo(rx+pw,ry+j*CELL); ctx.stroke(); }
       ctx.strokeStyle=css('--subject-deep','#0B7E86'); ctx.lineWidth=2.5; ctx.strokeRect(rx,ry,pw,ph);
@@ -64,9 +64,6 @@ window.SIMS['perimeter'] = (function(){
       ctx.fillText(toAr(l)+' وحدة', rx+pw/2, ry-8);
       ctx.save(); ctx.translate(rx+pw+14, ry+ph/2); ctx.rotate(Math.PI/2); ctx.fillText(toAr(w)+' وحدة',0,0); ctx.restore();
     }
-    function color(v,a){ // تحويل var(...) غير ممكن؛ نُرجِع اللون كما هو مع ألفا عبر globalAlpha بديلًا — نستعمل اللون مباشرة
-      return v; }
-
     function refresh(){
       var l=+lIn.value, w=+wIn.value, per=2*(l+w), area=l*w;
       q('.js-lv').textContent=toAr(l); q('.js-wv').textContent=toAr(w);
