@@ -185,7 +185,12 @@ window.CURRICULUM = {
         { t:'Vocabulary — Jobs & Professions', tag:'مفردات', ref:'EN_SG2_U3_VOCAB' },
         { t:'Reading — Jobs and Employment in Saudi Arabia', tag:'قراءة', ref:'EN_SG2_U3_READ' }
       ]},
-      { t:'Favorite Pastimes', s:'الهوايات وتكرار الأنشطة', lessons:[] },
+      { t:'Favorite Pastimes', s:'الهوايات وتكرار الأنشطة', lessons:[
+        { t:'Grammar — How Often & Frequency', tag:'قواعد', ref:'EN_SG2_U4_FREQ' },
+        { t:'Grammar — Know How To & Gerunds', tag:'قواعد', ref:'EN_SG2_U4_KNOW' },
+        { t:'Vocabulary — Hobbies & Pastimes', tag:'مفردات', ref:'EN_SG2_U4_VOCAB' },
+        { t:'Reading — Sky High!', tag:'قراءة', ref:'EN_SG2_U4_READ' }
+      ]},
       { t:'Is There Any Ice Cream?', s:'الأطعمة والكميات', lessons:[] },
       { t:'What Was It Like?', s:'الزمن الماضي', lessons:[] },
       { t:'What Happened?', s:'سرد الأحداث والروابط', lessons:[] },
