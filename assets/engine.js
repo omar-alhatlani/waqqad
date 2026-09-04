@@ -45,7 +45,7 @@ window.Engine = (function(){
     if(!lesson.mathdir || typeof s!=='string' || s.indexOf('class="mx"')>-1) return s;
     return s.replace(/(<[^>]+>)|([^<]+)/g, function(_,tag,text){
       if(tag) return tag;
-      return text.replace(/[+\-−()|×÷=.,،٫…:/٠-٩س\s]*[٠-٩][+\-−()|×÷=.,،٫…:/٠-٩س\s]*/g, function(m){
+      return text.replace(/[+\-−()|×÷=.,،٫…√:/٠-٩س\s]*[٠-٩][+\-−()|×÷=.,،٫…√:/٠-٩س\s]*/g, function(m){
         return '<span class="mx">'+m+'</span>';
       });
     });
@@ -102,6 +102,21 @@ window.Engine = (function(){
     return out;
   }
 
+  /* مختبرٌ تفاعليّ اختياريّ — يُحقن أسفل القاعدة إن عرّف الدرس lesson.explore */
+  function exploreHTML(){
+    var e=lesson.explore;
+    if(!e || !window.SIMS || !window.SIMS[e.sim]) return '';
+    return '<div class="rule open"><div class="rh"><span class="tag">مختبر</span>'+
+      '<span class="rt">'+(e.title||'استكشف بنفسك')+'</span></div><div class="rc">'+
+      (e.hint?'<p class="intro">'+e.hint+'</p>':'')+
+      '<div id="engExplore"></div></div></div>';
+  }
+  function mountExplore(){
+    var e=lesson.explore;
+    if(!e || !window.SIMS || !window.SIMS[e.sim]) return;
+    var host=$('engExplore'); if(host){ try{ window.SIMS[e.sim].mount(host); }catch(err){} }
+  }
+
   /* شاشة القاعدة الإجبارية — تُعرض عند فتح الدرس قبل المراحل */
   function renderIntro(){
     G=null;
@@ -110,10 +125,12 @@ window.Engine = (function(){
       '<h2 class="h-title">'+lesson.title+'</h2>'+
       '<p class="h-sub">اقرأ القاعدة والأمثلة جيّدًا، ثم انتقل إلى المراحل.</p></div>'+
       ruleHTML()+
+      exploreHTML()+
       '<div class="lp-actions" style="justify-content:space-between;margin-top:18px">'+
       '<button class="btn ghost sm" id="engBackIntro">'+I.chev+' عودة إلى الدروس</button>'+
       '<button class="btn" id="engStartStages">فهمتُ — إلى المراحل '+I.chev+'</button></div>'+
       '</div>';
+    mountExplore();
     $('engBackIntro').onclick=function(){ if(opts.onExit) opts.onExit(); };
     $('engStartStages').onclick=function(){ renderMap(); };
     if(opts.scrollTop) opts.scrollTop();

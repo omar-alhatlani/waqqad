@@ -399,3 +399,63 @@ main{max-width:1080px;margin:0 auto;padding:26px 18px 40px}
   .tile{width:128px}
 }
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+/* ============================================================
+   محاكاة تفاعلية (مختبر) — تُحقن داخل شاشة القاعدة عبر المحرّك
+   تستعمل متغيّرات المادة (--subject) فتتلوّن بلون الدرس تلقائيًّا
+   ============================================================ */
+.wq-sim{--cold:var(--s-math);--cold-deep:var(--s-math-deep);margin-top:6px}
+.wq-lab{display:flex;flex-wrap:wrap;gap:14px}
+.wq-stage{flex:1 1 300px;display:flex;gap:12px;background:var(--surface-2);border:1px solid var(--line);border-radius:16px;padding:12px}
+.wq-beakerwrap{flex:1;min-width:0;display:flex;flex-direction:column;align-items:center;gap:9px}
+.wq-beaker{position:relative;width:100%;max-width:280px;aspect-ratio:300/360;
+  border:2px solid color-mix(in srgb,var(--subject) 55%,var(--line));
+  border-top:2px dashed color-mix(in srgb,var(--subject) 40%,var(--line));
+  border-radius:10px 10px 18px 18px;background:linear-gradient(180deg,transparent,color-mix(in srgb,var(--subject) 5%,transparent));overflow:hidden}
+.wq-canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+.wq-shine{position:absolute;top:8px;inset-inline-start:9px;width:20px;height:68%;border-radius:99px;
+  background:linear-gradient(180deg,rgba(255,255,255,.5),transparent 70%);opacity:.45;pointer-events:none}
+.wq-statecap{display:flex;align-items:center;gap:8px}
+.wq-statecap .wq-lbl{font-size:12.5px;color:var(--muted);font-weight:600}
+.wq-statecap .wq-val{font-family:var(--display);font-weight:900;font-size:21px;transition:color .3s}
+
+.wq-thermo{width:44px;display:flex;flex-direction:column;align-items:center;gap:7px;padding-top:2px}
+.wq-thermo .wq-tube{position:relative;flex:1;width:15px;border-radius:99px;background:var(--surface);border:1px solid var(--line-strong);overflow:hidden;min-height:190px}
+.wq-thermo .wq-merc{position:absolute;left:0;right:0;bottom:0;border-radius:99px;transition:height .25s,background .25s}
+.wq-thermo .wq-bulb{width:28px;height:28px;border-radius:50%;border:1px solid var(--line-strong);transition:background .25s;box-shadow:inset 0 -3px 6px rgba(0,0,0,.12)}
+.wq-thermo .wq-cap{font-size:14px}
+
+.wq-panel{flex:1 1 240px;display:flex;flex-direction:column;gap:12px}
+.wq-cardin{background:var(--surface-2);border:1px solid var(--line);border-radius:14px;padding:14px}
+.wq-ends{display:flex;justify-content:space-between;font-size:12px;font-weight:700;margin-bottom:7px;direction:ltr}
+.wq-ends .wq-cold{color:var(--cold-deep)}.wq-ends .wq-hot{color:var(--ember-deep)}
+.wq-range{-webkit-appearance:none;appearance:none;width:100%;height:12px;border-radius:99px;outline-offset:4px;direction:ltr;
+  background:linear-gradient(90deg,var(--cold) 0%,var(--cold) 30%,var(--subject) 30%,var(--subject) 62%,var(--ember) 62%,var(--ember-deep) 100%);
+  box-shadow:inset 0 1px 3px rgba(0,0,0,.15)}
+.wq-range::-webkit-slider-thumb{-webkit-appearance:none;width:26px;height:26px;border-radius:50%;background:#fff;border:3px solid var(--subject-deep);box-shadow:0 3px 8px rgba(0,0,0,.25);cursor:pointer}
+.wq-range::-moz-range-thumb{width:22px;height:22px;border-radius:50%;background:#fff;border:3px solid var(--subject-deep);box-shadow:0 3px 8px rgba(0,0,0,.25);cursor:pointer}
+.wq-marks{position:relative;height:15px;margin-top:3px;direction:ltr}
+.wq-marks span{position:absolute;transform:translateX(-50%);font-size:10.5px;font-weight:700;color:var(--muted);white-space:nowrap}
+.wq-marks span::before{content:"";position:absolute;top:-6px;left:50%;width:2px;height:5px;background:var(--line-strong)}
+.wq-btnrow{display:flex;gap:8px;margin-top:13px}
+.wq-tbtn{flex:1;border:0;border-radius:11px;padding:11px;font-family:var(--display);font-weight:800;font-size:14px;cursor:pointer;color:#fff;transition:.14s}
+.wq-tbtn:hover{transform:translateY(-2px)}.wq-tbtn:active{transform:none}
+.wq-tbtn.cool{background:linear-gradient(140deg,var(--cold),var(--cold-deep))}
+.wq-tbtn.heat{background:linear-gradient(140deg,var(--ember),var(--ember-deep))}
+.wq-quick{display:flex;gap:8px;margin-top:10px}
+.wq-qbtn{flex:1;border:1.5px solid var(--line-strong);background:var(--surface);border-radius:10px;padding:9px 4px;font-family:var(--ar);font-weight:700;font-size:13px;color:var(--ink-soft);cursor:pointer;transition:.14s}
+.wq-qbtn:hover{border-color:var(--subject);color:var(--subject-deep)}
+.wq-qbtn[aria-pressed=true]{background:var(--subject-soft);border-color:var(--subject);color:var(--subject-deep)}
+.wq-reads{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.wq-read{background:var(--surface-2);border:1px solid var(--line);border-radius:11px;padding:10px 12px}
+.wq-read .wq-k{font-size:11px;color:var(--muted);font-weight:600;margin-bottom:3px}
+.wq-read .wq-v{font-family:var(--display);font-weight:900;font-size:18px;font-variant-numeric:tabular-nums}
+.wq-read .wq-v small{font-size:11px;font-weight:700;color:var(--muted)}
+.wq-tools{display:flex;gap:8px}
+.wq-tool{flex:1;border:1.5px solid var(--line-strong);background:var(--surface);border-radius:10px;padding:9px;font-family:var(--ar);font-weight:700;font-size:13px;color:var(--ink-soft);cursor:pointer;transition:.14s}
+.wq-tool:hover{border-color:var(--subject);color:var(--subject-deep)}
+.wq-explainbox{flex:1 1 100%;background:var(--surface-2);border:1px solid var(--line);border-radius:14px;padding:15px 16px;display:flex;gap:13px;align-items:flex-start}
+.wq-explainbox .wq-ic{width:42px;height:42px;flex:0 0 42px;border-radius:12px;display:grid;place-items:center;transition:.3s;color:#fff}
+.wq-explainbox .wq-ic svg{width:23px;height:23px}
+.wq-explainbox .wq-tx b{font-family:var(--display);font-weight:800;font-size:15.5px;display:block;margin-bottom:3px;transition:color .3s}
+.wq-explainbox .wq-tx p{color:var(--ink-soft);font-size:13.5px;line-height:1.8}

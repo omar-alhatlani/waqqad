@@ -1,12 +1,13 @@
 /* عامل الخدمة — وقّاد
    يخزّن قشرة التطبيق ليعمل بلا إنترنت بعد أول زيارة.
    عند تعديل الملفّات: ارفع رقم النسخة CACHE لإجبار التحديث. */
-var CACHE = 'waqqad-v39';
+var CACHE = 'waqqad-v41';
 var ASSETS = [
   './',
   './index.html',
   './assets/styles.css',
   './assets/icons.js',
+  './assets/sims/states.js',
   './assets/engine.js',
   './assets/app.js',
   './assets/data/curriculum.js',
@@ -75,6 +76,13 @@ var ASSETS = [
   './assets/data/ar-math-g2-u1-pattern.js',
   './assets/data/ar-math-g2-u1-powers.js',
   './assets/data/ar-math-g2-u1-scientific.js',
+  './assets/data/ar-math-g2-u2-sqrt.js',
+  './assets/data/ar-math-g2-u2-estimate.js',
+  './assets/data/ar-math-g2-u2-venn.js',
+  './assets/data/ar-math-g2-u2-real.js',
+  './assets/data/ar-math-g2-u2-pythagoras.js',
+  './assets/data/ar-math-g2-u2-pythapp.js',
+  './assets/data/ar-math-g2-u2-distance.js',
   './assets/data/ar-math-u1-order.js',
   './assets/data/ar-math-u1-steps.js',
   './assets/data/ar-math-u1-powers.js',
