@@ -1,7 +1,7 @@
 /* عامل الخدمة — وقّاد
    يخزّن قشرة التطبيق ليعمل بلا إنترنت بعد أول زيارة.
    عند تعديل الملفّات: ارفع رقم النسخة CACHE لإجبار التحديث. */
-var CACHE = 'waqqad-v43';
+var CACHE = 'waqqad-v44';
 var ASSETS = [
   './',
   './index.html',
@@ -97,6 +97,14 @@ var ASSETS = [
   './assets/data/ar-math-g2-u4-find.js',
   './assets/data/ar-math-g2-u4-solve.js',
   './assets/data/ar-math-g2-u4-change.js',
+  './assets/data/ar-math-g2-u5-angles.js',
+  './assets/data/ar-math-g2-u5-parallel.js',
+  './assets/data/ar-math-g2-u5-polygon.js',
+  './assets/data/ar-math-g2-u5-congruent.js',
+  './assets/data/ar-math-g2-u5-reflect.js',
+  './assets/data/ar-math-g2-u5-translate.js',
+  './assets/data/ar-math-g2-u5-rotate.js',
+  './assets/data/ar-math-g2-u5-symmetry.js',
   './assets/data/ar-math-u1-order.js',
   './assets/data/ar-math-u1-steps.js',
   './assets/data/ar-math-u1-powers.js',
@@ -141,6 +149,7 @@ var ASSETS = [
   './assets/data/ar-sci-u5-rocks.js',
   './assets/data/ar-sci-u6-plates.js',
   './assets/data/ar-sci-u6-erosion.js',
+  './assets/data/ar-sci-g3-u1-ohm.js',
   './icons/icon.svg',
   './manifest.webmanifest'
 ];

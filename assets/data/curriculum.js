@@ -161,6 +161,11 @@ window.CURRICULUM = {
         { t:'التجوية والتعرية وأثرهما', tag:'مفاهيم', ref:'SCI_G1_U6_EROSION' }
       ]}
     ]},
+    'g3.s2.sci':{ eyebrow:'علوم · الثالث متوسط', units:[
+      { t:'الكهرباء', s:'الوحدة الأولى · قانون أوم', lessons:[
+        { t:'الدائرة الكهربائية وقانون أوم', tag:'مفاهيم', ref:'SCI_G3_U1_OHM' }
+      ]}
+    ]},
     'g2.s1.ar':{ eyebrow:'لغتي الخالدة · الثاني متوسط', units:[
       { t:'التقنيات', s:'الدروس اللغوية للوحدة الأولى', lessons:[
         { t:'الصنف اللغوي — الظرف', tag:'صنف لغوي', ref:'AR_LUGHATI_G2_U1_THARF' },
@@ -219,7 +224,16 @@ window.CURRICULUM = {
         { t:'مسائل النسبة المئوية', tag:'نسبة', ref:'MATH_G2_U4_SOLVE' },
         { t:'التغيّر المئويّ', tag:'نسبة', ref:'MATH_G2_U4_CHANGE' }
       ]},
-      { t:'الهندسة والتحويلات', s:'الفصل الخامس', lessons:[] }
+      { t:'الهندسة والتحويلات', s:'الفصل الخامس', lessons:[
+        { t:'الزوايا وعلاقاتها', tag:'هندسة', ref:'MATH_G2_U5_ANGLES' },
+        { t:'الزوايا والمستقيمات المتوازية', tag:'هندسة', ref:'MATH_G2_U5_PARALLEL' },
+        { t:'مجموع زوايا المضلّع', tag:'هندسة', ref:'MATH_G2_U5_POLYGON' },
+        { t:'المضلّعات المتطابقة', tag:'هندسة', ref:'MATH_G2_U5_CONGRUENT' },
+        { t:'الانعكاس', tag:'تحويلات', ref:'MATH_G2_U5_REFLECT' },
+        { t:'الانسحاب', tag:'تحويلات', ref:'MATH_G2_U5_TRANSLATE' },
+        { t:'الدوران', tag:'تحويلات', ref:'MATH_G2_U5_ROTATE' },
+        { t:'التماثل', tag:'تحويلات', ref:'MATH_G2_U5_SYMMETRY' }
+      ]}
     ]}
   }
 };
@@ -228,5 +242,5 @@ window.CURRICULUM = {
 window.TAG_ICON = {
   'قواعد':'pen','نحو':'pen','مفردات':'book','إملاء':'pen','استماع':'ear',
   'قراءة':'read','مفاهيم':'book','عمليات':'math','أحياء':'sci',
-  'أعداد':'math','مهارة':'target','هندسة':'target','تناسب':'math','تشابه':'target','نسبة':'math'
+  'أعداد':'math','مهارة':'target','هندسة':'target','تناسب':'math','تشابه':'target','نسبة':'math','تحويلات':'target'
 };
