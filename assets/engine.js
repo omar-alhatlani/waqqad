@@ -45,7 +45,7 @@ window.Engine = (function(){
     if(!lesson.mathdir || typeof s!=='string' || s.indexOf('class="mx"')>-1) return s;
     return s.replace(/(<[^>]+>)|([^<]+)/g, function(_,tag,text){
       if(tag) return tag;
-      return text.replace(/[+\-−()|×÷=.,،٫…√:/٠-٩س\s]*[٠-٩][+\-−()|×÷=.,،٫…√:/٠-٩س\s]*/g, function(m){
+      return text.replace(/[+\-−()|×÷=≈.,،٫…√٪:/٠-٩س\s]*[٠-٩][+\-−()|×÷=≈.,،٫…√٪:/٠-٩س\s]*/g, function(m){
         return '<span class="mx">'+m+'</span>';
       });
     });
