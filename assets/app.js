@@ -76,7 +76,10 @@ window.BRAND = {
     C.subjects.forEach(function(sub){
       var el=document.createElement('button'); el.className='card subject-card';
       el.style.setProperty('--sc','var('+sub.c+')'); el.style.setProperty('--scd','var('+sub.cd+')'); el.style.setProperty('--scs','var('+sub.cs+')');
-      el.innerHTML='<div class="top"><div class="badge">'+I[sub.icon]+'</div><span class="arrow">'+I.chev+'</span></div><h3>'+sub.name+'</h3><div class="desc en">'+sub.en+'</div><span class="pill">'+sub.units+' وحدات دراسية</span>';
+      /* عددُ الوحدات من محتوى الصفّ/الفصل الحاليّ إن وُجد، وإلّا العددُ العامّ للمادة */
+      var ck=state.grade.id+'.'+state.sem.id+'.'+sub.id;
+      var uCount=(C.content[ck]&&C.content[ck].units)?C.content[ck].units.length:sub.units;
+      el.innerHTML='<div class="top"><div class="badge">'+I[sub.icon]+'</div><span class="arrow">'+I.chev+'</span></div><h3>'+sub.name+'</h3><div class="desc en">'+sub.en+'</div><span class="pill">'+uCount+' وحدات دراسية</span>';
       el.onclick=function(){ state.subject=sub; state.unit=null; openSubject(sub); };
       w.appendChild(el);
     });
