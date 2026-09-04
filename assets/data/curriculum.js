@@ -197,7 +197,12 @@ window.CURRICULUM = {
         { t:'Vocabulary — Food & Ordering', tag:'مفردات', ref:'EN_SG2_U5_VOCAB' },
         { t:'Reading — Globalization of Foods', tag:'قراءة', ref:'EN_SG2_U5_READ' }
       ]},
-      { t:'What Was It Like?', s:'الزمن الماضي', lessons:[] },
+      { t:'What Was It Like?', s:'الزمن الماضي', lessons:[
+        { t:'Grammar — Simple Past of Be (was/were)', tag:'قواعد', ref:'EN_SG2_U6_WAS' },
+        { t:'Grammar — Simple Past (Regular & Irregular)', tag:'قواعد', ref:'EN_SG2_U6_PAST' },
+        { t:'Vocabulary — Museums & Describing', tag:'مفردات', ref:'EN_SG2_U6_VOCAB' },
+        { t:'Reading — Art of the Pen: Arabic Calligraphy', tag:'قراءة', ref:'EN_SG2_U6_READ' }
+      ]},
       { t:'What Happened?', s:'سرد الأحداث والروابط', lessons:[] },
       { t:'What’s Wrong?', s:'الصحة والنصائح', lessons:[] }
     ]},
