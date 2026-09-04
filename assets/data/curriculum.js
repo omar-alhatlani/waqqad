@@ -179,7 +179,12 @@ window.CURRICULUM = {
         { t:'Vocabulary — Prepositions of Place', tag:'مفردات', ref:'EN_SG2_U2_PREP' },
         { t:'Reading — E-Learning Is Easy!', tag:'قراءة', ref:'EN_SG2_U2_READ' }
       ]},
-      { t:'Who’s Who', s:'المهن والأهداف المهنية', lessons:[] },
+      { t:'Who’s Who', s:'المهن والأهداف المهنية', lessons:[
+        { t:'Grammar — Simple Present & Wh- Questions', tag:'قواعد', ref:'EN_SG2_U3_PRESENT' },
+        { t:'Grammar — Relative Pronouns (who/that/which)', tag:'قواعد', ref:'EN_SG2_U3_REL' },
+        { t:'Vocabulary — Jobs & Professions', tag:'مفردات', ref:'EN_SG2_U3_VOCAB' },
+        { t:'Reading — Jobs and Employment in Saudi Arabia', tag:'قراءة', ref:'EN_SG2_U3_READ' }
+      ]},
       { t:'Favorite Pastimes', s:'الهوايات وتكرار الأنشطة', lessons:[] },
       { t:'Is There Any Ice Cream?', s:'الأطعمة والكميات', lessons:[] },
       { t:'What Was It Like?', s:'الزمن الماضي', lessons:[] },
