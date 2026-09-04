@@ -85,14 +85,14 @@ window.SIMS['coord'] = (function(){
       // النقطة
       ctx.fillStyle=css('--ember','#F2892E'); ctx.beginPath(); ctx.arc(sx,sy,6,0,6.2832); ctx.fill();
       ctx.fillStyle='#fff'; ctx.beginPath(); ctx.arc(sx-1.6,sy-1.8,2,0,6.2832); ctx.fill();
-      ctx.fillStyle=css('--ink','#1C2143'); ctx.font='800 12px Cairo,sans-serif'; ctx.textAlign='center';
-      ctx.fillText('('+sig(x)+'، '+sig(y)+')', sx, sy>OY? sy+18 : sy-11);
+      ctx.save(); ctx.fillStyle=css('--ink','#1C2143'); ctx.font='800 12px Cairo,sans-serif'; ctx.textAlign='center'; ctx.direction='ltr';
+      ctx.fillText('('+sig(x)+'، '+sig(y)+')', sx, sy>OY? sy+18 : sy-11); ctx.restore();
     }
     function refresh(){
       var x=+xIn.value, y=+yIn.value;
       q('.js-xv').textContent=sig(x); q('.js-yv').textContent=sig(y);
       q('.js-rx').textContent=sig(x); q('.js-ry').textContent=sig(y);
-      q('.js-pt').textContent='('+sig(x)+'، '+sig(y)+')';
+      q('.js-pt').innerHTML='(<bdi>'+sig(x)+'</bdi>، <bdi>'+sig(y)+'</bdi>)';
       var r=region(x,y), I=INFO[r];
       elReg.textContent=I.ar; elReg.style.color=I.col;
       if(r!==cur){ cur=r;
@@ -102,9 +102,9 @@ window.SIMS['coord'] = (function(){
     }
     xIn.addEventListener('input', refresh); yIn.addEventListener('input', refresh);
     q('.js-reset').onclick=function(){ xIn.value=3; yIn.value=2; refresh(); };
-    q('.js-pt').style.direction='ltr';
+    ['.js-xv','.js-yv','.js-rx','.js-ry','.js-pt'].forEach(function(s){ var e=q(s); if(e){ e.style.direction='ltr'; e.style.unicodeBidi='isolate'; } });
     fit(); refresh();
-    window.addEventListener('resize', fit);
+    window.addEventListener('resize', function(){ fit(); refresh(); });
     return { destroy:function(){} };
   }
   return { mount:mount };

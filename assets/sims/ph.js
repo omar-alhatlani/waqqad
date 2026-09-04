@@ -105,7 +105,7 @@ window.SIMS['ph'] = (function(){
     q('.js-reset').onclick=function(){ pIn.value=7; refresh(); };
 
     fit(); refresh();
-    window.addEventListener('resize', fit);
+    window.addEventListener('resize', function(){ fit(); refresh(); });
     return { destroy:function(){} };
   }
   return { mount:mount };
