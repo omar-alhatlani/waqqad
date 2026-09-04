@@ -209,7 +209,12 @@ window.CURRICULUM = {
         { t:'Vocabulary — Feelings & Events', tag:'مفردات', ref:'EN_SG2_U7_VOCAB' },
         { t:'Reading — So You Want to Be Cool', tag:'قراءة', ref:'EN_SG2_U7_READ' }
       ]},
-      { t:'What’s Wrong?', s:'الصحة والنصائح', lessons:[] }
+      { t:'What’s Wrong?', s:'الصحة والنصائح', lessons:[
+        { t:'Grammar — Should/Shouldn’t & When', tag:'قواعد', ref:'EN_SG2_U8_SHOULD' },
+        { t:'Grammar — Pronouns & Possessives', tag:'قواعد', ref:'EN_SG2_U8_PRON' },
+        { t:'Vocabulary — Health & Body', tag:'مفردات', ref:'EN_SG2_U8_VOCAB' },
+        { t:'Reading — Cold or the Flu?', tag:'قراءة', ref:'EN_SG2_U8_READ' }
+      ]}
     ]},
     'g2.s1.sci':{ eyebrow:'علوم · الثاني متوسط', units:[
       { t:'طبيعة العلم', s:'الوحدة ١ · دراسة المادة', lessons:[
