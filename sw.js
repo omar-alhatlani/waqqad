@@ -1,7 +1,7 @@
 /* عامل الخدمة — وقّاد
    يخزّن قشرة التطبيق ليعمل بلا إنترنت بعد أول زيارة.
    عند تعديل الملفّات: ارفع رقم النسخة CACHE لإجبار التحديث. */
-var CACHE = 'waqqad-v38';
+var CACHE = 'waqqad-v39';
 var ASSETS = [
   './',
   './index.html',
@@ -70,6 +70,11 @@ var ASSETS = [
   './assets/data/ar-math-g2-u1-compare.js',
   './assets/data/ar-math-g2-u1-multiply.js',
   './assets/data/ar-math-g2-u1-divide.js',
+  './assets/data/ar-math-g2-u1-addsame.js',
+  './assets/data/ar-math-g2-u1-adddiff.js',
+  './assets/data/ar-math-g2-u1-pattern.js',
+  './assets/data/ar-math-g2-u1-powers.js',
+  './assets/data/ar-math-g2-u1-scientific.js',
   './assets/data/ar-math-u1-order.js',
   './assets/data/ar-math-u1-steps.js',
   './assets/data/ar-math-u1-powers.js',
