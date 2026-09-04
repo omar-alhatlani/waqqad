@@ -1,7 +1,7 @@
 /* عامل الخدمة — وقّاد
    يخزّن قشرة التطبيق ليعمل بلا إنترنت بعد أول زيارة.
    عند تعديل الملفّات: ارفع رقم النسخة CACHE لإجبار التحديث. */
-var CACHE = 'waqqad-v57';
+var CACHE = 'waqqad-v58';
 var ASSETS = [
   './',
   './index.html',
@@ -12,6 +12,10 @@ var ASSETS = [
   './assets/sims/newton.js',
   './assets/sims/density.js',
   './assets/sims/atom.js',
+  './assets/sims/motion.js',
+  './assets/sims/lever.js',
+  './assets/sims/ph.js',
+  './assets/sims/coord.js',
   './assets/engine.js',
   './assets/app.js',
   './assets/data/curriculum.js',
@@ -103,6 +107,18 @@ var ASSETS = [
   './assets/data/ar-lughati-g2-u3-mafool.js',
   './assets/data/ar-lughati-g2-u3-tawkid.js',
   './assets/data/ar-lughati-g2-u3-hamza.js',
+  './assets/data/ar-lughati-g3-u1-fail.js',
+  './assets/data/ar-lughati-g3-u1-haal.js',
+  './assets/data/ar-lughati-g3-u1-qasam.js',
+  './assets/data/ar-lughati-g3-u1-alif.js',
+  './assets/data/ar-lughati-g3-u2-mafool.js',
+  './assets/data/ar-lughati-g3-u2-tamyiz.js',
+  './assets/data/ar-lughati-g3-u2-shart.js',
+  './assets/data/ar-lughati-g3-u2-alif2.js',
+  './assets/data/ar-lughati-g3-u3-mubalagha.js',
+  './assets/data/ar-lughati-g3-u3-mustathna.js',
+  './assets/data/ar-lughati-g3-u3-tafdil.js',
+  './assets/data/ar-lughati-g3-u3-mawsula.js',
   './assets/data/ar-math-g2-u1-rational.js',
   './assets/data/ar-math-g2-u1-compare.js',
   './assets/data/ar-math-g2-u1-multiply.js',

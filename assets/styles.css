@@ -488,3 +488,7 @@ main{max-width:1080px;margin:0 auto;padding:26px 18px 40px}
 .wq-stepbtn:hover:not(:disabled){border-color:var(--subject);color:var(--subject-deep)}
 .wq-stepbtn:disabled{opacity:.38;cursor:not-allowed}
 .wq-stepctl b{min-width:26px;text-align:center;font-family:var(--display);font-weight:900;font-size:17px;font-variant-numeric:tabular-nums}
+
+/* ---- مقياس الأس الهيدروجيني (pH) ---- */
+.wq-range.ph{background:linear-gradient(90deg,#D62828 0%,#E6853C 28%,#E6C83C 43%,#46B45A 50%,#28A89E 57%,#3A6ED2 72%,#6C48BE 86%,#9646AA 100%)}
+.wq-phscale{display:flex;justify-content:space-between;font-size:10.5px;font-weight:700;color:var(--muted);margin-top:4px;direction:ltr}
