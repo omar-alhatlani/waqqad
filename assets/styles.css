@@ -469,8 +469,8 @@ main{max-width:1080px;margin:0 auto;padding:26px 18px 40px}
 .wq-sllabel{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:7px;font-size:13px;font-weight:600;color:var(--ink-soft)}
 .wq-sllabel b{font-family:var(--display);font-weight:800;font-size:14px;color:var(--subject-deep)}
 .wq-sllabel b span{font-variant-numeric:tabular-nums}
-.wq-range.volt{background:linear-gradient(90deg,color-mix(in srgb,var(--ember) 30%,transparent),var(--ember))}
-.wq-range.res{background:linear-gradient(90deg,color-mix(in srgb,var(--subject) 22%,transparent),var(--subject))}
+.wq-range.volt,.wq-range.warm{background:linear-gradient(90deg,color-mix(in srgb,var(--ember) 30%,transparent),var(--ember))}
+.wq-range.res,.wq-range.cool{background:linear-gradient(90deg,color-mix(in srgb,var(--subject) 22%,transparent),var(--subject))}
 .wq-eq{margin-top:14px;background:var(--subject-soft);border:1px solid color-mix(in srgb,var(--subject) 26%,transparent);
   border-radius:12px;padding:11px 13px;text-align:center}
 .wq-eq .wq-eqt{display:block;font-size:12px;font-weight:700;color:var(--subject-deep);margin-bottom:5px}
