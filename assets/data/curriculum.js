@@ -173,7 +173,12 @@ window.CURRICULUM = {
         { t:'Vocabulary — التحية والتعارف', tag:'مفردات', ref:'EN_SG2_U1_VOCAB' },
         { t:'Reading — The Place to Stay', tag:'قراءة', ref:'EN_SG2_U1_READ' }
       ]},
-      { t:'What Are They Making?', s:'المضارع المستمر والأوامر', lessons:[] },
+      { t:'What Are They Making?', s:'المضارع المستمر والأوامر', lessons:[
+        { t:'Grammar — Present Progressive', tag:'قواعد', ref:'EN_SG2_U2_PROG' },
+        { t:'Grammar — Imperatives', tag:'قواعد', ref:'EN_SG2_U2_IMP' },
+        { t:'Vocabulary — Prepositions of Place', tag:'مفردات', ref:'EN_SG2_U2_PREP' },
+        { t:'Reading — E-Learning Is Easy!', tag:'قراءة', ref:'EN_SG2_U2_READ' }
+      ]},
       { t:'Who’s Who', s:'المهن والأهداف المهنية', lessons:[] },
       { t:'Favorite Pastimes', s:'الهوايات وتكرار الأنشطة', lessons:[] },
       { t:'Is There Any Ice Cream?', s:'الأطعمة والكميات', lessons:[] },

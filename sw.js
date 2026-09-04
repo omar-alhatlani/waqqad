@@ -1,7 +1,7 @@
 /* عامل الخدمة — وقّاد
    يخزّن قشرة التطبيق ليعمل بلا إنترنت بعد أول زيارة.
    عند تعديل الملفّات: ارفع رقم النسخة CACHE لإجبار التحديث. */
-var CACHE = 'waqqad-v50';
+var CACHE = 'waqqad-v51';
 var ASSETS = [
   './',
   './index.html',
@@ -11,6 +11,7 @@ var ASSETS = [
   './assets/sims/circuit.js',
   './assets/sims/newton.js',
   './assets/sims/density.js',
+  './assets/sims/atom.js',
   './assets/engine.js',
   './assets/app.js',
   './assets/data/curriculum.js',
@@ -50,6 +51,10 @@ var ASSETS = [
   './assets/data/en-sg2-u1-whq.js',
   './assets/data/en-sg2-u1-vocab.js',
   './assets/data/en-sg2-u1-read.js',
+  './assets/data/en-sg2-u2-prog.js',
+  './assets/data/en-sg2-u2-imp.js',
+  './assets/data/en-sg2-u2-prep.js',
+  './assets/data/en-sg2-u2-read.js',
   './assets/data/ar-lughati-g1-u1.js',
   './assets/data/ar-lughati-u1-hamza.js',
   './assets/data/ar-lughati-u1-amr.js',

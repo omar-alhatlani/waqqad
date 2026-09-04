@@ -476,3 +476,15 @@ main{max-width:1080px;margin:0 auto;padding:26px 18px 40px}
 .wq-eq .wq-eqt{display:block;font-size:12px;font-weight:700;color:var(--subject-deep);margin-bottom:5px}
 .wq-eq .wq-eqv{direction:ltr;font-family:var(--display);font-weight:900;font-size:19px;color:var(--ink);font-variant-numeric:tabular-nums}
 .wq-eq .wq-eqv .js-eq{color:var(--subject-deep)}
+
+/* ---- أزرار العدّ (بناء الذرّة) ---- */
+.wq-step{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.wq-step:last-child{margin-bottom:0}
+.wq-stepdot{width:12px;height:12px;border-radius:50%;flex:0 0 12px}
+.wq-steplbl{flex:1;font-size:13px;font-weight:700;color:var(--ink-soft);min-width:0}
+.wq-steplbl small{font-weight:600;color:var(--muted);font-size:11px}
+.wq-stepctl{display:flex;align-items:center;gap:8px;flex:0 0 auto}
+.wq-stepbtn{width:30px;height:30px;border-radius:9px;border:1.5px solid var(--line-strong);background:var(--surface);color:var(--ink);font-size:18px;font-weight:800;cursor:pointer;line-height:1;display:grid;place-items:center;font-family:var(--display);transition:.14s}
+.wq-stepbtn:hover:not(:disabled){border-color:var(--subject);color:var(--subject-deep)}
+.wq-stepbtn:disabled{opacity:.38;cursor:not-allowed}
+.wq-stepctl b{min-width:26px;text-align:center;font-family:var(--display);font-weight:900;font-size:17px;font-variant-numeric:tabular-nums}
