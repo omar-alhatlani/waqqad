@@ -166,6 +166,21 @@ window.CURRICULUM = {
         { t:'الدائرة الكهربائية وقانون أوم', tag:'مفاهيم', ref:'SCI_G3_U1_OHM' }
       ]}
     ]},
+    'g2.s1.en':{ eyebrow:'English · Super Goal 2', units:[
+      { t:'Are You Here on Vacation?', s:'التحية والتعارف والاتجاهات', lessons:[
+        { t:'Grammar — الفعل be: الأسئلة والإجابات القصيرة', tag:'قواعد', ref:'EN_SG2_U1_BE' },
+        { t:'Grammar — أسئلة الاستفهام (Wh-)', tag:'قواعد', ref:'EN_SG2_U1_WHQ' },
+        { t:'Vocabulary — التحية والتعارف', tag:'مفردات', ref:'EN_SG2_U1_VOCAB' },
+        { t:'Reading — The Place to Stay', tag:'قراءة', ref:'EN_SG2_U1_READ' }
+      ]},
+      { t:'What Are They Making?', s:'المضارع المستمر والأوامر', lessons:[] },
+      { t:'Who’s Who', s:'المهن والأهداف المهنية', lessons:[] },
+      { t:'Favorite Pastimes', s:'الهوايات وتكرار الأنشطة', lessons:[] },
+      { t:'Is There Any Ice Cream?', s:'الأطعمة والكميات', lessons:[] },
+      { t:'What Was It Like?', s:'الزمن الماضي', lessons:[] },
+      { t:'What Happened?', s:'سرد الأحداث والروابط', lessons:[] },
+      { t:'What’s Wrong?', s:'الصحة والنصائح', lessons:[] }
+    ]},
     'g2.s1.sci':{ eyebrow:'علوم · الثاني متوسط', units:[
       { t:'طبيعة العلم', s:'الوحدة ١ · دراسة المادة', lessons:[
         { t:'أسلوب العلم', tag:'مفاهيم', ref:'SCI_G2_U1_METHOD' },
