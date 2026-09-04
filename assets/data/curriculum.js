@@ -203,7 +203,12 @@ window.CURRICULUM = {
         { t:'Vocabulary — Museums & Describing', tag:'مفردات', ref:'EN_SG2_U6_VOCAB' },
         { t:'Reading — Art of the Pen: Arabic Calligraphy', tag:'قراءة', ref:'EN_SG2_U6_READ' }
       ]},
-      { t:'What Happened?', s:'سرد الأحداث والروابط', lessons:[] },
+      { t:'What Happened?', s:'سرد الأحداث والروابط', lessons:[
+        { t:'Grammar — There Was/Were + Ago', tag:'قواعد', ref:'EN_SG2_U7_THERE' },
+        { t:'Grammar — Pronouns & Conjunctions', tag:'قواعد', ref:'EN_SG2_U7_PRON' },
+        { t:'Vocabulary — Feelings & Events', tag:'مفردات', ref:'EN_SG2_U7_VOCAB' },
+        { t:'Reading — So You Want to Be Cool', tag:'قراءة', ref:'EN_SG2_U7_READ' }
+      ]},
       { t:'What’s Wrong?', s:'الصحة والنصائح', lessons:[] }
     ]},
     'g2.s1.sci':{ eyebrow:'علوم · الثاني متوسط', units:[
