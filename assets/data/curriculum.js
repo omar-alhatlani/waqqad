@@ -252,6 +252,44 @@ window.CURRICULUM = {
         { t:'الدائرة الكهربائية وقانون أوم', tag:'مفاهيم', ref:'SCI_G3_U1_OHM' }
       ]}
     ]},
+    'g3.s1.en':{ eyebrow:'English · Super Goal 3', units:[
+      { t:'Lifestyles', s:'العادات والروتين والتكرار', lessons:[
+        { t:'Grammar — المضارع البسيط (العادات)', tag:'قواعد', ref:'EN_SG3_U1_PRESENT' },
+        { t:'Grammar — ظروف التكرار وأسئلة How often', tag:'قواعد', ref:'EN_SG3_U1_FREQ' },
+        { t:'Vocabulary — أنماط الحياة والهوايات', tag:'مفردات', ref:'EN_SG3_U1_VOCAB' },
+        { t:'Reading — A Healthy Lifestyle?', tag:'قراءة', ref:'EN_SG3_U1_READ' }
+      ]},
+      { t:'Life Stories', s:'الماضي والسِّيَر الذاتية', lessons:[
+        { t:'Grammar — الماضي البسيط', tag:'قواعد', ref:'EN_SG3_U2_PAST' },
+        { t:'Grammar — used to وbe born والمبني للمجهول', tag:'قواعد', ref:'EN_SG3_U2_USEDTO' },
+        { t:'Vocabulary — أحداث الحياة والسِّيَر', tag:'مفردات', ref:'EN_SG3_U2_VOCAB' },
+        { t:'Reading — The King of Saudi Arabia', tag:'قراءة', ref:'EN_SG3_U2_READ' }
+      ]},
+      { t:'When Are You Traveling?', s:'السفر والمستقبل', lessons:[
+        { t:'Grammar — المستقبل: going to وwill', tag:'قواعد', ref:'EN_SG3_U3_FUTURE' },
+        { t:'Grammar — مصدر الغرض وحروف الجرّ', tag:'قواعد', ref:'EN_SG3_U3_TIME' },
+        { t:'Vocabulary — السفر الجوّيّ', tag:'مفردات', ref:'EN_SG3_U3_VOCAB' },
+        { t:'Reading — Study Arabic in Saudi Arabia', tag:'قراءة', ref:'EN_SG3_U3_READ' }
+      ]},
+      { t:'What Do I Need to Buy?', s:'الطعام والكمّيات', lessons:[
+        { t:'Grammar — عبارات الكمّية وsomething/anything', tag:'قواعد', ref:'EN_SG3_U4_QTY' },
+        { t:'Grammar — كلمات التسلسل والانعكاسيّة وbecause/so', tag:'قواعد', ref:'EN_SG3_U4_SEQ' },
+        { t:'Vocabulary — الأطعمة والطهي', tag:'مفردات', ref:'EN_SG3_U4_VOCAB' },
+        { t:'Reading — Foods from the Americas', tag:'قراءة', ref:'EN_SG3_U4_READ' }
+      ]},
+      { t:'Since When?', s:'المضارع التامّ والاختراعات', lessons:[
+        { t:'Grammar — المضارع التامّ مقابل الماضي (for/since)', tag:'قواعد', ref:'EN_SG3_U5_PERFECT' },
+        { t:'Grammar — المبني للمجهول', tag:'قواعد', ref:'EN_SG3_U5_PASSIVE' },
+        { t:'Vocabulary — الاختراعات والتقنية', tag:'مفردات', ref:'EN_SG3_U5_VOCAB' },
+        { t:'Reading — A History of Special Effects', tag:'قراءة', ref:'EN_SG3_U5_READ' }
+      ]},
+      { t:'Do You Know Where It Is?', s:'المقارنة ووصف الأماكن', lessons:[
+        { t:'Grammar — المقارنة والتفضيل وas...as', tag:'قواعد', ref:'EN_SG3_U6_COMPARE' },
+        { t:'Grammar — الأسئلة غير المباشرة وأداة التعريف', tag:'قواعد', ref:'EN_SG3_U6_INDIRECT' },
+        { t:'Vocabulary — جودة الحياة والأماكن', tag:'مفردات', ref:'EN_SG3_U6_VOCAB' },
+        { t:'Reading — Do You Know Where This Place Is?', tag:'قراءة', ref:'EN_SG3_U6_READ' }
+      ]}
+    ]},
     'g2.s1.en':{ eyebrow:'English · Super Goal 2', units:[
       { t:'Are You Here on Vacation?', s:'التحية والتعارف والاتجاهات', lessons:[
         { t:'Grammar — الفعل be: الأسئلة والإجابات القصيرة', tag:'قواعد', ref:'EN_SG2_U1_BE' },
