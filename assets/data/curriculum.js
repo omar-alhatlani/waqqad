@@ -191,7 +191,12 @@ window.CURRICULUM = {
         { t:'Vocabulary — Hobbies & Pastimes', tag:'مفردات', ref:'EN_SG2_U4_VOCAB' },
         { t:'Reading — Sky High!', tag:'قراءة', ref:'EN_SG2_U4_READ' }
       ]},
-      { t:'Is There Any Ice Cream?', s:'الأطعمة والكميات', lessons:[] },
+      { t:'Is There Any Ice Cream?', s:'الأطعمة والكميات', lessons:[
+        { t:'Grammar — Count/Noncount & Some/Any', tag:'قواعد', ref:'EN_SG2_U5_QTY' },
+        { t:'Grammar — Partitives & Too/Enough', tag:'قواعد', ref:'EN_SG2_U5_TOOENOUGH' },
+        { t:'Vocabulary — Food & Ordering', tag:'مفردات', ref:'EN_SG2_U5_VOCAB' },
+        { t:'Reading — Globalization of Foods', tag:'قراءة', ref:'EN_SG2_U5_READ' }
+      ]},
       { t:'What Was It Like?', s:'الزمن الماضي', lessons:[] },
       { t:'What Happened?', s:'سرد الأحداث والروابط', lessons:[] },
       { t:'What’s Wrong?', s:'الصحة والنصائح', lessons:[] }
