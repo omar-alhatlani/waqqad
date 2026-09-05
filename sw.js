@@ -1,7 +1,7 @@
 /* عامل الخدمة — وقّاد
    يخزّن قشرة التطبيق ليعمل بلا إنترنت بعد أول زيارة.
    عند تعديل الملفّات: ارفع رقم النسخة CACHE لإجبار التحديث. */
-var CACHE = 'waqqad-v76';
+var CACHE = 'waqqad-v77';
 var ASSETS = [
   './',
   './index.html',
@@ -542,7 +542,6 @@ var ASSETS = [
   './assets/data/ar-sci-g2-u12-waves.js',
   './assets/data/ar-sci-g2-u12-sound.js',
   './assets/data/ar-sci-g2-u12-light.js',
-  './assets/data/ar-sci-g3-u1-ohm.js',
   './assets/data/ar-sci-g3s1-u1-method.js',
   './assets/data/ar-sci-g3s1-u1-work.js',
   './assets/data/ar-sci-g3s1-u1-society.js',
@@ -558,6 +557,19 @@ var ASSETS = [
   './assets/data/ar-sci-g3s1-u6-periodic.js',
   './assets/data/ar-sci-g3s1-u6-representative.js',
   './assets/data/ar-sci-g3s1-u6-transition.js',
+  './assets/data/ar-sci-g3s2-u7-atoms.js',
+  './assets/data/ar-sci-g3s2-u7-bonds.js',
+  './assets/data/ar-sci-g3s2-u8-equations.js',
+  './assets/data/ar-sci-g3s2-u8-rates.js',
+  './assets/data/ar-sci-g3s2-u9-motion.js',
+  './assets/data/ar-sci-g3s2-u9-acceleration.js',
+  './assets/data/ar-sci-g3s2-u9-momentum.js',
+  './assets/data/ar-sci-g3s2-u10-newton12.js',
+  './assets/data/ar-sci-g3s2-u10-newton3.js',
+  './assets/data/ar-sci-g3s2-u11-current.js',
+  './assets/data/ar-sci-g3s2-u11-circuits.js',
+  './assets/data/ar-sci-g3s2-u12-magnets.js',
+  './assets/data/ar-sci-g3s2-u12-electromag.js',
   './icons/icon.svg',
   './manifest.webmanifest'
 ];
