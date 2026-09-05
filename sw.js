@@ -1,7 +1,7 @@
 /* عامل الخدمة — وقّاد
    يخزّن قشرة التطبيق ليعمل بلا إنترنت بعد أول زيارة.
    عند تعديل الملفّات: ارفع رقم النسخة CACHE لإجبار التحديث. */
-var CACHE = 'waqqad-v68';
+var CACHE = 'waqqad-v69';
 var ASSETS = [
   './',
   './index.html',
@@ -256,6 +256,18 @@ var ASSETS = [
   './assets/data/ar-lughati-g2-u3-mafool.js',
   './assets/data/ar-lughati-g2-u3-tawkid.js',
   './assets/data/ar-lughati-g2-u3-hamza.js',
+  './assets/data/ar-lughati-g2-u4-khamsa.js',
+  './assets/data/ar-lughati-g2-u4-mutlaq.js',
+  './assets/data/ar-lughati-g2-u4-tamanni.js',
+  './assets/data/ar-lughati-g2-u4-madda.js',
+  './assets/data/ar-lughati-g2-u5-maqsur.js',
+  './assets/data/ar-lughati-g2-u5-liajlih.js',
+  './assets/data/ar-lughati-g2-u5-taraji.js',
+  './assets/data/ar-lughati-g2-u5-alif.js',
+  './assets/data/ar-lughati-g2-u6-mamdud.js',
+  './assets/data/ar-lughati-g2-u6-fih.js',
+  './assets/data/ar-lughati-g2-u6-madh.js',
+  './assets/data/ar-lughati-g2-u6-alif.js',
   './assets/data/ar-lughati-g3-u1-fail.js',
   './assets/data/ar-lughati-g3-u1-haal.js',
   './assets/data/ar-lughati-g3-u1-qasam.js',
