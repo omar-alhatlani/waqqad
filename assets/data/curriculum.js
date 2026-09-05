@@ -676,6 +676,51 @@ window.CURRICULUM = {
         { t:'الدوران', tag:'تحويلات', ref:'MATH_G2_U5_ROTATE' },
         { t:'التماثل', tag:'تحويلات', ref:'MATH_G2_U5_SYMMETRY' }
       ]}
+    ]},
+    'g2.s2.math':{ eyebrow:'رياضيات · الثاني متوسط', units:[
+      { t:'الإحصاء', s:'الفصل السادس', lessons:[
+        { t:'استراتيجية: إنشاء جدول', tag:'مهارة', ref:'MATH_G2_U6_TABLE' },
+        { t:'المدرّجات التكرارية', tag:'إحصاء', ref:'MATH_G2_U6_HISTOGRAM' },
+        { t:'القطاعات الدائرية', tag:'إحصاء', ref:'MATH_G2_U6_PIE' },
+        { t:'مقاييس النزعة المركزية والمدى', tag:'إحصاء', ref:'MATH_G2_U6_CENTER' },
+        { t:'مقاييس التشتّت', tag:'إحصاء', ref:'MATH_G2_U6_SPREAD' },
+        { t:'التمثيل بالصندوق وطرفيه', tag:'إحصاء', ref:'MATH_G2_U6_BOXPLOT' },
+        { t:'التمثيل بالساق والورقة', tag:'إحصاء', ref:'MATH_G2_U6_STEMLEAF' },
+        { t:'اختيار طريقة التمثيل المناسبة', tag:'إحصاء', ref:'MATH_G2_U6_CHOOSE' }
+      ]},
+      { t:'الاحتمالات', s:'الفصل السابع', lessons:[
+        { t:'عدّ النواتج', tag:'احتمال', ref:'MATH_G2_U7_COUNT' },
+        { t:'احتمال الحوادث المركّبة', tag:'احتمال', ref:'MATH_G2_U7_COMPOUND' },
+        { t:'الاحتمال النظري والتجريبي', tag:'احتمال', ref:'MATH_G2_U7_THEOEXP' },
+        { t:'استراتيجية: تمثيل المسألة', tag:'مهارة', ref:'MATH_G2_U7_MODEL' },
+        { t:'استعمال المعاينة في التنبؤ', tag:'احتمال', ref:'MATH_G2_U7_SAMPLING' }
+      ]},
+      { t:'القياس: المساحة والحجم', s:'الفصل الثامن', lessons:[
+        { t:'مساحات الأشكال المركّبة', tag:'قياس', ref:'MATH_G2_U8_COMPOSITE' },
+        { t:'استراتيجية: حل مسألة أبسط', tag:'مهارة', ref:'MATH_G2_U8_SIMPLER' },
+        { t:'الأشكال الثلاثية الأبعاد', tag:'هندسة', ref:'MATH_G2_U8_SOLIDS' },
+        { t:'حجم المنشور والأسطوانة', tag:'قياس', ref:'MATH_G2_U8_VOLPRISM' },
+        { t:'حجم الهرم والمخروط', tag:'قياس', ref:'MATH_G2_U8_VOLPYRAMID' },
+        { t:'مساحة سطح المنشور والأسطوانة', tag:'قياس', ref:'MATH_G2_U8_SURFPRISM' },
+        { t:'مساحة سطح الهرم', tag:'قياس', ref:'MATH_G2_U8_SURFPYRAMID' }
+      ]},
+      { t:'الجبر: المعادلات والمتباينات', s:'الفصل التاسع', lessons:[
+        { t:'تبسيط العبارات الجبرية', tag:'جبر', ref:'MATH_G2_U9_SIMPLIFY' },
+        { t:'حل معادلات ذات خطوتين', tag:'جبر', ref:'MATH_G2_U9_TWOSTEP' },
+        { t:'كتابة معادلات ذات خطوتين', tag:'جبر', ref:'MATH_G2_U9_WRITETWO' },
+        { t:'معادلات تتضمّن متغيّرات في طرفيها', tag:'جبر', ref:'MATH_G2_U9_BOTHSIDES' },
+        { t:'استراتيجية: التخمين والتحقّق', tag:'مهارة', ref:'MATH_G2_U9_GUESS' },
+        { t:'المتباينات', tag:'جبر', ref:'MATH_G2_U9_INEQUAL' },
+        { t:'حل المتباينات', tag:'جبر', ref:'MATH_G2_U9_SOLVEINEQ' }
+      ]},
+      { t:'الجبر: الدوال الخطية', s:'الفصل العاشر', lessons:[
+        { t:'المتتابعات', tag:'جبر', ref:'MATH_G2_U10_SEQUENCE' },
+        { t:'الدوال', tag:'دوال', ref:'MATH_G2_U10_FUNCTIONS' },
+        { t:'تمثيل الدوال الخطية', tag:'دوال', ref:'MATH_G2_U10_GRAPHLINEAR' },
+        { t:'ميل المستقيم', tag:'دوال', ref:'MATH_G2_U10_SLOPE' },
+        { t:'التغيّر الطرديّ', tag:'دوال', ref:'MATH_G2_U10_DIRECT' },
+        { t:'استراتيجية: إنشاء نموذج', tag:'مهارة', ref:'MATH_G2_U10_MODEL' }
+      ]}
     ]}
   }
 };
