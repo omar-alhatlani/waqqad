@@ -340,6 +340,44 @@ window.CURRICULUM = {
         { t:'Reading — Do You Know Where This Place Is?', tag:'قراءة', ref:'EN_SG3_U6_READ' }
       ]}
     ]},
+    'g3.s2.en':{ eyebrow:'English · Super Goal 3', units:[
+      { t:"It's a Good Deal, Isn't It?", s:'الأسئلة الذيلية والصفقات', lessons:[
+        { t:'Grammar — الأسئلة الذيلية والسلبية', tag:'قواعد', ref:'EN_SG3_U7_TAG' },
+        { t:"Grammar — be able to والاقتراحات", tag:'قواعد', ref:'EN_SG3_U7_ABLE' },
+        { t:'Vocabulary — الأغراض المستعملة', tag:'مفردات', ref:'EN_SG3_U7_VOCAB' },
+        { t:'Reading — You Look Just Like Me!', tag:'قراءة', ref:'EN_SG3_U7_READ' }
+      ]},
+      { t:'Drive Slowly!', s:'القيادة والالتزام', lessons:[
+        { t:"Grammar — must/mustn't وshould", tag:'قواعد', ref:'EN_SG3_U8_MODALS' },
+        { t:'Grammar — الطلبات والأوامر ونقلُها', tag:'قواعد', ref:'EN_SG3_U8_REQCMD' },
+        { t:'Vocabulary — القيادة والمرور', tag:'مفردات', ref:'EN_SG3_U8_VOCAB' },
+        { t:'Reading — Is Right, Right?', tag:'قراءة', ref:'EN_SG3_U8_READ' }
+      ]},
+      { t:'All Kinds of People', s:'الشخصية والصفات', lessons:[
+        { t:'Grammar — الضمائر الموصولة who/that/which', tag:'قواعد', ref:'EN_SG3_U9_RELATIVE' },
+        { t:'Grammar — الماضي المستمرّ وwhen/while', tag:'قواعد', ref:'EN_SG3_U9_PASTPROG' },
+        { t:'Vocabulary — صفات الشخصية', tag:'مفردات', ref:'EN_SG3_U9_VOCAB' },
+        { t:'Reading — Simple Ideas, Big Results', tag:'قراءة', ref:'EN_SG3_U9_READ' }
+      ]},
+      { t:'Who Used My Toothpaste?', s:'الشكاوى والأعمال المنزلية', lessons:[
+        { t:'Grammar — المضارع التامّ already/yet/just', tag:'قواعد', ref:'EN_SG3_U10_PERFECT' },
+        { t:'Grammar — الأفعال + gerund وثنائية الكلمة', tag:'قواعد', ref:'EN_SG3_U10_GERUND' },
+        { t:'Vocabulary — الشكاوى', tag:'مفردات', ref:'EN_SG3_U10_VOCAB' },
+        { t:'Reading — Common Complaints', tag:'قراءة', ref:'EN_SG3_U10_READ' }
+      ]},
+      { t:'Making Choices', s:'القرارات والشرط التخيّليّ', lessons:[
+        { t:"Grammar — الشرط التخيّليّ وI'd rather", tag:'قواعد', ref:'EN_SG3_U11_IMAGINE' },
+        { t:'Grammar — wish والتمنّي', tag:'قواعد', ref:'EN_SG3_U11_WISH' },
+        { t:'Vocabulary — القرارات والنصيحة', tag:'مفردات', ref:'EN_SG3_U11_VOCAB' },
+        { t:'Reading — The Right Choice', tag:'قراءة', ref:'EN_SG3_U11_READ' }
+      ]},
+      { t:'Culture Shock', s:'الثقافة والتأقلم', lessons:[
+        { t:"Grammar — الأفعال + المصدر وIt's + to", tag:'قواعد', ref:'EN_SG3_U12_INFINITIVE' },
+        { t:'Grammar — الماضي التامّ والـgerund كفاعل', tag:'قواعد', ref:'EN_SG3_U12_PASTPERF' },
+        { t:'Vocabulary — الثقافة والتأقلم', tag:'مفردات', ref:'EN_SG3_U12_VOCAB' },
+        { t:'Reading — A Fish Out of Water', tag:'قراءة', ref:'EN_SG3_U12_READ' }
+      ]}
+    ]},
     'g2.s1.en':{ eyebrow:'English · Super Goal 2', units:[
       { t:'Are You Here on Vacation?', s:'التحية والتعارف والاتجاهات', lessons:[
         { t:'Grammar — الفعل be: الأسئلة والإجابات القصيرة', tag:'قواعد', ref:'EN_SG2_U1_BE' },
