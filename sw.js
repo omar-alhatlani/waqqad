@@ -1,7 +1,7 @@
 /* عامل الخدمة — وقّاد
    يخزّن قشرة التطبيق ليعمل بلا إنترنت بعد أول زيارة.
    عند تعديل الملفّات: ارفع رقم النسخة CACHE لإجبار التحديث. */
-var CACHE = 'waqqad-v74';
+var CACHE = 'waqqad-v75';
 var ASSETS = [
   './',
   './index.html',
@@ -503,6 +503,18 @@ var ASSETS = [
   './assets/data/ar-sci-u5-rocks.js',
   './assets/data/ar-sci-u6-plates.js',
   './assets/data/ar-sci-u6-erosion.js',
+  './assets/data/ar-sci-u7-atmosphere.js',
+  './assets/data/ar-sci-u7-fronts.js',
+  './assets/data/ar-sci-u8-solarsystem.js',
+  './assets/data/ar-sci-u8-stars.js',
+  './assets/data/ar-sci-u9-cells.js',
+  './assets/data/ar-sci-u9-cellfunc.js',
+  './assets/data/ar-sci-u10-inverts1.js',
+  './assets/data/ar-sci-u10-inverts2.js',
+  './assets/data/ar-sci-u11-vertebrates.js',
+  './assets/data/ar-sci-u11-birdsmammals.js',
+  './assets/data/ar-sci-u12-ecosystem.js',
+  './assets/data/ar-sci-u12-energy.js',
   './assets/data/ar-sci-g2-u1-method.js',
   './assets/data/ar-sci-g2-u1-problem.js',
   './assets/data/ar-sci-g2-u2-solutions.js',
