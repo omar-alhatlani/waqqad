@@ -1,7 +1,7 @@
 /* عامل الخدمة — وقّاد
    يخزّن قشرة التطبيق ليعمل بلا إنترنت بعد أول زيارة.
    عند تعديل الملفّات: ارفع رقم النسخة CACHE لإجبار التحديث. */
-var CACHE = 'waqqad-v70';
+var CACHE = 'waqqad-v71';
 var ASSETS = [
   './',
   './index.html',
@@ -292,6 +292,18 @@ var ASSETS = [
   './assets/data/ar-lughati-g3-u3-mustathna.js',
   './assets/data/ar-lughati-g3-u3-tafdil.js',
   './assets/data/ar-lughati-g3-u3-mawsula.js',
+  './assets/data/ar-lughati-g3-u4-zaman.js',
+  './assets/data/ar-lughati-g3-u4-naat.js',
+  './assets/data/ar-lughati-g3-u4-istithnaa.js',
+  './assets/data/ar-lughati-g3-u4-wasl.js',
+  './assets/data/ar-lughati-g3-u5-aala.js',
+  './assets/data/ar-lughati-g3-u5-atf.js',
+  './assets/data/ar-lughati-g3-u5-taajjub.js',
+  './assets/data/ar-lughati-g3-u5-zaid.js',
+  './assets/data/ar-lughati-g3-u6-masadir.js',
+  './assets/data/ar-lughati-g3-u6-badal.js',
+  './assets/data/ar-lughati-g3-u6-adad.js',
+  './assets/data/ar-lughati-g3-u6-hadhf.js',
   './assets/data/ar-math-g3-u1-eq.js',
   './assets/data/ar-math-g3-u1-onestep.js',
   './assets/data/ar-math-g3-u1-multistep.js',
