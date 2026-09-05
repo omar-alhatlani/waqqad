@@ -1,7 +1,7 @@
 /* عامل الخدمة — وقّاد
    يخزّن قشرة التطبيق ليعمل بلا إنترنت بعد أول زيارة.
    عند تعديل الملفّات: ارفع رقم النسخة CACHE لإجبار التحديث. */
-var CACHE = 'waqqad-v75';
+var CACHE = 'waqqad-v76';
 var ASSETS = [
   './',
   './index.html',
@@ -528,6 +528,20 @@ var ASSETS = [
   './assets/data/ar-sci-g2-u5-immunity.js',
   './assets/data/ar-sci-g2-u6-digestion.js',
   './assets/data/ar-sci-g2-u6-respiration.js',
+  './assets/data/ar-sci-g2-u7-skin.js',
+  './assets/data/ar-sci-g2-u7-skeleton.js',
+  './assets/data/ar-sci-g2-u8-glands.js',
+  './assets/data/ar-sci-g2-u8-lifestages.js',
+  './assets/data/ar-sci-g2-u9-seedless.js',
+  './assets/data/ar-sci-g2-u9-seed.js',
+  './assets/data/ar-sci-g2-u10-resources.js',
+  './assets/data/ar-sci-g2-u10-pollution.js',
+  './assets/data/ar-sci-g2-u11-temperature.js',
+  './assets/data/ar-sci-g2-u11-heattransfer.js',
+  './assets/data/ar-sci-g2-u11-engines.js',
+  './assets/data/ar-sci-g2-u12-waves.js',
+  './assets/data/ar-sci-g2-u12-sound.js',
+  './assets/data/ar-sci-g2-u12-light.js',
   './assets/data/ar-sci-g3-u1-ohm.js',
   './assets/data/ar-sci-g3s1-u1-method.js',
   './assets/data/ar-sci-g3s1-u1-work.js',
