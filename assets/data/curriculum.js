@@ -390,6 +390,56 @@ window.CURRICULUM = {
         { t:'Reading — Cold or the Flu?', tag:'قراءة', ref:'EN_SG2_U8_READ' }
       ]}
     ]},
+    'g2.s2.en':{ eyebrow:'English · Super Goal 2', units:[
+      { t:"Let's Go Out", s:'الاقتراحات والواجبات', lessons:[
+        { t:"Grammar — should / why don't / let's", tag:'قواعد', ref:'EN_SG2_U9_SUGGEST' },
+        { t:'Grammar — have to / must (الواجب)', tag:'قواعد', ref:'EN_SG2_U9_HAVETO' },
+        { t:'Vocabulary — الأعمال المنزلية والخروج', tag:'مفردات', ref:'EN_SG2_U9_VOCAB' },
+        { t:'Reading — Someone Has to Do It!', tag:'قراءة', ref:'EN_SG2_U9_READ' }
+      ]},
+      { t:"It's a Bargain!", s:'التسوّق والملكية', lessons:[
+        { t:'Grammar — ضمائر الملكية وwhose', tag:'قواعد', ref:'EN_SG2_U10_POSS' },
+        { t:'Grammar — one/ones وtoo والأفعال الناقصة', tag:'قواعد', ref:'EN_SG2_U10_ONEONES' },
+        { t:'Vocabulary — التسوّق', tag:'مفردات', ref:'EN_SG2_U10_VOCAB' },
+        { t:'Reading — The Best Place to Shop', tag:'قراءة', ref:'EN_SG2_U10_READ' }
+      ]},
+      { t:"There's No Comparison", s:'المقارنة والتفضيل', lessons:[
+        { t:'Grammar — المقارنة والتفضيل', tag:'قواعد', ref:'EN_SG2_U11_COMPARE' },
+        { t:'Grammar — so…that / such…that', tag:'قواعد', ref:'EN_SG2_U11_SOTHAT' },
+        { t:'Vocabulary — الصفات والتقنية', tag:'مفردات', ref:'EN_SG2_U11_VOCAB' },
+        { t:'Reading — Vision 2030', tag:'قراءة', ref:'EN_SG2_U11_READ' }
+      ]},
+      { t:"It's Going to Be Fun!", s:'العطلات والمستقبل', lessons:[
+        { t:'Grammar — المستقبل be going to', tag:'قواعد', ref:'EN_SG2_U12_GOINGTO' },
+        { t:'Grammar — الصفات وظروف الحال', tag:'قواعد', ref:'EN_SG2_U12_ADVERBS' },
+        { t:'Vocabulary — العطلات والسفر', tag:'مفردات', ref:'EN_SG2_U12_VOCAB' },
+        { t:'Reading — The Stones of Al-Ula', tag:'قراءة', ref:'EN_SG2_U12_READ' }
+      ]},
+      { t:"What's the Weather Like?", s:'الطقس والتنبّؤ', lessons:[
+        { t:'Grammar — المستقبل will والتنبّؤ', tag:'قواعد', ref:'EN_SG2_U13_WILL' },
+        { t:'Grammar — الجمل الشرطية', tag:'قواعد', ref:'EN_SG2_U13_COND' },
+        { t:'Vocabulary — الطقس والفصول', tag:'مفردات', ref:'EN_SG2_U13_VOCAB' },
+        { t:"Reading — Can Weather Affect Moods?", tag:'قراءة', ref:'EN_SG2_U13_READ' }
+      ]},
+      { t:'Could You Do Me a Favor?', s:'الطلبات والعروض', lessons:[
+        { t:'Grammar — الطلبات والعروض', tag:'قواعد', ref:'EN_SG2_U14_REQUESTS' },
+        { t:'Grammar — want/tell/ask + مفعول + مصدر', tag:'قواعد', ref:'EN_SG2_U14_TELLASK' },
+        { t:'Vocabulary — المعروف والمكالمات', tag:'مفردات', ref:'EN_SG2_U14_VOCAB' },
+        { t:'Reading — Dear Daughter', tag:'قراءة', ref:'EN_SG2_U14_READ' }
+      ]},
+      { t:"Today's News", s:'الأخبار والماضي المستمرّ', lessons:[
+        { t:'Grammar — الماضي المستمرّ وwhen', tag:'قواعد', ref:'EN_SG2_U15_PASTPROG' },
+        { t:'Grammar — could / was able to', tag:'قواعد', ref:'EN_SG2_U15_ABLE' },
+        { t:'Vocabulary — الأخبار والسرد', tag:'مفردات', ref:'EN_SG2_U15_VOCAB' },
+        { t:'Reading — Age Means Nothing', tag:'قراءة', ref:'EN_SG2_U15_READ' }
+      ]},
+      { t:'Have You Ever…?', s:'المضارع التامّ والتجارب', lessons:[
+        { t:'Grammar — المضارع التامّ (ever/never)', tag:'قواعد', ref:'EN_SG2_U16_PERFECT' },
+        { t:'Grammar — التامّ مقابل الماضي البسيط', tag:'قواعد', ref:'EN_SG2_U16_VSPAST' },
+        { t:'Vocabulary — التجارب', tag:'مفردات', ref:'EN_SG2_U16_VOCAB' },
+        { t:'Reading — Ships of the Desert', tag:'قراءة', ref:'EN_SG2_U16_READ' }
+      ]}
+    ]},
     'g2.s1.sci':{ eyebrow:'علوم · الثاني متوسط', units:[
       { t:'طبيعة العلم', s:'الوحدة ١ · دراسة المادة', lessons:[
         { t:'أسلوب العلم', tag:'مفاهيم', ref:'SCI_G2_U1_METHOD' },
