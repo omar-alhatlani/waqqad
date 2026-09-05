@@ -73,6 +73,56 @@ window.CURRICULUM = {
         { t:"Reading — Teenagers' Favorite Place", tag:'قراءة', ref:'EN_SG1_U8_READ' }
       ]}
     ]},
+    'g1.s2.en':{ eyebrow:'English · Super Goal 1', units:[
+      { t:'What Do You Do?', s:'المهن والأعمال', lessons:[
+        { t:'Grammar — المضارع البسيط وأسئلة What', tag:'قواعد', ref:'EN_SG1_U9_PRESENT' },
+        { t:'Grammar — الروابط so/because', tag:'قواعد', ref:'EN_SG1_U9_CONJ' },
+        { t:'Vocabulary — المهن', tag:'مفردات', ref:'EN_SG1_U9_VOCAB' },
+        { t:'Reading — Follow Your Dream', tag:'قراءة', ref:'EN_SG1_U9_READ' }
+      ]},
+      { t:"What's School Like?", s:'المدرسة والصفات', lessons:[
+        { t:'Grammar — الصفات وموضعها والمكثّفات', tag:'قواعد', ref:'EN_SG1_U10_ADJ' },
+        { t:'Grammar — صفات ‎-ed و‎-ing', tag:'قواعد', ref:'EN_SG1_U10_EDING' },
+        { t:'Vocabulary — المواد والشخصية', tag:'مفردات', ref:'EN_SG1_U10_VOCAB' },
+        { t:'Reading — School Clubs', tag:'قراءة', ref:'EN_SG1_U10_READ' }
+      ]},
+      { t:'What Time Do You Get Up?', s:'الروتين اليوميّ والوقت', lessons:[
+        { t:'Grammar — ظروف التكرار وتعابير الوقت', tag:'قواعد', ref:'EN_SG1_U11_FREQ' },
+        { t:'Grammar — حروف الزمن والبسيط مقابل المستمرّ', tag:'قواعد', ref:'EN_SG1_U11_PREP' },
+        { t:'Vocabulary — الروتين وقول الوقت', tag:'مفردات', ref:'EN_SG1_U11_VOCAB' },
+        { t:'Reading — A School Day', tag:'قراءة', ref:'EN_SG1_U11_READ' }
+      ]},
+      { t:'What Can You Do There?', s:'القدرة والأماكن', lessons:[
+        { t:'Grammar — الفعل الناقص can', tag:'قواعد', ref:'EN_SG1_U12_CAN' },
+        { t:'Grammar — like + مصدر / gerund', tag:'قواعد', ref:'EN_SG1_U12_LIKE' },
+        { t:'Vocabulary — الأماكن والأنشطة', tag:'مفردات', ref:'EN_SG1_U12_VOCAB' },
+        { t:'Reading — Places to Visit in Saudi Arabia', tag:'قراءة', ref:'EN_SG1_U12_READ' }
+      ]},
+      { t:'What Are You Going to Wear There?', s:'المستقبل والملابس', lessons:[
+        { t:'Grammar — المستقبل be + going to', tag:'قواعد', ref:'EN_SG1_U13_GOINGTO' },
+        { t:'Grammar — المضارع المستمرّ للمستقبل', tag:'قواعد', ref:'EN_SG1_U13_FUTURE' },
+        { t:'Vocabulary — الملابس والألوان', tag:'مفردات', ref:'EN_SG1_U13_VOCAB' },
+        { t:'Reading — The Iguassu Falls', tag:'قراءة', ref:'EN_SG1_U13_READ' }
+      ]},
+      { t:"Let's Celebrate", s:'الاحتفالات والأعياد', lessons:[
+        { t:'Grammar — ضمائر المفعول', tag:'قواعد', ref:'EN_SG1_U14_PRON' },
+        { t:"Grammar — Let's وmust/should", tag:'قواعد', ref:'EN_SG1_U14_MODALS' },
+        { t:'Vocabulary — الاحتفالات', tag:'مفردات', ref:'EN_SG1_U14_VOCAB' },
+        { t:'Reading — Eid Celebrations', tag:'قراءة', ref:'EN_SG1_U14_READ' }
+      ]},
+      { t:'Then and Now', s:'الماضي: كان وأخواتها', lessons:[
+        { t:'Grammar — ماضي be: was/were وbe born', tag:'قواعد', ref:'EN_SG1_U15_WAS' },
+        { t:'Grammar — There was / There were', tag:'قواعد', ref:'EN_SG1_U15_THERE' },
+        { t:'Vocabulary — الماضي والحاضر', tag:'مفردات', ref:'EN_SG1_U15_VOCAB' },
+        { t:'Reading — Yao Ming', tag:'قراءة', ref:'EN_SG1_U15_READ' }
+      ]},
+      { t:'What Did You Do Last Week?', s:'الماضي البسيط', lessons:[
+        { t:'Grammar — الماضي المنتظم والشاذّ', tag:'قواعد', ref:'EN_SG1_U16_PAST' },
+        { t:'Grammar — تعابير الماضي والبسيط مقابل الماضي', tag:'قواعد', ref:'EN_SG1_U16_TIME' },
+        { t:'Vocabulary — أنشطة وقت الفراغ', tag:'مفردات', ref:'EN_SG1_U16_VOCAB' },
+        { t:'Reading — What Did You Do Last Week?', tag:'قراءة', ref:'EN_SG1_U16_READ' }
+      ]}
+    ]},
     'g1.s1.ar':{ eyebrow:'لغتي الخالدة · الأول متوسط', units:[
       { t:'القيم الإسلامية', s:'الدروس اللغوية للوحدة', lessons:[
         { t:'الصنف اللغوي — المذكّر والمؤنّث', tag:'صنف لغوي', ref:'AR_LUGHATI_U1_MUDHAKKAR' },

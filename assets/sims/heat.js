@@ -72,6 +72,7 @@ window.SIMS['heat'] = (function(){
     function drawNum(x,y,str,al){ ctx.save(); ctx.textAlign=al||'center'; ctx.direction='ltr';
       var ch=str.split(''), ws=ch.map(function(c){return ctx.measureText(c).width;}), tot=ws.reduce(function(a,b){return a+b;},0), lx=(al==='right'?x-tot:(al==='left'?x:x-tot/2));
       for(var i=0;i<ch.length;i++){ ctx.fillText(ch[i],lx,y); lx+=ws[i]; } ctx.restore(); }
+    function drawAr(x,y,str){ ctx.save(); ctx.textAlign='center'; ctx.textBaseline='alphabetic'; ctx.direction='rtl'; ctx.fillText(str,x,y); ctx.restore(); }
 
     function draw(){
       var h=+hIn.value, t=temp(h);
@@ -96,8 +97,8 @@ window.SIMS['heat'] = (function(){
       ctx.fillStyle='#fff'; ctx.beginPath(); ctx.arc(px(h)-1.6,py(t)-1.8,2,0,6.2832); ctx.fill();
       // عناوين المحاور
       ctx.fillStyle=css('--muted','#7C82A8'); ctx.font='600 10px "IBM Plex Sans Arabic",sans-serif'; ctx.textBaseline='alphabetic';
-      drawNum((GX0+GX1)/2,GYB+16,'الحرارة المضافة ←');
-      ctx.save(); ctx.translate(GX0-22,(GY0+GYB)/2); ctx.rotate(-Math.PI/2); drawNum(0,0,'درجة الحرارة (°س)'); ctx.restore();
+      drawAr((GX0+GX1)/2,GYB+16,'الحرارة المضافة');
+      ctx.save(); ctx.translate(GX0-22,(GY0+GYB)/2); ctx.rotate(-Math.PI/2); drawAr(0,0,'درجة الحرارة'); ctx.restore();
     }
     function refresh(){
       var h=+hIn.value, t=temp(h), ph=phase(h), P=PH[ph];
