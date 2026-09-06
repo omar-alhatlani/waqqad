@@ -1,5 +1,5 @@
 /* ============================================================
-   Lesson: Verb + Infinitive · Verb + Object + Infinitive · It's + Infinitive
+   Lesson: Verb + Infinitive · Verb + Object + Infinitive · It’s + Infinitive
    English · Super Goal 3 · Unit 12 (Culture Shock) · صفحة ١٣٢
    من كتاب الوزارة طبعة ١٤٤٨ (Super Goal 3). lang:'en'.
    ============================================================ */
@@ -11,9 +11,9 @@
     lang:'en',
     rule:{
       tag:'القاعدة',
-      title:'want/decide/need + to · It\'s + adjective + to',
+      title:'want/decide/need + to · It’s + adjective + to',
       intro:'بعد أفعالٍ مثل <code>want, decide, need, hope, learn, try</code> يأتي <b>المصدر</b> (<code>to + verb</code>): <code>I decided to travel</code>. وبعضُها يأخذ <b>مفعولًا ثمّ مصدرًا</b>: <code>want/tell/ask/advise + object + to + verb</code> (<code>I want you to come</code>). ونستعمل <code>It’s + صفة + to + verb</code>: <code>It’s important to be patient</code>.',
-      table:[['verb + to','I need to rest.'],['verb + object + to','I want you to help.'],["It's … + to","It’s hard to adjust."],['advice','It’s a good idea to plan.']],
+      table:[['verb + to','I need to rest.'],['verb + object + to','I want you to help.'],["It’s … + to","It’s hard to adjust."],['advice','It’s a good idea to plan.']],
       trick:'بعد <code>want/decide/need/hope</code> ← <code>to + verb</code> مباشرةً، أو مع مفعولٍ: <code>want + object + to</code>. وصيغةُ <code>It’s + صفة + to</code> شائعةٌ للنصيحة والتقييم.'
     },
     stages:[
@@ -29,7 +29,7 @@
         {p:'They asked us ___ wait.', o:['to','—','that','for'], a:0, w:'<code>ask + object + to</code>.', f:'asked us <u>to</u> wait'},
         {p:'I want ___ to be happy. (he)', o:['him','he','his','himself'], a:0, w:'مفعول ← <code>him</code>.', f:'want <u>him</u> to be happy'}
       ]},
-      { type:'choice', name:"It's + adjective + to", hint:'التقييم والنصيحة', qs:[
+      { type:'choice', name:"It’s + adjective + to", hint:'التقييم والنصيحة', qs:[
         {p:'It’s important ___ patient.', o:['to be','being','be','are'], a:0, w:'<code>It’s + صفة + to be</code>.', f:'important <u>to be</u> patient'},
         {p:'It’s hard ___ to a new culture.', o:['to adjust','adjusting','adjust','adjusted'], a:0, w:'<code>to adjust</code>.', f:'hard <u>to adjust</u>'},
         {p:'It’s a good idea ___ your trip.', o:['to plan','planning','plan','planned'], a:0, w:'<code>to plan</code>.', f:'a good idea <u>to plan</u>'},
@@ -44,7 +44,7 @@
       { type:'order', name:'رتّب الجملة', hint:'انقر الكلمات بالترتيب الصحيح', qs:[
         {sol:['I','decided','to','travel','abroad','.'], w:'<code>decide + to</code>.', f:'I decided to travel abroad.'},
         {sol:['I','want','you','to','come','.'], w:'<code>want + object + to</code>.', f:'I want you to come.'},
-        {sol:['It’s','important','to','be','patient','.'], w:'<code>It’s + صفة + to</code>.', f:"It's important to be patient."},
+        {sol:['It’s','important','to','be','patient','.'], w:'<code>It’s + صفة + to</code>.', f:"It’s important to be patient."},
         {sol:['She','needs','to','learn','the','language','.'], w:'<code>need + to</code>.', f:'She needs to learn the language.'}
       ]},
       { type:'mixed', name:'التحدي النهائي', hint:'كلّ ما تعلّمته — مختلطًا', final:true, qs:[

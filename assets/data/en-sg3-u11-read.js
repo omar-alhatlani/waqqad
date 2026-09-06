@@ -33,7 +33,7 @@
         {p:'Who worked in the mines to pay for the studies?', o:['Albert','Albrecht','the father'], a:0, w:'ألبرت.', f:'<u>Albert</u>'},
         {p:'What happened to Albert’s hands after four years?', o:['they were ruined','they got stronger','nothing'], a:0, w:'أُتلِفت.', f:'they were <u>ruined</u>'},
         {p:'What did Albrecht become?', o:['a great artist','a miner','a doctor'], a:0, w:'فنّانًا عظيمًا.', f:'a <u>great artist</u>'},
-        {p:'What did Albrecht draw to thank his brother?', o:['his brother’s hands','a house','a horse'], a:0, w:'يدَي أخيه.', f:"his brother's <u>hands</u>"}
+        {p:'What did Albrecht draw to thank his brother?', o:['his brother’s hands','a house','a horse'], a:0, w:'يدَي أخيه.', f:"his brother’s <u>hands</u>"}
       ]},
       { type:'choice', name:'صحّ أم خطأ', hint:'True / False', qs:[
         {p:'T/F: The father was rich.', o:['False','True'], a:0, w:'بل عمل ١٨ ساعة ليطعمهم.', f:'<u>False</u>'},

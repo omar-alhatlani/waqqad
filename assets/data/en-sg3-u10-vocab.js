@@ -26,7 +26,7 @@
       ]},
       { type:'gap', name:'أكمل الجملة', hint:'اختر الكلمة المناسبة', qs:[
         {p:'Families often ___ about the same things.', o:['complain','clean','borrow'], a:0, w:'يشتكون.', f:'<u>complain</u>'},
-        {p:"Please ___ up your room; it's a mess.", o:['clean','make','borrow'], a:0, w:'نظّف.', f:'<u>clean</u> up'},
+        {p:"Please ___ up your room; it’s a mess.", o:['clean','make','borrow'], a:0, w:'نظّف.', f:'<u>clean</u> up'},
         {p:'Don’t ___ my things without asking first.', o:['borrow','clean','share'], a:0, w:'تستعير.', f:'<u>borrow</u>'},
         {p:'Playing music loudly is very ___.', o:['annoying','polite','clean'], a:0, w:'مزعج.', f:'<u>annoying</u>'},
         {p:'It’s good to ___ things with your family.', o:['share','borrow only','mess'], a:0, w:'تتشارك.', f:'<u>share</u>'}

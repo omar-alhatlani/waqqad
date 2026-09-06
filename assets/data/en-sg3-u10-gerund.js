@@ -26,11 +26,11 @@
       { type:'choice', name:'الأفعال ثنائية الكلمة', hint:'verb + particle', qs:[
         {p:'Please ___ your toys after playing.', o:['put away','put','away put','putting'], a:0, w:'<code>put away</code>.', f:'<u>put away</u> your toys'},
         {p:'Can you ___ the trash?', o:['take out','out take','take','taking'], a:0, w:'<code>take out</code>.', f:'<u>take out</u> the trash'},
-        {p:'He didn’t ___ his things after using them.', o:['put back','back put','put','putting back'], a:0, w:'<code>put back</code>.', f:"didn't <u>put back</u>…"},
+        {p:'He didn’t ___ his things after using them.', o:['put back','back put','put','putting back'], a:0, w:'<code>put back</code>.', f:"didn’t <u>put back</u>…"},
         {p:'She needs to ___ her room.', o:['clean up','up clean','cleaning','clean'], a:0, w:'<code>clean up</code>.', f:'<u>clean up</u> her room'}
       ]},
       { type:'choice', name:'موضع الضمير', hint:'بين الفعل والحرف', qs:[
-        {p:'Have you done the dishes? — Yes, I’ve done ___.', o:['them','it away','them away','away them'], a:0, w:'الضميرُ بعد الفعل.', f:"…I've done <u>them</u>."},
+        {p:'Have you done the dishes? — Yes, I’ve done ___.', o:['them','it away','them away','away them'], a:0, w:'الضميرُ بعد الفعل.', f:"…I’ve done <u>them</u>."},
         {p:'The trash is full. Please take ___ out.', o:['it','out it','it away','away'], a:0, w:'الضميرُ بين الفعل والحرف.', f:'take <u>it</u> out'},
         {p:'Which is correct?', o:['put it away','put away it','away put it'], a:0, w:'<code>put it away</code>.', f:'<u>put it away</u>'},
         {p:'With a pronoun, the particle goes:', o:['after the pronoun','before the pronoun','is dropped'], a:0, w:'بعد الضمير.', f:'<u>after the pronoun</u>'}

@@ -1,6 +1,6 @@
 /* ============================================================
    Lesson: Vocabulary — Garage Sales & Secondhand Items
-   English · Super Goal 3 · Unit 7 (It's a Good Deal, Isn't It?) · صفحات ٧٤–٧٥
+   English · Super Goal 3 · Unit 7 (It’s a Good Deal, Isn’t It?) · صفحات ٧٤–٧٥
    من كتاب الوزارة طبعة ١٤٤٨ (Super Goal 3). lang:'en'.
    ============================================================ */
 (function(){
@@ -41,7 +41,7 @@
         {words:['A','lawn','mower','cleans','the','floor','.'], bad:3, fix:'cuts grass', w:'الجزّازةُ تجزّ العشب.', f:'…<u>cuts the grass</u>.'},
         {words:['These','toys','are','in','good','coincidence','.'], bad:5, fix:'condition', w:'الحالة ← <code>condition</code>.', f:'in good <u>condition</u>.'},
         {words:['A','garage','sale','sells','new','items','.'], bad:4, fix:'used', w:'أغراضٌ مستعملة.', f:'sells <u>used</u> items'},
-        {words:['Only','5','riyals','!','It’s','a','tool','!'], bad:6, fix:'bargain/deal', w:'صفقة.', f:"It's a <u>bargain</u>!"}
+        {words:['Only','5','riyals','!','It’s','a','tool','!'], bad:6, fix:'bargain/deal', w:'صفقة.', f:"It’s a <u>bargain</u>!"}
       ]},
       { type:'mixed', name:'التحدي النهائي', hint:'كلّ ما تعلّمته — مختلطًا', final:true, qs:[
         {p:'garage sale sells ___ items.', ask:'اختر', o:['used','new'], a:0, w:'مستعملة.', f:'<u>used</u>'},

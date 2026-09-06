@@ -1,6 +1,6 @@
 /* ============================================================
    Lesson: Reading — You Look Just Like Me!
-   English · Super Goal 3 · Unit 7 (It's a Good Deal, Isn't It?) · صفحة ٨٠
+   English · Super Goal 3 · Unit 7 (It’s a Good Deal, Isn’t It?) · صفحة ٨٠
    من كتاب الوزارة طبعة ١٤٤٨ (Super Goal 3). lang:'en'.
    ============================================================ */
 (function(){

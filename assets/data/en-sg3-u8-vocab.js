@@ -27,7 +27,7 @@
       { type:'gap', name:'أكمل الجملة', hint:'اختر الكلمة المناسبة', qs:[
         {p:'Stop when the ___ light is red.', o:['traffic','desk','reading'], a:0, w:'إشارة المرور.', f:'the <u>traffic</u> light'},
         {p:'Always wear your ___ in the car.', o:['seatbelt','hat','watch'], a:0, w:'حزام الأمان.', f:'<u>seatbelt</u>'},
-        {p:"Don't go over the ___ limit.", o:['speed','time','word'], a:0, w:'حدّ السرعة.', f:'<u>speed</u> limit'},
+        {p:"Don’t go over the ___ limit.", o:['speed','time','word'], a:0, w:'حدّ السرعة.', f:'<u>speed</u> limit'},
         {p:'Walk on the ___, not on the road.', o:['sidewalk','highway','sky'], a:0, w:'الرصيف.', f:'the <u>sidewalk</u>'},
         {p:'If you speed, you may pay a ___.', o:['fine','gift','discount'], a:0, w:'غرامة.', f:'a <u>fine</u>'}
       ]},

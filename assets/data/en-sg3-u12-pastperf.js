@@ -13,7 +13,7 @@
       tag:'القاعدة',
       title:'had + p.p. · gerund as subject',
       intro:'نستعمل <b>الماضي التامّ</b> (<code>had + التصريف الثالث</code>) لفعلٍ حدث <b>قبل</b> فعلٍ آخر في الماضي: <code>By the time we arrived, the flight had already left</code>. وتعابيرُه: <code>after, before, by the time, already, never, until</code>. و<b>الاسمُ الفعليّ (gerund)</b> قد يكون <b>فاعلًا</b>: <code>Traveling is fun. Learning a language takes time</code>.',
-      table:[['past perfect','had + past participle'],['sequence','…before / by the time…'],['gerund subject','Reading is useful.'],['contraction',"had → 'd (I'd, she'd)"]],
+      table:[['past perfect','had + past participle'],['sequence','…before / by the time…'],['gerund subject','Reading is useful.'],['contraction',"had → 'd (I’d, she’d)"]],
       trick:'الماضي التامّ للحدث <b>الأسبق</b> بين ماضيين. والاسمُ الفعليُّ (<code>-ing</code>) في أوّل الجملة يكون فاعلًا ويأخذ فعلًا مفردًا: <code>Swimming is fun</code>.'
     },
     stages:[

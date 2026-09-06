@@ -18,33 +18,33 @@
     },
     stages:[
       { type:'choice', name:'already', hint:'في الجملة المثبتة', qs:[
-        {p:'Have you done the dishes? — Yes, I’ve ___ done them.', o:['already','yet','never','ago'], a:0, w:'المثبت ← <code>already</code>.', f:"I've <u>already</u> done them."},
+        {p:'Have you done the dishes? — Yes, I’ve ___ done them.', o:['already','yet','never','ago'], a:0, w:'المثبت ← <code>already</code>.', f:"I’ve <u>already</u> done them."},
         {p:'She has ___ cleaned her room.', o:['already','yet','ago','never'], a:0, w:'<code>already</code>.', f:'has <u>already</u> cleaned'},
         {p:'“already” goes ___ the past participle.', o:['before','after','instead of'], a:0, w:'قبله (بين المساعد والفعل).', f:'<u>before</u>'},
         {p:'Kareem has already ___.', o:['gone','went','go','going'], a:0, w:'التصريف الثالث.', f:'has already <u>gone</u>'}
       ]},
       { type:'choice', name:'yet', hint:'السؤال والنفي', qs:[
         {p:'Have you fed the goldfish ___?', o:['yet','already','just','ago'], a:0, w:'السؤال ← <code>yet</code>.', f:'…fed the goldfish <u>yet</u>?'},
-        {p:'No, I haven’t done it ___.', o:['yet','already','just','ever'], a:0, w:'النفي ← <code>yet</code>.', f:"…haven't done it <u>yet</u>."},
+        {p:'No, I haven’t done it ___.', o:['yet','already','just','ever'], a:0, w:'النفي ← <code>yet</code>.', f:"…haven’t done it <u>yet</u>."},
         {p:'“yet” usually goes ___ the sentence.', o:['at the end of','at the start of','before the verb'], a:0, w:'في النهاية.', f:'<u>at the end of</u>'},
         {p:'Why haven’t you done the dishes ___?', o:['yet','already','just'], a:0, w:'النفي/السؤال ← <code>yet</code>.', f:'…the dishes <u>yet</u>?'}
       ]},
       { type:'choice', name:'just', hint:'حدث قبل قليل', qs:[
-        {p:'I’ve ___ washed them. (قبل قليل)', o:['just','yet','ago','never'], a:0, w:'<code>just</code>.', f:"I've <u>just</u> washed them."},
+        {p:'I’ve ___ washed them. (قبل قليل)', o:['just','yet','ago','never'], a:0, w:'<code>just</code>.', f:"I’ve <u>just</u> washed them."},
         {p:'He has just ___ home.', o:['arrived','arrive','arriving','arrives'], a:0, w:'التصريف الثالث.', f:'has just <u>arrived</u>'},
         {p:'“just” means the action happened:', o:['a short time ago','long ago','never'], a:0, w:'قبل قليل.', f:'<u>a short time ago</u>'},
-        {p:'She’s just ___ the news.', o:['heard','hear','hearing','hears'], a:0, w:'<code>heard</code>.', f:"She's just <u>heard</u>…"}
+        {p:'She’s just ___ the news.', o:['heard','hear','hearing','hears'], a:0, w:'<code>heard</code>.', f:"She’s just <u>heard</u>…"}
       ]},
       { type:'error', name:'اكتشف الخطأ', hint:'انقر الكلمة الخاطئة', qs:[
-        {words:['I’ve','done','already','it','.'], bad:2, fix:'الموضع: already done', w:'<code>already</code> قبل التصريف الثالث.', f:"I've <u>already done</u> it."},
+        {words:['I’ve','done','already','it','.'], bad:2, fix:'الموضع: already done', w:'<code>already</code> قبل التصريف الثالث.', f:"I’ve <u>already done</u> it."},
         {words:['Have','you','already','finished','?'], bad:2, fix:'yet', w:'في السؤال ← <code>yet</code>.', f:'Have you finished <u>yet</u>?'},
-        {words:['I','haven’t','done','it','already','.'], bad:4, fix:'yet', w:'في النفي ← <code>yet</code>.', f:"I haven't done it <u>yet</u>."},
+        {words:['I','haven’t','done','it','already','.'], bad:4, fix:'yet', w:'في النفي ← <code>yet</code>.', f:"I haven’t done it <u>yet</u>."},
         {words:['He','has','just','arrive','.'], bad:3, fix:'arrived', w:'التصريف الثالث.', f:'has just <u>arrived</u>.'}
       ]},
       { type:'order', name:'رتّب الجملة', hint:'انقر الكلمات بالترتيب الصحيح', qs:[
-        {sol:['I’ve','already','done','them','.'], w:'<code>already + p.p.</code>.', f:"I've already done them."},
+        {sol:['I’ve','already','done','them','.'], w:'<code>already + p.p.</code>.', f:"I’ve already done them."},
         {sol:['Have','you','done','it','yet','?'], w:'<code>yet</code> في النهاية.', f:'Have you done it yet?'},
-        {sol:['I','haven’t','done','it','yet','.'], w:'النفي + <code>yet</code>.', f:"I haven't done it yet."},
+        {sol:['I','haven’t','done','it','yet','.'], w:'النفي + <code>yet</code>.', f:"I haven’t done it yet."},
         {sol:['She','has','just','left','.'], w:'<code>just</code>.', f:'She has just left.'}
       ]},
       { type:'mixed', name:'التحدي النهائي', hint:'كلّ ما تعلّمته — مختلطًا', final:true, qs:[
