@@ -43,9 +43,12 @@ window.Engine = (function(){
      فتظهر الإشارة السالبة يسار الرقم صحيحةً. يُفعَّل فقط عند lesson.mathdir=true. */
   function M(s){
     if(!lesson.mathdir || typeof s!=='string' || s.indexOf('class="mx"')>-1) return s;
+    // «س» تُعزَل كمتغيّرٍ جبريّ فقط حين لا يليها حرفٌ عربيّ، فلا تنكسر كلماتٌ كـ«سم» و«ساعة» و«سالب».
+    var C='(?:[+\\-−()|×÷=≈.,،٫…√٪°:/٠-٩\\s]|س(?![ء-ي]))';
+    var RE=new RegExp(C+'*[٠-٩]'+C+'*','g');
     return s.replace(/(<[^>]+>)|([^<]+)/g, function(_,tag,text){
       if(tag) return tag;
-      return text.replace(/[+\-−()|×÷=≈.,،٫…√٪°:/٠-٩س\s]*[٠-٩][+\-−()|×÷=≈.,،٫…√٪°:/٠-٩س\s]*/g, function(m){
+      return text.replace(RE, function(m){
         return '<span class="mx">'+m+'</span>';
       });
     });
