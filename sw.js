@@ -1,7 +1,7 @@
 /* عامل الخدمة — وقّاد
    يخزّن قشرة التطبيق ليعمل بلا إنترنت بعد أول زيارة.
    عند تعديل الملفّات: ارفع رقم النسخة CACHE لإجبار التحديث. */
-var CACHE = 'waqqad-v77';
+var CACHE = 'waqqad-v78';
 var ASSETS = [
   './',
   './index.html',
@@ -53,6 +53,33 @@ var ASSETS = [
   './assets/sims/translation.js',
   './assets/sims/method.js',
   './assets/sims/pump.js',
+  './assets/sims/probability.js',
+  './assets/sims/stats.js',
+  './assets/sims/balance.js',
+  './assets/sims/parabola.js',
+  './assets/sims/trig.js',
+  './assets/sims/solids.js',
+  './assets/sims/circlearea.js',
+  './assets/sims/waves.js',
+  './assets/sims/light.js',
+  './assets/sims/heattransfer.js',
+  './assets/sims/bonds.js',
+  './assets/sims/chemeq.js',
+  './assets/sims/magnet.js',
+  './assets/sims/momentum.js',
+  './assets/sims/solar.js',
+  './assets/sims/cell.js',
+  './assets/sims/photosynthesis.js',
+  './assets/sims/foodchain.js',
+  './assets/sims/circulation.js',
+  './assets/sims/rockcycle.js',
+  './assets/sims/absline.js',
+  './assets/sims/direct.js',
+  './assets/sims/percentbar.js',
+  './assets/sims/sqrtarea.js',
+  './assets/sims/scinote.js',
+  './assets/sims/angles.js',
+  './assets/sims/algetiles.js',
   './assets/engine.js',
   './assets/app.js',
   './assets/data/curriculum.js',
