@@ -12,7 +12,7 @@ window.CURRICULUM = {
   ],
   semesters:[
     {id:'s1', name:'الفصل الدراسي الأول', desc:'الوحدات من بداية العام حتى منتصفه'},
-    {id:'s2', name:'الفصل الدراسي الثاني', desc:'وحدات النصف الثاني من العام'}
+    {id:'s2', name:'الفصل الدراسي الثاني', desc:'وحدات النصف الثاني من العام', locked:true}
   ],
   subjects:[
     {id:'ar',   name:'اللغة العربية',   en:'لغتي الخالدة', icon:'ar',   c:'--s-ar',   cd:'--s-ar-deep',   cs:'--s-ar-soft',   units:3},

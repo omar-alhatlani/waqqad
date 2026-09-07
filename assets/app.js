@@ -61,9 +61,15 @@ window.BRAND = {
     $('#semTitle').textContent=gr.name+' — اختر الفصل';
     var w=$('#semGrid'); w.innerHTML='';
     C.semesters.forEach(function(sm){
-      var el=document.createElement('button'); el.className='card';
-      el.innerHTML='<div class="top"><div class="badge">'+(sm.id==='s1'?'١':'٢')+'</div><span class="arrow">'+I.chev+'</span></div><h3>'+sm.name+'</h3><div class="desc">'+sm.desc+'</div>';
-      el.onclick=function(){ state.sem=sm; state.subject=null; state.unit=null; openSubjects(); };
+      var el=document.createElement('button'); el.className='card'+(sm.locked?' locked':'');
+      var badge = sm.locked ? I.lock : (sm.id==='s1'?'١':'٢');
+      var desc  = sm.locked ? 'يُفتح قريبًا بإذن الله' : sm.desc;
+      el.innerHTML='<div class="top"><div class="badge">'+badge+'</div>'+(sm.locked?'':'<span class="arrow">'+I.chev+'</span>')+'</div><h3>'+sm.name+'</h3><div class="desc">'+desc+'</div>';
+      if(sm.locked){
+        el.onclick=function(){ toast('سيُفتح الفصل الدراسي الثاني قريبًا بإذن الله 🌟'); };
+      } else {
+        el.onclick=function(){ state.sem=sm; state.subject=null; state.unit=null; openSubjects(); };
+      }
       w.appendChild(el);
     });
     go('sem');
