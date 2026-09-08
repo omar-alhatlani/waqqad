@@ -41,17 +41,41 @@ window.Engine = (function(){
   function ltrCls(){ return (lesson.lang==='en' || lesson.dir==='ltr') ? ' ltr' : ''; }
   /* عزل التعبيرات الرقمية (أرقام عربية-هندية + رموز) داخل نصٍّ عربيّ RTL كي تُعرض LTR
      فتظهر الإشارة السالبة يسار الرقم صحيحةً. يُفعَّل فقط عند lesson.mathdir=true. */
+  // كسرٌ رأسيّ: بسطٌ فوق مقام بخطٍّ أفقيّ فاصل، كما في كتاب الوزارة — لا شرطةٌ مائلة «أ/ب»
+  // تُقرأ في العربيّة (يمينًا ← يسارًا) بالمقلوب.
+  function fracHTML(sign, num, den){
+    return '<span class="frac">'+(sign?'<span class="fsg">'+sign+'</span>':'')+
+      '<span class="fb"><span class="fn">'+num+'</span><span class="fd">'+den+'</span></span></span>';
+  }
   function M(s){
-    if(!lesson.mathdir || typeof s!=='string' || s.indexOf('class="mx"')>-1) return s;
+    if(!lesson.mathdir || typeof s!=='string' || s.indexOf('class="mx"')>-1 || s.indexOf('class="frac"')>-1) return s;
     // «س» تُعزَل كمتغيّرٍ جبريّ فقط حين لا يليها حرفٌ عربيّ، فلا تنكسر كلماتٌ كـ«سم» و«ساعة» و«سالب».
     var C='(?:[+\\-−()|×÷=≈.,،٫…√٪°:/٠-٩\\s]|س(?![ء-ي]))';
     var RE=new RegExp(C+'*[٠-٩]'+C+'*','g');
-    return s.replace(/(<[^>]+>)|([^<]+)/g, function(_,tag,text){
-      if(tag) return tag;
-      return text.replace(RE, function(m){
-        return '<span class="mx">'+m+'</span>';
-      });
+    // الكسر: حدّاه رقمٌ (بفاصلةٍ عشريّةٍ وأُسٍّ اختياريَّين) أو متغيّرٌ (س/ص)، محميٌّ بحدود كلمات
+    // فلا تنكسرُ «ارتفاع/ظلّ» ولا كلمةٌ منتهيةٌ بـ«س». الأُسُّ في المقام يُشمَل داخل الكسر.
+    var T='(?:[٠-٩]+(?:٫[٠-٩]+)?|[سص])(?:<sup>[^<]*<\\/sup>)?';
+    var FRAC=new RegExp('(^|[^ء-ي٠-٩])([-−]?'+T+')\\/('+T+')(?=$|[^ء-ي٠-٩])','g');
+    // ١) احمِ السلاسل متعدّدة الشرطات (كالتواريخ) من التفكيك ككسور
+    var prot=[];
+    s=s.replace(/[٠-٩]+(?:\/[٠-٩]+){2,}/g,function(m){ prot.push(m); return ''+(prot.length-1)+''; });
+    // ٢) الكسور المفردة ← عرضٌ رأسيّ (يمرُّ عبر الوسوم كي يلتقطَ أُسَّ المقام)
+    var frs=[];
+    s=s.replace(FRAC,function(_m,b,nu,de){
+      var sg='', c=nu.charAt(0);
+      if(c==='-'||c==='−'){ sg='−'; nu=nu.slice(1); }
+      frs.push(fracHTML(sg,nu,de));
+      return b+''+(frs.length-1)+'';
     });
+    // ٣) أعِدِ السلاسل المحميّة كي تُعزَل رقميًّا كالمعتاد
+    s=s.replace(/(\d+)/g,function(_m,i){ return prot[+i]; });
+    // ٤) اعزل بقيّة التعبيرات الرقمية LTR (متجاوزًا الوسوم والعناصرَ النائبة)
+    s=s.replace(/(<[^>]+>)|([^<]+)/g, function(_x,tag,text){
+      if(tag) return tag;
+      return text.replace(RE, function(m){ return '<span class="mx">'+m+'</span>'; });
+    });
+    // ٥) استبدلِ العناصرَ النائبة بالكسور بعد العزل
+    return s.replace(/(\d+)/g,function(_m,i){ return frs[+i]; });
   }
   function shuffle(a){ a=a.slice(); for(var i=a.length-1;i>0;i--){ var j=Math.floor(Math.random()*(i+1)); var t=a[i];a[i]=a[j];a[j]=t; } return a; }
   function starStr(n,max){ max=max||3; var s=''; for(var i=0;i<max;i++) s+=(i<n?'★':'<span class="off">★</span>'); return s; }
