@@ -47,6 +47,18 @@ window.Engine = (function(){
     return '<span class="frac">'+(sign?'<span class="fsg">'+sign+'</span>':'')+
       '<span class="fb"><span class="fn">'+num+'</span><span class="fd">'+den+'</span></span></span>';
   }
+  // يعزل تعبيرًا رقميًّا LTR، لكن يُخرِج الأقواسَ غيرَ المتوازنة داخله إلى نصّ RTL كي تتزاوج
+  // بصريًّا صحيحةً؛ فلا ينكسر قوسُ جملةٍ عربيّةٍ حول رقم «(الفرق ٢)»، وتبقى المجموعاتُ الرياضيّة
+  // المتوازنةُ داخل العزل «√(٩+١٦)» و«(−٣، −٢)» وحدةً.
+  function isoRun(m){
+    var stack=[], loose={}, i, ch;
+    for(i=0;i<m.length;i++){ ch=m.charAt(i); if(ch==='(') stack.push(i); else if(ch===')'){ if(stack.length) stack.pop(); else loose[i]=1; } }
+    while(stack.length) loose[stack.pop()]=1;
+    var out='', seg='';
+    function flush(){ if(seg){ out += (/[٠-٩]/.test(seg) ? '<span class="mx">'+seg+'</span>' : seg); seg=''; } }
+    for(i=0;i<m.length;i++){ if(loose[i]){ flush(); out+=m.charAt(i); } else seg+=m.charAt(i); }
+    flush(); return out;
+  }
   function M(s){
     if(!lesson.mathdir || typeof s!=='string' || s.indexOf('class="mx"')>-1 || s.indexOf('class="frac"')>-1) return s;
     // «س» تُعزَل كمتغيّرٍ جبريّ فقط حين لا يليها حرفٌ عربيّ، فلا تنكسر كلماتٌ كـ«سم» و«ساعة» و«سالب».
@@ -72,7 +84,7 @@ window.Engine = (function(){
     // ٤) اعزل بقيّة التعبيرات الرقمية LTR (متجاوزًا الوسوم والعناصرَ النائبة)
     s=s.replace(/(<[^>]+>)|([^<]+)/g, function(_x,tag,text){
       if(tag) return tag;
-      return text.replace(RE, function(m){ return '<span class="mx">'+m+'</span>'; });
+      return text.replace(RE, function(m){ return isoRun(m); });
     });
     // ٥) استبدلِ العناصرَ النائبة بالكسور بعد العزل
     return s.replace(/(\d+)/g,function(_m,i){ return frs[+i]; });

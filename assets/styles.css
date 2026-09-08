@@ -71,7 +71,7 @@ body{
 sup{font-size:.62em;vertical-align:super;line-height:0;unicode-bidi:isolate}
 /* الكسر الرأسيّ: بسطٌ فوق مقام بخطٍّ أفقيّ فاصل، كما في كتاب الوزارة (لا شرطة مائلة تُقرأ معكوسة في RTL).
    يُوَلَّد بالمحرّك من صيغة «أ/ب» عند mathdir. currentColor ليتبعَ لون النصّ في الوضعين الفاتح والداكن. */
-.frac{display:inline-flex;align-items:center;direction:ltr;unicode-bidi:isolate;vertical-align:-.42em;margin:0 .18em;font-variant-numeric:normal}
+.frac{display:inline-flex;align-items:center;direction:ltr;unicode-bidi:isolate;vertical-align:middle;margin:0 .18em .12em;font-variant-numeric:normal}
 .frac .fsg{margin-inline-end:.14em}
 .frac .fb{display:inline-flex;flex-direction:column;align-items:center;line-height:1.06}
 .frac .fn{padding:0 .34em .05em;border-bottom:.1em solid currentColor}
