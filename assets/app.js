@@ -15,6 +15,35 @@ window.BRAND = {
   var $ = function(s){ return document.querySelector(s); };
   var state = { grade:null, sem:null, subject:null, unit:null, unitIdx:0 };
 
+  /* ---------- التحميل حسب الطلب ----------
+     LMAN فهرسٌ خفيفٌ يُحمَّل مقدّمًا (ref → ملفّ الدرس وعددُ مراحله ومحاكاتُه)،
+     أمّا محتوى الدرس والمحاكاة فيُحمَّل عند فتحه فقط. */
+  var LMAN = window.LMAN || { lessons:{}, sims:{} };
+  var _loaded = {};
+  function loadScript(src){
+    if(_loaded[src]) return _loaded[src];
+    _loaded[src] = new Promise(function(res, rej){
+      var s=document.createElement('script'); s.src=src; s.async=false;
+      s.onload=function(){ res(); };
+      s.onerror=function(){ _loaded[src]=null; rej(new Error('تعذّر تحميل '+src)); };
+      document.head.appendChild(s);
+    });
+    return _loaded[src];
+  }
+  function built(ref){ return !!(ref && LMAN.lessons[ref]); }               // هل الدرسُ مبنيّ؟ (من الفهرس، بلا تحميل)
+  function lstats(ref){                                                      // إحصاءُ التقدّم من الفهرس + التخزين المحلّي (بلا تحميل الدرس)
+    var m=LMAN.lessons[ref]; if(!m) return { stars:0, max:0, started:false, complete:false };
+    return Engine.stats({ id:m.id||ref, stages:{ length:m.n||0 } });
+  }
+  function loadLesson(ref){                                                  // يحمّل ملفّ الدرس (ومحاكاتَه إن وُجدت) عند فتحه
+    var m=LMAN.lessons[ref]; if(!m) return Promise.reject(new Error('لا يوجد '+ref));
+    var need = !(window.LESSONS && window.LESSONS[ref]);
+    var p = need ? loadScript(m.f) : Promise.resolve();
+    return p.then(function(){
+      if(m.sim && LMAN.sims[m.sim] && !(window.SIMS && window.SIMS[m.sim])) return loadScript(LMAN.sims[m.sim]);
+    });
+  }
+
   /* ---------- متغيّرات لون المادة ---------- */
   function setSubjectVars(sub){
     var s=document.body.style;
@@ -124,10 +153,10 @@ window.BRAND = {
     go('units');
   }
   function unitProgress(u){
-    var refs=(u.lessons||[]).filter(function(l){ return l.ref && window.LESSONS[l.ref]; });
+    var refs=(u.lessons||[]).filter(function(l){ return built(l.ref); });
     if(!refs.length) return {pct:0,stars:0};
     var complete=0, sSum=0, sMax=0;
-    refs.forEach(function(l){ var s=Engine.stats(window.LESSONS[l.ref]); if(s.complete) complete++; sSum+=s.stars; sMax+=s.max; });
+    refs.forEach(function(l){ var s=lstats(l.ref); if(s.complete) complete++; sSum+=s.stars; sMax+=s.max; });
     return { pct:Math.round(complete/refs.length*100), stars: sMax? Math.round(sSum/sMax*3):0 };
   }
 
@@ -142,9 +171,8 @@ window.BRAND = {
       go('lessons'); return;
     }
     u.lessons.forEach(function(ls){
-      var L = ls.ref && window.LESSONS[ls.ref] ? window.LESSONS[ls.ref] : null;
-      var s = L ? Engine.stats(L) : null;
-      var playable = !!L;
+      var playable = built(ls.ref);
+      var s = playable ? lstats(ls.ref) : null;
       var doneState = s && s.complete;
       var el=document.createElement('button'); el.className='lesson'+(doneState?' done':'')+(playable?'':' locked');
       var icon = !playable ? I.lock : (doneState ? I.check : I.play);
@@ -153,7 +181,7 @@ window.BRAND = {
                     : (s.started ? '<span class="stars">'+starStr(Math.round(s.stars/s.max*3),3)+'</span>' : '<span class="tag">ابدأ الآن</span>'));
       var tagIc = window.TAG_ICON[ls.tag];
       el.innerHTML='<div class="lic">'+icon+'</div><div class="lmeta"><b>'+ls.t+'</b><div class="tags"><span class="tag">'+ls.tag+'</span>'+stateTag+'</div></div>'+(playable?'<span class="chev">'+I.chev+'</span>':'');
-      if(playable){ el.onclick=function(){ openLesson(L); }; }
+      if(playable){ el.onclick=function(){ openLesson(ls.ref); }; }
       else{ el.onclick=function(){ toast('هذا الدرس قيد الإعداد 🔒'); }; }
       w.appendChild(el);
     });
@@ -161,24 +189,27 @@ window.BRAND = {
   }
 
   /* ---------- فتح الدرس عبر المحرّك ---------- */
-  function openLesson(L){
+  function openLesson(ref){
     go('lesson');
-    Engine.open(L, {
-      mount: $('#lessonMount'),
-      onExit: function(){ openUnit(state.unit, state.unitIdx); },
-      onProgress: function(){ refreshTotals(); },
-      toast: toast,
-      scrollTop: scrollTop
+    var mount=$('#lessonMount');
+    mount.innerHTML='<div class="soon"><div class="si">'+I.book+'</div><b>جارِ تحميل الدرس…</b></div>';
+    loadLesson(ref).then(function(){
+      var L=window.LESSONS && window.LESSONS[ref];
+      if(!L) throw new Error('missing '+ref);
+      Engine.open(L, {
+        mount: mount,
+        onExit: function(){ openUnit(state.unit, state.unitIdx); },
+        onProgress: function(){ refreshTotals(); },
+        toast: toast,
+        scrollTop: scrollTop
+      });
+    }).catch(function(){
+      mount.innerHTML='<div class="soon"><div class="si">'+I.book+'</div><b>تعذّر تحميل الدرس</b><span>تحقّقْ من اتصالك بالإنترنت ثم أعِدِ المحاولة.</span></div>';
     });
   }
 
   /* ---------- إجماليّات النجوم ---------- */
-  function allRefLessons(){
-    var out=[]; var c=C.content;
-    for(var k in c){ if(c.hasOwnProperty(k)){ c[k].units.forEach(function(u){ (u.lessons||[]).forEach(function(l){ if(l.ref && window.LESSONS[l.ref]) out.push(window.LESSONS[l.ref]); }); }); } }
-    return out;
-  }
-  function refreshTotals(){ var t=0; allRefLessons().forEach(function(L){ t+=Engine.stats(L).stars; }); $('#starTotal').textContent=t; }
+  function refreshTotals(){ var t=0; for(var ref in LMAN.lessons){ if(LMAN.lessons.hasOwnProperty(ref)) t+=lstats(ref).stars; } $('#starTotal').textContent=t; }
 
   /* ---------- أدوات ---------- */
   function starStr(n,max){ max=max||3; var s=''; for(var i=0;i<max;i++) s+=(i<n?'★':'<span class="off">★</span>'); return s; }
@@ -274,7 +305,7 @@ window.BRAND = {
       state.grade=C.grades[0]; state.sem=C.semesters[0]; state.subject=C.subjects[3];
       setSubjectVars(state.subject);
       var u=C.content['g1.s1.en'].units[0]; state.unit=u; state.unitIdx=0;
-      openLesson(window.LESSONS['EN_SG1_U1_VERBBE']);
+      openLesson('EN_SG1_U1_VERBBE');
     };
     $('#aboutLink').onclick=openAbout;
     $('#aboutClose').onclick=closeAbout;
