@@ -51,13 +51,16 @@ window.Engine = (function(){
   // بصريًّا صحيحةً؛ فلا ينكسر قوسُ جملةٍ عربيّةٍ حول رقم «(الفرق ٢)»، وتبقى المجموعاتُ الرياضيّة
   // المتوازنةُ داخل العزل «√(٩+١٦)» و«(−٣، −٢)» وحدةً.
   function isoRun(m){
+    // اسحبِ العواملَ الثنائيةَ البادئة (= × ÷ ≈) إلى نصّ RTL كي لا ينعكسَ ترتيبُها بعد كلمةٍ عربيّة
+    // فـ«العدد × نظيره = ١» يُقرأ صحيحًا لا «نظيره ١ =». (لا «+ −» فقد تكونان إشارةً لا عاملًا.)
+    var lead=''; var lm=m.match(/^[\s=×÷≈]+/); if(lm){ lead=lm[0]; m=m.slice(lead.length); }
     var stack=[], loose={}, i, ch;
     for(i=0;i<m.length;i++){ ch=m.charAt(i); if(ch==='(') stack.push(i); else if(ch===')'){ if(stack.length) stack.pop(); else loose[i]=1; } }
     while(stack.length) loose[stack.pop()]=1;
     var out='', seg='';
     function flush(){ if(seg){ out += (/[٠-٩]/.test(seg) ? '<span class="mx">'+seg+'</span>' : seg); seg=''; } }
     for(i=0;i<m.length;i++){ if(loose[i]){ flush(); out+=m.charAt(i); } else seg+=m.charAt(i); }
-    flush(); return out;
+    flush(); return lead+out;
   }
   function M(s){
     if(!lesson.mathdir || typeof s!=='string' || s.indexOf('class="mx"')>-1 || s.indexOf('class="frac"')>-1) return s;
@@ -66,11 +69,11 @@ window.Engine = (function(){
     var RE=new RegExp(C+'*[٠-٩]'+C+'*','g');
     // الكسر: حدّاه رقمٌ (بفاصلةٍ عشريّةٍ وأُسٍّ اختياريَّين) أو متغيّرٌ (س/ص)، محميٌّ بحدود كلمات
     // فلا تنكسرُ «ارتفاع/ظلّ» ولا كلمةٌ منتهيةٌ بـ«س». الأُسُّ في المقام يُشمَل داخل الكسر.
-    var T='(?:[٠-٩]+(?:٫[٠-٩]+)?|[سص])(?:<sup>[^<]*<\\/sup>)?';
+    var T='(?:[٠-٩]+(?:٫[٠-٩]+)?|[ء-ي]ـ?)(?:<sup>[^<]*<\\/sup>)?';
     var FRAC=new RegExp('(^|[^ء-ي٠-٩])([-−]?'+T+')\\/('+T+')(?=$|[^ء-ي٠-٩])','g');
     // ١) احمِ السلاسل متعدّدة الشرطات (كالتواريخ) من التفكيك ككسور
     var prot=[];
-    s=s.replace(/[٠-٩]+(?:\/[٠-٩]+){2,}/g,function(m){ prot.push(m); return ''+(prot.length-1)+''; });
+    s=s.replace(/(?:[٠-٩]+(?:٫[٠-٩]+)?|[ء-ي]ـ?)(?:\/(?:[٠-٩]+(?:٫[٠-٩]+)?|[ء-ي]ـ?)){2,}/g,function(m){ prot.push(m); return ''+(prot.length-1)+''; });
     // ٢) الكسور المفردة ← عرضٌ رأسيّ (يمرُّ عبر الوسوم كي يلتقطَ أُسَّ المقام)
     var frs=[];
     s=s.replace(FRAC,function(_m,b,nu,de){
@@ -81,13 +84,17 @@ window.Engine = (function(){
     });
     // ٣) أعِدِ السلاسل المحميّة كي تُعزَل رقميًّا كالمعتاد
     s=s.replace(/(\d+)/g,function(_m,i){ return prot[+i]; });
+    // ٣.٥) الأُسّ المفرد: أساسٌ (رقمٌ أو متغيّرٌ) يتبعه <sup> يُعزَل وحدةً LTR كي يظهر الأُسُّ أعلى يمينِ الأساس لا يساره
+    var PE0=String.fromCharCode(0xE020), PE1=String.fromCharCode(0xE021), exps=[];
+    s=s.replace(/([٠-٩]+(?:٫[٠-٩]+)?|[ء-ي])(<sup>[^<]*<\/sup>)/g,function(_m,base,sup){ exps.push('<span class="mx">'+base+sup+'</span>'); return PE0+(exps.length-1)+PE1; });
     // ٤) اعزل بقيّة التعبيرات الرقمية LTR (متجاوزًا الوسوم والعناصرَ النائبة)
     s=s.replace(/(<[^>]+>)|([^<]+)/g, function(_x,tag,text){
       if(tag) return tag;
       return text.replace(RE, function(m){ return isoRun(m); });
     });
     // ٥) استبدلِ العناصرَ النائبة بالكسور بعد العزل
-    return s.replace(/(\d+)/g,function(_m,i){ return frs[+i]; });
+    s=s.replace(/(\d+)/g,function(_m,i){ return frs[+i]; });
+    return s.replace(new RegExp(PE0+'(\\d+)'+PE1,'g'),function(_m,i){ return exps[+i]; });
   }
   function shuffle(a){ a=a.slice(); for(var i=a.length-1;i>0;i--){ var j=Math.floor(Math.random()*(i+1)); var t=a[i];a[i]=a[j];a[j]=t; } return a; }
   function starStr(n,max){ max=max||3; var s=''; for(var i=0;i<max;i++) s+=(i<n?'★':'<span class="off">★</span>'); return s; }
@@ -269,7 +276,7 @@ window.Engine = (function(){
     }
     // اختيار / إكمال فراغ (السؤال يملك q.o)
     var txt = q.p.indexOf('___')>-1 ? q.p.replace('___','<span class="blank">&nbsp;?&nbsp;</span>') : q.p;
-    var longest=Math.max.apply(null,q.o.map(function(x){return x.length;}));
+    var longest=Math.max.apply(null,q.o.map(function(x){return x.replace(/<[^>]+>/g,'').length;}));
     var isLong=longest>15;
     var askLine = q.ask ? '<div class="qhint ask">'+M(q.ask)+'</div>' : '<div class="qhint">اختر الإجابة الصحيحة</div>';
     A.innerHTML='<div class="qcard">'+askLine+'<div class="qtext'+enCls()+'">'+M(txt)+'</div></div>'+

@@ -103,7 +103,7 @@ window.SIMS['newton'] = (function(){
       var val=values();
       q('.js-fval').textContent=toAr(val.F);
       q('.js-mval').textContent=toAr(val.m);
-      q('.js-eq').textContent=fmt(val.a)+' = '+toAr(val.F)+' ÷ '+toAr(val.m);
+      q('.js-eq').textContent=toAr(val.F)+' ÷ '+toAr(val.m)+' = '+fmt(val.a);
       q('.js-a').textContent=fmt(val.a);
       setState(val);
       if(reduce) draw();
