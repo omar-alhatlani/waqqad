@@ -285,8 +285,15 @@ window.BRAND = {
     go('home');
     visitorCounter();
 
-    // PWA
-    if('serviceWorker' in navigator){ window.addEventListener('load',function(){ navigator.serviceWorker.register('sw.js').catch(function(){}); }); }
+    // PWA — تسجيلٌ + تحديثٌ تلقائيّ: حين يتولّى عاملُ خدمةٍ جديدٌ التحكّم (بعد نشرِ نسخةٍ جديدة)
+    // نعيدُ التحميلَ مرّةً واحدةً كي يصلَ التحديثُ للجوّال دون هارد-ريفريش يدويّ. (يُتخطّى أوّلُ تثبيت.)
+    if('serviceWorker' in navigator){
+      var swRefreshing=false, hadController=!!navigator.serviceWorker.controller;
+      navigator.serviceWorker.addEventListener('controllerchange', function(){
+        if(swRefreshing || !hadController) return; swRefreshing=true; window.location.reload();
+      });
+      window.addEventListener('load', function(){ navigator.serviceWorker.register('sw.js').catch(function(){}); });
+    }
   }
 
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', boot);
