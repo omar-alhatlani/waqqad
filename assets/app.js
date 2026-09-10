@@ -78,11 +78,16 @@ window.BRAND = {
   /* ---------- الصفوف ---------- */
   function renderGrades(){
     var w=$('#gradeGrid'); w.innerHTML='';
-    C.grades.forEach(function(gr){
-      var el=document.createElement('button'); el.className='card';
-      el.innerHTML='<div class="top"><div class="badge">'+gr.num+'</div><span class="arrow">'+I.chev+'</span></div><h3>'+gr.name+'</h3><div class="desc">'+gr.desc+'</div>';
-      el.onclick=function(){ state.grade=gr; state.sem=null; state.subject=null; state.unit=null; openGrade(gr); };
-      w.appendChild(el);
+    var stages=[]; C.grades.forEach(function(g){ var s=g.stage||''; if(stages.indexOf(s)<0) stages.push(s); });
+    stages.forEach(function(st){
+      if(st){ var h=document.createElement('div'); h.className='grade-stage'; h.textContent=st;
+        h.style.cssText='grid-column:1/-1;font-family:var(--display);font-weight:800;color:var(--ink-soft);font-size:15px;margin:8px 2px 0;'; w.appendChild(h); }
+      C.grades.filter(function(g){ return (g.stage||'')===st; }).forEach(function(gr){
+        var el=document.createElement('button'); el.className='card';
+        el.innerHTML='<div class="top"><div class="badge">'+gr.num+'</div><span class="arrow">'+I.chev+'</span></div><h3>'+gr.name+'</h3><div class="desc">'+gr.desc+'</div>';
+        el.onclick=function(){ state.grade=gr; state.sem=null; state.subject=null; state.unit=null; openGrade(gr); };
+        w.appendChild(el);
+      });
     });
   }
   function openGrade(gr){
