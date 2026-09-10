@@ -3,6 +3,13 @@
    الأنماط: منظومة ألوان بمتغيّرات + وضعان فاتح/داكن + مكوّنات
    ============================================================ */
 
+/* أرقامٌ أوضح: تُوجَّه الأرقامُ العربية-الهندية (٠–٩) وحدَها إلى خطّ Cairo
+   عبر unicode-range، فتتمايز ٢ و٣ بوضوح، ويبقى بقيّةُ النصّ بخطّ Plex. */
+@font-face{
+  font-family:'WqNum'; font-style:normal; font-weight:400 900; font-display:swap;
+  src:url(https://fonts.gstatic.com/s/cairo/v31/SLXgc1nY6HkvangtZmpQdkhzfH5lkSs2SgRjCAGMQ1z0hAc5a1biLD-H.woff2) format('woff2');
+  unicode-range:U+0660-0669;
+}
 :root{
   --bg:#F5F6FB; --grad-a:#EEF0FB; --grad-b:#F7F5FF;
   --surface:#FFFFFF; --surface-2:#FBFBFE;
@@ -23,9 +30,9 @@
 
   --subject:var(--brand); --subject-deep:var(--brand-deep); --subject-soft:var(--brand-soft);
 
-  --ar:'IBM Plex Sans Arabic','Segoe UI',Tahoma,sans-serif;
-  --display:'Cairo','IBM Plex Sans Arabic',sans-serif;
-  --en:'Poppins','Segoe UI',Arial,sans-serif;
+  --ar:'WqNum','IBM Plex Sans Arabic','Segoe UI',Tahoma,sans-serif;
+  --display:'WqNum','Cairo','IBM Plex Sans Arabic',sans-serif;
+  --en:'WqNum','Poppins','Segoe UI',Arial,sans-serif;
 }
 @media (prefers-color-scheme:dark){
   :root:not([data-theme="light"]){
