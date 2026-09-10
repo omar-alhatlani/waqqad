@@ -210,20 +210,22 @@ window.BRAND = {
      رقمٌ إجماليٌّ فقط (بلا بيانات شخصية) عبر خدمة Abacus المجّانية.
      يُحسب مرّةً لكلّ جلسة، ويختفي بهدوءٍ إن تعذّر الاتصال (أوفلاين مثلًا). */
   function toAr(n){ return String(n).replace(/[0-9]/g,function(d){ return '٠١٢٣٤٥٦٧٨٩'[d]; }); }
+  /* أرقامٌ إنجليزيّةٌ للعدّاد الرقميّ (LED)، مصفوفةٌ بأصفارٍ بادئة (أربع خاناتٍ على الأقلّ) */
+  function fmtCount(n){ n=Math.max(0,Math.round(n||0)); var s=String(n); while(s.length<4) s='0'+s; return s; }
   /* عدٌّ تصاعديٌّ متحرّك للرقم حتى القيمة النهائية (يحترم تقليل الحركة) */
   function countUp(el, target){
     var reduce=false; try{ reduce=matchMedia('(prefers-reduced-motion:reduce)').matches; }catch(e){}
     /* تبويبٌ مخفيٌّ يُجمّد requestAnimationFrame، فنضبط الرقم النهائيّ فورًا بلا حركة */
-    if(reduce || !target || target<2 || document.hidden || typeof requestAnimationFrame!=='function'){ el.textContent=toAr(target); return; }
+    if(reduce || !target || target<2 || document.hidden || typeof requestAnimationFrame!=='function'){ el.textContent=fmtCount(target); return; }
     var t0=0, dur=1100, from=Math.max(0, target-Math.min(target, 60)), done=false;
     function step(now){
       if(!t0) t0=now;
       var p=Math.min(1,(now-t0)/dur), e=1-Math.pow(1-p,3);
-      el.textContent=toAr(Math.round(from+(target-from)*e));
+      el.textContent=fmtCount(from+(target-from)*e);
       if(p<1) requestAnimationFrame(step); else done=true;
     }
     requestAnimationFrame(step);
-    setTimeout(function(){ if(!done) el.textContent=toAr(target); }, dur+700); /* ضمانٌ نهائيّ */
+    setTimeout(function(){ if(!done) el.textContent=fmtCount(target); }, dur+700); /* ضمانٌ نهائيّ */
   }
   function visitorCounter(){
     var box=$('#visitBox'), num=$('#visitCount'); if(!box||!num) return;
@@ -258,6 +260,14 @@ window.BRAND = {
 
     // الروابط
     $('#brandHome').onclick=function(){ setSubjectVars(null); go('home'); };
+
+    // أزرار الرجوع في كلّ شاشة (خطوةٌ واحدةٌ للخلف)
+    var backChev = I.chev+' رجوع';
+    $('#gradeBack').innerHTML=backChev;   $('#gradeBack').onclick=function(){ setSubjectVars(null); go('home'); };
+    $('#semBack').innerHTML=backChev;     $('#semBack').onclick=function(){ state.grade=null; state.sem=null; setSubjectVars(null); go('grade'); };
+    $('#subjectBack').innerHTML=backChev; $('#subjectBack').onclick=function(){ openGrade(state.grade); };
+    $('#unitsBack').innerHTML=backChev;   $('#unitsBack').onclick=function(){ openSubjects(); };
+    $('#lessonsBack').innerHTML=backChev; $('#lessonsBack').onclick=function(){ openSubject(state.subject); };
     $('#startBtn').onclick=function(){ saveName(); setSubjectVars(null); renderGrades(); go('grade'); };
     $('#resumeBtn').onclick=function(){
       saveName();
