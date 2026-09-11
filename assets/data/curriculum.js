@@ -113,6 +113,49 @@ window.CURRICULUM = {
       ]}
     ]},
 
+    'p4.s1.en':{ eyebrow:'English · Top Goal 1', units:[
+      { t:'Unit 1 — Family Events', s:'المناسبات العائليّة · قواعد ومفردات', lessons:[
+        { t:'Grammar — How often & frequency', tag:'قواعد', ref:'EN_TG1_U1_FREQ' },
+        { t:'Grammar — Possessives with whose', tag:'قواعد', ref:'EN_TG1_U1_POSS' },
+        { t:'Vocabulary — Family Events', tag:'مفردات', ref:'EN_TG1_U1_VOCAB' }
+      ]},
+      { t:'Unit 2 — Chores', s:'الأعمال المنزليّة · قواعد ومفردات', lessons:[
+        { t:'Grammar — Present Simple vs. Progressive', tag:'قواعد', ref:'EN_TG1_U2_PROG' },
+        { t:'Grammar — Can: offers & requests', tag:'قواعد', ref:'EN_TG1_U2_CAN' },
+        { t:'Vocabulary — Chores', tag:'مفردات', ref:'EN_TG1_U2_VOCAB' }
+      ]},
+      { t:'Unit 3 — Stories', s:'القصص · قواعد ومفردات', lessons:[
+        { t:'Grammar — Simple Past: + and −', tag:'قواعد', ref:'EN_TG1_U3_PAST' },
+        { t:'Grammar — Past questions & answers', tag:'قواعد', ref:'EN_TG1_U3_PASTQ' },
+        { t:'Vocabulary — Story action verbs', tag:'مفردات', ref:'EN_TG1_U3_VOCAB' }
+      ]},
+      { t:'Unit 4 — After-School Fun', s:'أنشطة ما بعد المدرسة · قواعد ومفردات', lessons:[
+        { t:'Grammar — Regular & irregular past', tag:'قواعد', ref:'EN_TG1_U4_IRREG' },
+        { t:'Grammar — and, but, because, so, when', tag:'قواعد', ref:'EN_TG1_U4_CONJ' },
+        { t:'Vocabulary — After-School Fun', tag:'مفردات', ref:'EN_TG1_U4_VOCAB' }
+      ]},
+      { t:'Unit 5 — Outdoor Fun', s:'المتعة في الهواء الطلق · قواعد ومفردات', lessons:[
+        { t:'Grammar — to-infinitive vs. -ing', tag:'قواعد', ref:'EN_TG1_U5_INF' },
+        { t:'Grammar — could / couldn’t (past ability)', tag:'قواعد', ref:'EN_TG1_U5_COULD' },
+        { t:'Vocabulary — Nature & Land', tag:'مفردات', ref:'EN_TG1_U5_VOCAB' }
+      ]},
+      { t:'Unit 6 — House Accidents', s:'حوادث المنزل · قواعد ومفردات', lessons:[
+        { t:'Grammar — have to / must / should', tag:'قواعد', ref:'EN_TG1_U6_MODAL' },
+        { t:'Grammar — Indefinite pronouns', tag:'قواعد', ref:'EN_TG1_U6_INDEF' },
+        { t:'Vocabulary — Health & Injuries', tag:'مفردات', ref:'EN_TG1_U6_VOCAB' }
+      ]},
+      { t:'Unit 7 — Wildlife', s:'الحياة الفطريّة · قواعد ومفردات', lessons:[
+        { t:'Grammar — Relative clauses', tag:'قواعد', ref:'EN_TG1_U7_REL' },
+        { t:'Grammar — Comparatives & superlatives', tag:'قواعد', ref:'EN_TG1_U7_COMP' },
+        { t:'Vocabulary — Wildlife', tag:'مفردات', ref:'EN_TG1_U7_VOCAB' }
+      ]},
+      { t:'Unit 8 — Weather', s:'الطقس · قواعد ومفردات', lessons:[
+        { t:'Grammar — Future: be going to', tag:'قواعد', ref:'EN_TG1_U8_FUTURE' },
+        { t:'Grammar — to be: present & past', tag:'قواعد', ref:'EN_TG1_U8_BE' },
+        { t:'Vocabulary — Weather', tag:'مفردات', ref:'EN_TG1_U8_VOCAB' }
+      ]}
+    ]},
+
     /* ===== الخامس الابتدائي · الفصل الأول ===== */
     'p5.s1.math':{ eyebrow:'رياضيات · الخامس الابتدائي', units:[
       { t:'القيمة المنزلية والكسور العشرية', s:'الفصل الأول', lessons:[
