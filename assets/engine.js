@@ -54,13 +54,15 @@ window.Engine = (function(){
     // اسحبِ العواملَ الثنائيةَ البادئة (= × ÷ ≈) إلى نصّ RTL كي لا ينعكسَ ترتيبُها بعد كلمةٍ عربيّة
     // فـ«العدد × نظيره = ١» يُقرأ صحيحًا لا «نظيره ١ =». (لا «+ −» فقد تكونان إشارةً لا عاملًا.)
     var lead=''; var lm=m.match(/^[\s=×÷≈]+/); if(lm){ lead=lm[0]; m=m.slice(lead.length); }
+    // واسحبِ المسافاتِ الطرفيّةَ خارجَ العزل كي لا تُطوى عند حدّ .mx فيلتصقَ الرقمُ بالكلمة العربية بعده
+    var trail=''; var tm=m.match(/\s+$/); if(tm){ trail=tm[0]; m=m.slice(0,m.length-trail.length); }
     var stack=[], loose={}, i, ch;
     for(i=0;i<m.length;i++){ ch=m.charAt(i); if(ch==='(') stack.push(i); else if(ch===')'){ if(stack.length) stack.pop(); else loose[i]=1; } }
     while(stack.length) loose[stack.pop()]=1;
     var out='', seg='';
     function flush(){ if(seg){ out += (/[٠-٩]/.test(seg) ? '<span class="mx">'+seg+'</span>' : seg); seg=''; } }
     for(i=0;i<m.length;i++){ if(loose[i]){ flush(); out+=m.charAt(i); } else seg+=m.charAt(i); }
-    flush(); return lead+out;
+    flush(); return lead+out+trail;
   }
   function M(s){
     if(!lesson.mathdir || typeof s!=='string' || s.indexOf('class="mx"')>-1 || s.indexOf('class="frac"')>-1) return s;
