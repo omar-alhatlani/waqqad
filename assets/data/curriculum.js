@@ -92,6 +92,21 @@ window.CURRICULUM = {
       ]}
     ]},
 
+    'p3.s1.ar':{ eyebrow:'لغتي · الثالث الابتدائي', units:[
+      { t:'الرسم الإملائي', s:'أساسيّات الكتابة', lessons:[
+        { t:'اللام الشمسية والقمرية', tag:'إملاء', ref:'AR_LUGHATI_P3_U1_LAM' },
+        { t:'التنوين', tag:'إملاء', ref:'AR_LUGHATI_P3_U1_TANWIN' },
+        { t:'التاء المربوطة والمفتوحة والهاء', tag:'إملاء', ref:'AR_LUGHATI_P3_U1_TAA' },
+        { t:'حروف المدّ', tag:'إملاء', ref:'AR_LUGHATI_P3_U1_MADD' },
+        { t:'الألف اللينة', tag:'إملاء', ref:'AR_LUGHATI_P3_U1_ALIF' },
+        { t:'الحرف المشدّد', tag:'إملاء', ref:'AR_LUGHATI_P3_U1_SHADDA' }
+      ]},
+      { t:'التراكيب اللغوية', s:'الجملة والإشارة', lessons:[
+        { t:'الجملة المفيدة', tag:'نحو', ref:'AR_LUGHATI_P3_U1_JUMLA' },
+        { t:'اسم الإشارة', tag:'نحو', ref:'AR_LUGHATI_P3_U1_ISHARA' }
+      ]}
+    ]},
+
     /* ===== الرابع الابتدائي · الفصل الأول ===== */
     'p4.s1.math':{ eyebrow:'رياضيات · الرابع الابتدائي', units:[
       { t:'القيمة المنزلية', s:'الفصل الأول', lessons:[
