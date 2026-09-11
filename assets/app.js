@@ -118,8 +118,12 @@ window.BRAND = {
       el.style.setProperty('--sc','var('+sub.c+')'); el.style.setProperty('--scd','var('+sub.cd+')'); el.style.setProperty('--scs','var('+sub.cs+')');
       /* عددُ الوحدات من محتوى الصفّ/الفصل الحاليّ إن وُجد، وإلّا العددُ العامّ للمادة */
       var ck=state.grade.id+'.'+state.sem.id+'.'+sub.id;
-      var uCount=(C.content[ck]&&C.content[ck].units)?C.content[ck].units.length:sub.units;
-      el.innerHTML='<div class="top"><div class="badge">'+I[sub.icon]+'</div><span class="arrow">'+I.chev+'</span></div><h3>'+sub.name+'</h3><div class="desc en">'+sub.en+'</div><span class="pill">'+uCount+' وحدات دراسية</span>';
+      var content=C.content[ck];
+      var uCount=(content&&content.units)?content.units.length:sub.units;
+      /* العنوان الفرعيّ للإنجليزي واعٍ بالصفّ: يُشتقّ من إيبرو المحتوى (سلسلةُ الكتاب) إن وُجد */
+      var desc=sub.en;
+      if(sub.id==='en' && content && content.eyebrow) desc=content.eyebrow.replace(/^English\s*·\s*/,'');
+      el.innerHTML='<div class="top"><div class="badge">'+I[sub.icon]+'</div><span class="arrow">'+I.chev+'</span></div><h3>'+sub.name+'</h3><div class="desc en">'+desc+'</div><span class="pill">'+uCount+' وحدات دراسية</span>';
       el.onclick=function(){ state.subject=sub; state.unit=null; openSubject(sub); };
       w.appendChild(el);
     });
