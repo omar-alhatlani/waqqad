@@ -107,6 +107,33 @@ window.CURRICULUM = {
       ]}
     ]},
 
+    'p3.s1.en':{ eyebrow:'English · We Can! 3', units:[
+      { t:'Unit 1 — It’s Nice to Meet You!', s:'التعارف · قواعد ومفردات', lessons:[
+        { t:'Grammar — verb to be & greetings', tag:'قواعد', ref:'EN_WC3_U1_BE' },
+        { t:'Vocabulary — Greetings & People', tag:'مفردات', ref:'EN_WC3_U1_VOCAB' }
+      ]},
+      { t:'Unit 2 — Sea Animals', s:'حيوانات البحر · قواعد ومفردات', lessons:[
+        { t:'Grammar — There is / There are', tag:'قواعد', ref:'EN_WC3_U2_THERE' },
+        { t:'Vocabulary — Sea Animals', tag:'مفردات', ref:'EN_WC3_U2_VOCAB' }
+      ]},
+      { t:'Unit 3 — Sports and Activities', s:'الرياضة والأنشطة · قواعد ومفردات', lessons:[
+        { t:'Grammar — can / can’t', tag:'قواعد', ref:'EN_WC3_U3_CAN' },
+        { t:'Vocabulary — Sports & Activities', tag:'مفردات', ref:'EN_WC3_U3_VOCAB' }
+      ]},
+      { t:'Unit 4 — Chores', s:'الأعمال المنزلية · قواعد ومفردات', lessons:[
+        { t:'Grammar — Present Progressive', tag:'قواعد', ref:'EN_WC3_U4_PROG' },
+        { t:'Vocabulary — Chores', tag:'مفردات', ref:'EN_WC3_U4_VOCAB' }
+      ]},
+      { t:'Unit 5 — Yesterday and Today', s:'الروتين اليومي · قواعد ومفردات', lessons:[
+        { t:'Grammar — Daily routines & time', tag:'قواعد', ref:'EN_WC3_U5_ROUTINE' },
+        { t:'Vocabulary — Daily Routines', tag:'مفردات', ref:'EN_WC3_U5_VOCAB' }
+      ]},
+      { t:'Unit 6 — Jobs', s:'المِهَن · قواعد ومفردات', lessons:[
+        { t:'Grammar — Jobs & a/an', tag:'قواعد', ref:'EN_WC3_U6_JOBS' },
+        { t:'Vocabulary — Jobs', tag:'مفردات', ref:'EN_WC3_U6_VOCAB' }
+      ]}
+    ]},
+
     /* ===== الرابع الابتدائي · الفصل الأول ===== */
     'p4.s1.math':{ eyebrow:'رياضيات · الرابع الابتدائي', units:[
       { t:'القيمة المنزلية', s:'الفصل الأول', lessons:[
