@@ -28,6 +28,8 @@
   --s-sci:#0FA3AA; --s-sci-deep:#0B7E86; --s-sci-soft:#E2F5F5;
   --s-en:#7A5BE8; --s-en-deep:#5B3FC4; --s-en-soft:#EFEAFD;
 
+  --tok-focus:#2E5AD6; --tok-plural:#B26A12;   /* تركيزٌ نحويّ (أزرق) + إشارةُ الجمع (كهرمانيّ) — ليسا أحمرَ الخطأ ولا أخضرَ النجاح */
+
   --subject:var(--brand); --subject-deep:var(--brand-deep); --subject-soft:var(--brand-soft);
 
   --ar:'WqNum','IBM Plex Sans Arabic','Segoe UI',Tahoma,sans-serif;
@@ -45,6 +47,7 @@
     --shadow:0 10px 30px rgba(0,0,0,.45); --shadow-lg:0 24px 60px rgba(0,0,0,.55);
     --s-ar-soft:rgba(46,158,107,.16); --s-math-soft:rgba(59,111,224,.16);
     --s-sci-soft:rgba(15,163,170,.16); --s-en-soft:rgba(122,91,232,.18);
+    --tok-focus:#9DB8FF; --tok-plural:#F0B44A;
   }
 }
 :root[data-theme="dark"]{
@@ -57,6 +60,7 @@
   --shadow:0 10px 30px rgba(0,0,0,.45); --shadow-lg:0 24px 60px rgba(0,0,0,.55);
   --s-ar-soft:rgba(46,158,107,.16); --s-math-soft:rgba(59,111,224,.16);
   --s-sci-soft:rgba(15,163,170,.16); --s-en-soft:rgba(122,91,232,.18);
+  --tok-focus:#9DB8FF; --tok-plural:#F0B44A;
 }
 
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
@@ -274,6 +278,11 @@ main{max-width:1080px;margin:0 auto;padding:26px 18px 40px}
 .berow .arw{color:var(--muted)}
 .rule .trick{background:color-mix(in srgb,var(--gold) 12%,transparent);border:1px dashed var(--gold);border-radius:12px;padding:12px 14px;margin-top:12px;font-size:14px}
 .rule .trick b{color:var(--ember-deep)}
+/* صندوق الصيغة (rule.formula) على سطرٍ مستقلّ + رموزُ التركيز النحويّ وإشارةُ الجمع */
+.rule .wq-formula{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:8px;margin:12px 0;padding:12px 16px;background:var(--subject-soft);border:1.5px solid color-mix(in srgb,var(--subject) 32%,transparent);border-radius:12px;font-size:17px;font-weight:800;letter-spacing:.2px;color:var(--ink)}
+.rule .wq-formula.en{font-family:var(--en);direction:ltr;text-align:center}
+.tok-focus{color:var(--tok-focus);font-weight:800}
+.tok-plural{color:var(--tok-plural);font-weight:800}
 
 .qtop{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;font-size:13px;font-weight:700;color:var(--muted)}
 .pbar{height:9px;background:var(--line);border-radius:99px;overflow:hidden;margin-bottom:20px}

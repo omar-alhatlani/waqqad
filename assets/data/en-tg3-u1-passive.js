@@ -15,10 +15,11 @@
     rule:{
       tag:'القاعدة',
       title:'المبنيّ للمجهول في المضارع',
-      intro:'نستعملُ <b>المبنيَّ للمجهول</b> (Present Passive) حين نهتمُّ بمَن <b>وقعَ عليه</b> الفعلُ لا بمَن قام به. تركيبُه: <code>is / are + V3</code> (التصريف الثالث)، ويمكنُ ذكرُ الفاعل بعد <code>by</code>. المفردُ يأخذ <code>is</code> والجمعُ يأخذ <code>are</code>.',
-      table:[['المفرد','<code>is + V3</code> → Honey is made.'],['الجمع','<code>are + V3</code> → Nests are built.'],['الفاعل (اختياري)','<code>by ...</code> → made <code>by</code> bees'],['المعلوم ← المجهول','Bees make honey → Honey is made by bees.']],
-      examples:['Active: Bees make honey.  →  Passive: <code>Honey is made by bees.</code>','Active: Eagles build nests.  →  Passive: <code>Nests are built by eagles.</code>'],
-      trick:'اسألْ: على مَن وقعَ الفعل؟ اجعلْه أوّلَ الجملة، ثم <span class="en">is/are + V3</span>، ثم <span class="en">by</span> + الفاعل. مفردٌ ← <span class="en">is</span> ، جمعٌ ← <span class="en">are</span>.'
+      intro:'نستعملُ <b>المبنيَّ للمجهول</b> (Present Passive) حين نهتمُّ بمَن <b>وقعَ عليه</b> الفعلُ لا بمَن قام به. ويمكنُ ذكرُ الفاعل بعد <code>by</code>. القاعدة: الفاعلُ <b>المفرد</b> يأخذ <span class="tok-focus">is</span>، وإذا انتهى الفاعلُ بـ <span class="tok-plural">s</span> الجمع فهو <b>جمعٌ</b> ويأخذ <span class="tok-focus">are</span> — ثم التصريفُ الثالث للفعل (V3).',
+      formula:'object + <span class="tok-focus">is</span> / <span class="tok-focus">are</span> + V3&nbsp;&nbsp;( + by + doer )',
+      table:[['المفرد','Honey <span class="tok-focus">is</span> made.'],['الجمع','Nest<span class="tok-plural">s</span> <span class="tok-focus">are</span> built.'],['الفاعل (اختياري)','made <code>by</code> bee<span class="tok-plural">s</span>'],['المعلوم ← المجهول','Bee<span class="tok-plural">s</span> make honey → Honey <span class="tok-focus">is</span> made by bee<span class="tok-plural">s</span>.']],
+      examples:['Active: Bees make honey.  →  Passive: Honey <span class="tok-focus">is</span> made by bee<span class="tok-plural">s</span>.','Active: Eagles build nests.  →  Passive: Nest<span class="tok-plural">s</span> <span class="tok-focus">are</span> built by eagle<span class="tok-plural">s</span>.'],
+      trick:'اسألْ: على مَن وقعَ الفعل؟ اجعلْه أوّلَ الجملة، ثم <span class="tok-focus">is</span>/<span class="tok-focus">are</span> + V3، ثم <span class="en">by</span> + الفاعل. فاعلٌ مفردٌ ← <span class="tok-focus">is</span> ، وفاعلٌ ينتهي بـ <span class="tok-plural">s</span> ← <span class="tok-focus">are</span>.'
     },
     stages:[
       { type:'choice', name:'is أم are؟', hint:'انظر إلى الفاعل: مفردٌ أم جمع؟', qs:[

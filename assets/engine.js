@@ -133,6 +133,7 @@ window.Engine = (function(){
     var out='<div class="rule open"><div class="rh"><span class="tag">'+(r.tag||'القاعدة')+'</span>'+
       '<span class="rt">'+(r.title||'القاعدة')+'</span></div><div class="rc">';
     if(r.intro) out+='<p class="intro">'+M(r.intro)+'</p>';
+    if(r.formula) out+='<div class="wq-formula'+enCls()+'">'+M(r.formula)+'</div>';
     if(r.table && r.table.length){
       var rows='';
       r.table.forEach(function(row){ rows+='<div class="berow"><span class="subj'+enCls()+'">'+M(row[0])+'</span><span class="arw">◀</span><span class="be'+enCls()+'">'+M(row[1])+'</span></div>'; });

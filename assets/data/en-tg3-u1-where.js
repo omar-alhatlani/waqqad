@@ -14,10 +14,11 @@
     rule:{
       tag:'القاعدة',
       title:'وصفُ المكان بـ where',
-      intro:'نستعملُ <code>where</code> لنصفَ <b>المكانَ</b> ونقولَ ما يحدثُ فيه. التركيبُ الشائع: <code>[المكان] + is where + [فاعل + فعل]</code>. فكلمةُ <code>where</code> تربطُ المكانَ بالحدث الذي يقعُ فيه.',
-      table:[['التركيب','<code>place + is where + subject + verb</code>'],['مثال','A pond <code>is where</code> frogs live.'],['مثال','A nest <code>is where</code> birds lay eggs.'],['السؤال','<code>Where</code> do camels live? — In the desert.']],
-      examples:['A cave <code>is where</code> bats sleep during the day.','The ocean <code>is where</code> whales and octopuses live.'],
-      trick:'إن سألتَ «أين؟» فالجوابُ مكانٌ، ورابطُه <span class="en">where</span>. تذكّرْ: «المكان + <span class="en">is where</span> + ما يحدثُ فيه».'
+      intro:'نستعملُ <span class="tok-focus">where</span> لنصفَ <b>المكانَ</b> ونقولَ ما يحدثُ فيه. فكلمةُ <span class="tok-focus">where</span> تربطُ المكانَ بالحدث الذي يقعُ فيه. وانتبِهْ لاتّفاق الفعل: مع الفاعل الجمع (المنتهي بـ <span class="tok-plural">s</span>) يأتي الفعلُ مجرَّدًا (live)، ومع المفرد يأخذ الفعلُ (lives / swims).',
+      formula:'place + is <span class="tok-focus">where</span> + subject + verb',
+      table:[['التركيب','place + is <span class="tok-focus">where</span> + subject + verb'],['مثال','A pond is <span class="tok-focus">where</span> frog<span class="tok-plural">s</span> live.'],['مثال','A nest is <span class="tok-focus">where</span> bird<span class="tok-plural">s</span> lay eggs.'],['السؤال','<span class="tok-focus">Where</span> do camel<span class="tok-plural">s</span> live? — In the desert.']],
+      examples:['A cave is <span class="tok-focus">where</span> bat<span class="tok-plural">s</span> sleep during the day.','The ocean is <span class="tok-focus">where</span> whale<span class="tok-plural">s</span> and octopuses live.'],
+      trick:'إن سألتَ «أين؟» فالجوابُ مكانٌ، ورابطُه <span class="tok-focus">where</span>. تذكّرْ: «المكان + is <span class="tok-focus">where</span> + ما يحدثُ فيه».'
     },
     stages:[
       { type:'choice', name:'أيّ رابطٍ نستعمل؟', hint:'للمكان نستعمل where', qs:[
