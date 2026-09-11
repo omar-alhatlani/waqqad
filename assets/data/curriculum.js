@@ -97,6 +97,22 @@ window.CURRICULUM = {
       ]}
     ]},
 
+    'p4.s1.ar':{ eyebrow:'لغتي · الرابع الابتدائي', units:[
+      { t:'الظاهرة الإملائية', s:'صحّتي وبيئتي · الرسم الإملائي', lessons:[
+        { t:'همزتا القطع والوصل', tag:'إملاء', ref:'AR_LUGHATI_P4_U1_HAMZAQW' },
+        { t:'الهمزة المتطرفة', tag:'إملاء', ref:'AR_LUGHATI_P4_U1_HAMZAMUT' },
+        { t:'التاء المربوطة والمفتوحة', tag:'إملاء', ref:'AR_LUGHATI_P4_U1_TAA' },
+        { t:'كلماتٌ حُذفت الألفُ من وسطها', tag:'إملاء', ref:'AR_LUGHATI_P4_U1_HADHF' }
+      ]},
+      { t:'الوظيفة النحوية', s:'صحّتي وبيئتي · النحو', lessons:[
+        { t:'أنواع الكلمة والجملة', tag:'نحو', ref:'AR_LUGHATI_P4_U1_KALIMA' },
+        { t:'المبتدأ والخبر', tag:'نحو', ref:'AR_LUGHATI_P4_U1_MUBTADA' },
+        { t:'أنواع الفعل', tag:'نحو', ref:'AR_LUGHATI_P4_U1_FIL' },
+        { t:'الفاعل', tag:'نحو', ref:'AR_LUGHATI_P4_U1_FAIL' },
+        { t:'المفعول به', tag:'نحو', ref:'AR_LUGHATI_P4_U1_MAFOOL' }
+      ]}
+    ]},
+
     /* ===== الخامس الابتدائي · الفصل الأول ===== */
     'p5.s1.math':{ eyebrow:'رياضيات · الخامس الابتدائي', units:[
       { t:'القيمة المنزلية والكسور العشرية', s:'الفصل الأول', lessons:[
