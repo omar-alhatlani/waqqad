@@ -1,7 +1,8 @@
 /* ============================================================
    محرّك الأنشطة — وقّاد
    يعرض خريطة مراحل الدرس، ويشغّل الأنشطة بأنواعها، ويحفظ التقدّم.
-   الاستعمال: Engine.open(lessonModule, { mount, onExit, subject, onProgress })
+   الاستعمال: Engine.open(lessonModule, { mount, onExit, onProgress, toast, scrollTop })
+   وكذلك Engine.stats(lessonModule) لإحصاء تقدّم درسٍ دون فتحه.
    ============================================================ */
 window.Engine = (function(){
   var I = window.ICONS;
@@ -18,7 +19,7 @@ window.Engine = (function(){
   }
   function saveProg(){
     try{ localStorage.setItem(key(lesson.id), JSON.stringify(prog)); }catch(e){}
-    if(opts.onProgress) opts.onProgress();
+    if(opts.onProgress) opts.onProgress(lesson.id);
   }
   function stageStars(i){ return prog.stars[i] || 0; }
   function totalStars(){ var t=0; for(var k in prog.stars) if(prog.stars.hasOwnProperty(k)) t+=prog.stars[k]; return t; }
@@ -36,9 +37,9 @@ window.Engine = (function(){
 
   /* ---------- أدوات ---------- */
   var $ = function(id){ return mount.querySelector('#'+id); };
-  // en: خطّ إنجليزي + LTR (Poppins). ltr (رياضيات): اتجاه LTR مع الخطّ العربي (أرقام عربية-هندية).
-  function enCls(){ return lesson.lang==='en' ? ' en' : (lesson.dir==='ltr' ? ' ltr' : ''); }
-  function ltrCls(){ return (lesson.lang==='en' || lesson.dir==='ltr') ? ' ltr' : ''; }
+  // en: خطّ إنجليزي + اتجاه LTR (Poppins). أمّا الرياضيات فتبقى RTL، وعزلُ الأرقام يتكفّل به M().
+  function enCls(){ return lesson.lang==='en' ? ' en' : ''; }
+  function ltrCls(){ return lesson.lang==='en' ? ' ltr' : ''; }
   /* عزل التعبيرات الرقمية (أرقام عربية-هندية + رموز) داخل نصٍّ عربيّ RTL كي تُعرض LTR
      فتظهر الإشارة السالبة يسار الرقم صحيحةً. يُفعَّل فقط عند lesson.mathdir=true. */
   // كسرٌ رأسيّ: بسطٌ فوق مقام بخطٍّ أفقيّ فاصل، كما في كتاب الوزارة — لا شرطةٌ مائلة «أ/ب»
@@ -100,6 +101,8 @@ window.Engine = (function(){
   }
   function shuffle(a){ a=a.slice(); for(var i=a.length-1;i>0;i--){ var j=Math.floor(Math.random()*(i+1)); var t=a[i];a[i]=a[j];a[j]=t; } return a; }
   function starStr(n,max){ max=max||3; var s=''; for(var i=0;i<max;i++) s+=(i<n?'★':'<span class="off">★</span>'); return s; }
+  // تهريبُ HTML لأيّ نصٍّ يأتي من المستخدم (كاسم الطالب في الشهادة) قبل حقنه عبر innerHTML.
+  function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g,function(c){ return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c]; }); }
   var AC=null;
   function beep(ok){
     try{
@@ -126,7 +129,7 @@ window.Engine = (function(){
   function open(lessonModule, options){
     lesson = lessonModule; opts = options || {}; mount = opts.mount;
     toastFn = opts.toast || function(){};
-    loadProg(); G=null; renderIntro();
+    loadProg(); G=null; destroyExplore(); renderIntro();
   }
 
   function ruleHTML(){
@@ -160,10 +163,27 @@ window.Engine = (function(){
       (e.hint?'<p class="intro">'+e.hint+'</p>':'')+
       '<div id="engExplore"></div></div></div>';
   }
+  /* المحاكاة الحاليّة: نلتقط ما تسجّله من مستمعات window (كـ resize) أثناء mount كي نزيلها
+     عند مغادرة شاشة القاعدة، فلا تتراكم مع كلّ فتحِ درسٍ ذي مختبر (تسريب مستمعات). */
+  var explored=null;
   function mountExplore(){
     var e=lesson.explore;
     if(!e || !window.SIMS || !window.SIMS[e.sim]) return;
-    var host=$('engExplore'); if(host){ try{ window.SIMS[e.sim].mount(host); }catch(err){} }
+    var host=$('engExplore'); if(!host) return;
+    destroyExplore();
+    var origAdd=window.addEventListener, rec=[];
+    window.addEventListener=function(type,fn,o){ rec.push([type,fn,o]); return origAdd.call(window,type,fn,o); };
+    var inst=null;
+    try{ inst=window.SIMS[e.sim].mount(host)||null; }
+    catch(err){}
+    finally{ window.addEventListener=origAdd; }
+    explored={ inst:inst, listeners:rec };
+  }
+  function destroyExplore(){
+    if(!explored) return;
+    explored.listeners.forEach(function(L){ try{ window.removeEventListener(L[0],L[1],L[2]); }catch(e){} });
+    if(explored.inst && typeof explored.inst.destroy==='function'){ try{ explored.inst.destroy(); }catch(e){} }
+    explored=null;
   }
 
   /* شاشة القاعدة الإجبارية — تُعرض عند فتح الدرس قبل المراحل */
@@ -180,13 +200,13 @@ window.Engine = (function(){
       '<button class="btn" id="engStartStages">فهمتُ — إلى المراحل '+I.chev+'</button></div>'+
       '</div>';
     mountExplore();
-    $('engBackIntro').onclick=function(){ if(opts.onExit) opts.onExit(); };
+    $('engBackIntro').onclick=function(){ destroyExplore(); if(opts.onExit) opts.onExit(); };
     $('engStartStages').onclick=function(){ renderMap(); };
     if(opts.scrollTop) opts.scrollTop();
   }
 
   function renderMap(){
-    G=null;
+    G=null; destroyExplore();
     var done = lessonComplete();
     var finalPerfect = (prog.stars[lesson.stages.length-1]||0) === 3;
     var h = '<div class="lesson-wrap">';
@@ -377,7 +397,7 @@ window.Engine = (function(){
       (typeof earned!=='undefined'?'<div class="bigstars">'+starStr(earned)+'</div>':'')+
       '<div class="cert"><span class="seal2">🎓</span>'+
       '<h3>شهادة إتقان</h3><p>تشهد منصّة «'+(B.name||'وقّاد')+'» بأنّ الطالب</p>'+
-      '<div class="who">'+(getPlayerName()||'الطالب/ة')+'</div>'+
+      '<div class="who">'+(esc(getPlayerName())||'الطالب/ة')+'</div>'+
       '<p>قد أتقن الدرس:<br><b class="en">'+lesson.title+'</b></p>'+
       '<div class="sig">إشراف المعلّم: <b>'+(B.teacher||'')+'</b><br>'+(B.school||'')+'</div>'+
       '</div>'+

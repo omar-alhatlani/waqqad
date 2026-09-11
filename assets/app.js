@@ -78,6 +78,7 @@ window.BRAND = {
 
   /* ---------- المراحل ---------- */
   function firstWord(s){ return (s||'').split(' ')[0]; }
+  function byId(arr,id){ for(var i=0;i<(arr||[]).length;i++) if(arr[i].id===id) return arr[i]; return null; }
   function renderStages(){
     var w=$('#stageGrid'); if(!w) return; w.innerHTML='';
     var stages=[]; C.grades.forEach(function(g){ var s=g.stage||''; if(stages.indexOf(s)<0) stages.push(s); });
@@ -156,7 +157,7 @@ window.BRAND = {
     $('#unitsEyebrow').textContent=data?data.eyebrow:sub.name;
     var w=$('#unitsPath'); w.innerHTML='';
     if(!data){
-      w.innerHTML='<div class="soon"><div class="si">'+I.book+'</div><b>محتوى هذا الفصل قيد الإعداد</b><span>نبدأ حاليًّا بالأول متوسط — الفصل الأول. تابعنا قريبًا.</span></div>';
+      w.innerHTML='<div class="soon"><div class="si">'+I.book+'</div><b>محتوى هذا الفصل قيد الإعداد</b><span>نضيف بقيّة الفصول تباعًا بإذن الله. تابعنا قريبًا.</span></div>';
       go('units'); return;
     }
     data.units.forEach(function(u,i){
@@ -202,7 +203,6 @@ window.BRAND = {
       var stateTag = !playable ? '<span class="tag state-soon">قريبًا</span>'
                     : (doneState ? '<span class="tag state-done">مكتمل ✓</span>'
                     : (s.started ? '<span class="stars">'+starStr(Math.round(s.stars/s.max*3),3)+'</span>' : '<span class="tag">ابدأ الآن</span>'));
-      var tagIc = window.TAG_ICON[ls.tag];
       el.innerHTML='<div class="lic">'+icon+'</div><div class="lmeta"><b>'+ls.t+'</b><div class="tags"><span class="tag">'+ls.tag+'</span>'+stateTag+'</div></div>'+(playable?'<span class="chev">'+I.chev+'</span>':'');
       if(playable){ el.onclick=function(){ openLesson(ls.ref); }; }
       else{ el.onclick=function(){ toast('هذا الدرس قيد الإعداد 🔒'); }; }
@@ -222,7 +222,7 @@ window.BRAND = {
       Engine.open(L, {
         mount: mount,
         onExit: function(){ openUnit(state.unit, state.unitIdx); },
-        onProgress: function(){ refreshTotals(); },
+        onProgress: function(id){ refreshTotals(id); },
         toast: toast,
         scrollTop: scrollTop
       });
@@ -231,8 +231,20 @@ window.BRAND = {
     });
   }
 
-  /* ---------- إجماليّات النجوم ---------- */
-  function refreshTotals(){ var t=0; for(var ref in LMAN.lessons){ if(LMAN.lessons.hasOwnProperty(ref)) t+=lstats(ref).stars; } $('#starTotal').textContent=t; }
+  /* ---------- إجماليّات النجوم ----------
+     يُحسب الإجماليّ مسحًا كاملاً مرّةً عند الإقلاع، ثمّ يُحدَّث تفاضليًّا لدرسٍ واحدٍ
+     عند كلّ تقدّم (بدلاً من إعادة مسحِ كلّ الدروس في كلّ حفظٍ للتقدّم). */
+  var _starTotal=0, _starBy={}, _starReady=false;
+  function refreshTotals(changedRef){
+    if(_starReady && changedRef && LMAN.lessons[changedRef]){
+      var ns=lstats(changedRef).stars, old=_starBy[changedRef]||0;
+      if(ns!==old){ _starBy[changedRef]=ns; _starTotal+=(ns-old); $('#starTotal').textContent=_starTotal; }
+      return;
+    }
+    var t=0; _starBy={};
+    for(var ref in LMAN.lessons){ if(LMAN.lessons.hasOwnProperty(ref)){ var s=lstats(ref).stars; _starBy[ref]=s; t+=s; } }
+    _starTotal=t; _starReady=true; $('#starTotal').textContent=t;
+  }
 
   /* ---------- أدوات ---------- */
   function starStr(n,max){ max=max||3; var s=''; for(var i=0;i<max;i++) s+=(i<n?'★':'<span class="off">★</span>'); return s; }
@@ -326,10 +338,15 @@ window.BRAND = {
     $('#startBtn').onclick=function(){ saveName(); setSubjectVars(null); renderStages(); go('stage'); };
     $('#resumeBtn').onclick=function(){
       saveName();
-      state.grade=C.grades[0]; state.sem=C.semesters[0]; state.subject=C.subjects[3];
-      setSubjectVars(state.subject);
-      var u=C.content['g1.s1.en'].units[0]; state.unit=u; state.unitIdx=0;
-      openLesson('EN_SG1_U1_VERBBE');
+      var DEMO='EN_SG1_U1_VERBBE', ck='g1.s1.en';
+      var g=byId(C.grades,'g1'), sm=byId(C.semesters,'s1'), sub=byId(C.subjects,'en'), content=C.content[ck];
+      if(!g||!sm||!sub||!content||!content.units||!content.units.length||!built(DEMO)){
+        setSubjectVars(null); renderStages(); go('stage'); return; // تعذّر الدرسُ التجريبيّ ← اختيار المرحلة
+      }
+      state.stage=g.stage; state.grade=g; state.sem=sm; state.subject=sub;
+      state.unit=content.units[0]; state.unitIdx=0;
+      setSubjectVars(sub);
+      openLesson(DEMO);
     };
     $('#aboutLink').onclick=openAbout;
     $('#aboutClose').onclick=closeAbout;
