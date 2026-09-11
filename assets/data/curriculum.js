@@ -121,6 +121,14 @@ window.CURRICULUM = {
       ]}
     ]},
 
+    'p6.s1.en':{ eyebrow:'English · Top Goal 3', units:[
+      { t:'Unit 1 — Living Things', s:'الكائنات الحية · قواعد ومفردات', lessons:[
+        { t:'Grammar — Present Passive (المبنيّ للمجهول)', tag:'قواعد', ref:'EN_TG3_U1_PASSIVE' },
+        { t:'Grammar — "where" clauses (جُمَل المكان)', tag:'قواعد', ref:'EN_TG3_U1_WHERE' },
+        { t:'Vocabulary — Living Things (المفردات)', tag:'مفردات', ref:'EN_TG3_U1_VOCAB' }
+      ]}
+    ]},
+
     'g1.s1.en':{ eyebrow:'English · Super Goal 1', units:[
       { t:'Good Morning!', s:'التحية والتعارف', lessons:[
         { t:'Grammar — الفعل be (am/is/are)', tag:'قواعد', ref:'EN_SG1_U1_VERBBE' },
