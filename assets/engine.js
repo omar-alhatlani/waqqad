@@ -103,6 +103,8 @@ window.Engine = (function(){
   function starStr(n,max){ max=max||3; var s=''; for(var i=0;i<max;i++) s+=(i<n?'★':'<span class="off">★</span>'); return s; }
   // تهريبُ HTML لأيّ نصٍّ يأتي من المستخدم (كاسم الطالب في الشهادة) قبل حقنه عبر innerHTML.
   function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g,function(c){ return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c]; }); }
+  // أرقامٌ عربيّةٌ-هنديّة لعناصر الواجهة (المراحل وعدّاد الأسئلة) اتّساقًا مع بقيّة المنصّة.
+  function arNum(n){ return String(n).replace(/[0-9]/g,function(d){ return '٠١٢٣٤٥٦٧٨٩'[d]; }); }
   var AC=null;
   function beep(ok){
     try{
@@ -236,7 +238,7 @@ window.Engine = (function(){
       var row=document.createElement(open_?'button':'div');
       row.className='lesson'+(open_?'':' locked')+(stc>0?' done':'');
       var icon = !open_ ? I.lock : (stc>0 ? I.check : (st.final?I.trophy:I.play));
-      var tags = '<span class="tag">'+(st.final?'تحدٍّ نهائي':('مرحلة '+(i+1)))+'</span>'+
+      var tags = '<span class="tag">'+(st.final?'تحدٍّ نهائي':('مرحلة '+arNum(i+1)))+'</span>'+
                  (open_ ? '<span class="stars">'+starStr(stc)+'</span>' : '<span class="tag state-soon">مقفلة</span>');
       row.innerHTML='<div class="lic">'+icon+'</div><div class="lmeta"><b>'+st.name+'</b><div class="tags">'+tags+'</div></div>'+
         (open_?'<span class="chev">'+I.chev+'</span>':'');
@@ -259,7 +261,7 @@ window.Engine = (function(){
     G={ si:i, qi:0, hearts:3, errs:0, answered:false, built:[], qs:(st.type==='order'?st.qs.slice():shuffle(st.qs)) };
     var h='<div class="lesson-wrap">'+
       '<div class="stage-head"><div class="name">'+st.name+'<small>'+(st.hint||'')+'</small></div>'+
-      '<div style="display:flex;align-items:center;gap:10px"><span class="hearts" id="engHearts"></span>'+
+      '<div style="display:flex;align-items:center;gap:10px"><span id="engQNum" style="font-size:13px;font-weight:800;color:var(--muted);font-variant-numeric:tabular-nums;direction:ltr;unicode-bidi:isolate"></span><span class="hearts" id="engHearts"></span>'+
       '<button class="iconbtn" id="engExit" title="خريطة الدرس" aria-label="العودة إلى خريطة الدرس">'+I.chev+'</button></div></div>'+
       '<div class="pbar"><i id="engBar"></i></div>'+
       '<div id="engPlay"></div><div id="engFb"></div><div class="lp-actions" id="engActions"></div></div>';
@@ -275,6 +277,7 @@ window.Engine = (function(){
     var st=lesson.stages[G.si], q=G.qs[G.qi];
     G.answered=false; G.built=[];
     updateHearts();
+    if($('engQNum')) $('engQNum').innerHTML='<span style="unicode-bidi:isolate">'+arNum(G.qi+1)+'</span> / <span style="unicode-bidi:isolate">'+arNum(G.qs.length)+'</span>';
     $('engBar').style.width=Math.round(G.qi/G.qs.length*100)+'%';
     $('engFb').innerHTML=''; $('engActions').innerHTML='';
     var A=$('engPlay');
@@ -379,7 +382,7 @@ window.Engine = (function(){
 
     var body='<div class="lesson-wrap"><div class="done-card"><div class="seal">'+(perfect?I.trophy:I.check)+'</div>'+
       '<h2>'+st.name+'</h2><div class="bigstars">'+starStr(earned)+'</div>'+
-      '<div class="msg">'+msg+' &nbsp;·&nbsp; الأخطاء: '+G.errs+'</div>'+
+      '<div class="msg">'+msg+' &nbsp;·&nbsp; الأخطاء: '+arNum(G.errs)+'</div>'+
       '<div class="lp-actions" style="justify-content:center">'+
       '<button class="btn ghost sm" id="engAgain">↺ أعِد المرحلة</button>'+
       '<button class="btn sm" id="engNext">'+(G.si+1<lesson.stages.length?'المرحلة التالية ←':'إلى خريطة الدرس 🗺️')+'</button>'+

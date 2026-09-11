@@ -84,10 +84,10 @@ window.BRAND = {
     var stages=[]; C.grades.forEach(function(g){ var s=g.stage||''; if(stages.indexOf(s)<0) stages.push(s); });
     stages.forEach(function(st){
       var gs=C.grades.filter(function(g){ return (g.stage||'')===st; });
-      var emoji = /ابتدائ/.test(st) ? '🎒' : (/متوسط/.test(st) ? '📚' : '🏫');
+      var icon = /ابتدائ/.test(st) ? I.bag : (/متوسط/.test(st) ? I.cap : I.book);
       var range = gs.length ? ('الصفوف '+firstWord(gs[0].name)+' – '+firstWord(gs[gs.length-1].name)) : '';
       var el=document.createElement('button'); el.className='card';
-      el.innerHTML='<div class="top"><div class="badge">'+emoji+'</div><span class="arrow">'+I.chev+'</span></div><h3>'+st+'</h3><div class="desc">'+gs.length+' صفوف · '+range+'</div>';
+      el.innerHTML='<div class="top"><div class="badge">'+icon+'</div><span class="arrow">'+I.chev+'</span></div><h3>'+st+'</h3><div class="desc">'+toAr(gs.length)+' صفوف · '+range+'</div>';
       el.onclick=function(){ state.stage=st; state.grade=null; state.sem=null; state.subject=null; state.unit=null; renderGrades(st); go('grade'); };
       w.appendChild(el);
     });
@@ -100,7 +100,7 @@ window.BRAND = {
     var sub=$('#gradeSub'); if(sub) sub.textContent = (st?st+' — ':'')+'اختر الصف لتظهر لك الفصول الدراسية.';
     C.grades.filter(function(g){ return !st || (g.stage||'')===st; }).forEach(function(gr){
       var el=document.createElement('button'); el.className='card';
-      el.innerHTML='<div class="top"><div class="badge">'+gr.num+'</div><span class="arrow">'+I.chev+'</span></div><h3>'+gr.name+'</h3><div class="desc">'+gr.desc+'</div>';
+      el.innerHTML='<div class="top"><div class="badge">'+gr.num+'</div><span class="arrow">'+I.chev+'</span></div><h3>'+gr.name+'</h3><div class="desc">'+toAr(C.subjects.length)+' موادّ دراسية</div>';
       el.onclick=function(){ state.grade=gr; state.sem=null; state.subject=null; state.unit=null; openGrade(gr); };
       w.appendChild(el);
     });
@@ -138,7 +138,7 @@ window.BRAND = {
       /* العنوان الفرعيّ للإنجليزي واعٍ بالصفّ: يُشتقّ من إيبرو المحتوى (سلسلةُ الكتاب) إن وُجد */
       var desc=sub.en;
       if(sub.id==='en' && content && content.eyebrow) desc=content.eyebrow.replace(/^English\s*·\s*/,'');
-      el.innerHTML='<div class="top"><div class="badge">'+I[sub.icon]+'</div><span class="arrow">'+I.chev+'</span></div><h3>'+sub.name+'</h3><div class="desc en">'+desc+'</div><span class="pill">'+uCount+' وحدات دراسية</span>';
+      el.innerHTML='<div class="top"><div class="badge">'+I[sub.icon]+'</div><span class="arrow">'+I.chev+'</span></div><h3>'+sub.name+'</h3><div class="desc en">'+desc+'</div><span class="pill">'+toAr(uCount)+' وحدات دراسية</span>';
       el.onclick=function(){ state.subject=sub; state.unit=null; openSubject(sub); };
       w.appendChild(el);
     });
@@ -154,7 +154,9 @@ window.BRAND = {
     setSubjectVars(sub);
     var data=getContent();
     $('#unitsTitle').textContent=sub.name+' — الوحدات';
-    $('#unitsEyebrow').textContent=data?data.eyebrow:sub.name;
+    var _eb=data?data.eyebrow:sub.name;
+    if(state.grade && _eb.indexOf(state.grade.name)<0) _eb=state.grade.name+' · '+_eb; // سياقُ الصفّ للجوّال (يُضاف فقط إن غاب، كالإنجليزيّ)
+    $('#unitsEyebrow').textContent=_eb;
     var w=$('#unitsPath'); w.innerHTML='';
     if(!data){
       w.innerHTML='<div class="soon"><div class="si">'+I.book+'</div><b>محتوى هذا الفصل قيد الإعداد</b><span>نضيف بقيّة الفصول تباعًا بإذن الله. تابعنا قريبًا.</span></div>';
@@ -167,8 +169,8 @@ window.BRAND = {
       var right = st==='locked'
         ? '<div class="prog"><span class="lock-txt">قيد الإعداد</span></div>'
         : '<div class="prog"><span class="stars">'+starStr(prog.stars,3)+'</span><div class="mini-bar"><i style="width:'+prog.pct+'%"></i></div></div>';
-      el.innerHTML='<div class="node"><div class="dot">'+(st==='locked'?I.lock:(i+1))+'</div></div>'+
-        '<button class="body"><div class="info"><b>الوحدة '+(i+1)+' · '+u.t+'</b><span>'+u.s+'</span></div>'+right+'</button>';
+      el.innerHTML='<div class="node"><div class="dot">'+(st==='locked'?I.lock:toAr(i+1))+'</div></div>'+
+        '<button class="body"><div class="info"><b>الوحدة '+toAr(i+1)+' · '+u.t+'</b><span>'+u.s+'</span></div>'+right+'</button>';
       var body=el.querySelector('.body');
       if(hasLessons){ body.onclick=function(){ openUnit(u,i); }; }
       else{ body.onclick=function(){ toast('هذه الوحدة قيد الإعداد 🔒'); }; }
@@ -188,7 +190,7 @@ window.BRAND = {
   function openUnit(u, idx){
     state.unit=u; state.unitIdx=(typeof idx==='number'?idx:0);
     $('#lessonsTitle').textContent=u.t;
-    $('#lessonsEyebrow').textContent='الوحدة '+(state.unitIdx+1);
+    $('#lessonsEyebrow').textContent=(state.subject?state.subject.name+' · ':'')+'الوحدة '+toAr(state.unitIdx+1);
     var w=$('#lessonsList'); w.innerHTML='';
     if(!u.lessons||!u.lessons.length){
       w.innerHTML='<div class="soon"><div class="si">'+I.book+'</div><b>دروس هذه الوحدة قيد الإعداد</b><span>سنضيفها قريبًا بإذن الله.</span></div>';
