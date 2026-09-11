@@ -101,6 +101,26 @@ window.CURRICULUM = {
       ]}
     ]},
 
+    'p6.s1.ar':{ eyebrow:'لغتي · السادس الابتدائي', units:[
+      { t:'الظاهرة الإملائية', s:'قدوات ومثل عليا · رسمُ الهمزات', lessons:[
+        { t:'همزتا الوصل والقطع', tag:'إملاء', ref:'AR_LUGHATI_P6_U1_WASLQAT' },
+        { t:'الهمزة المتوسطة', tag:'إملاء', ref:'AR_LUGHATI_P6_U1_MUTAWASSITA' },
+        { t:'الهمزة المتطرفة', tag:'إملاء', ref:'AR_LUGHATI_P6_U1_MUTATARRIFA' }
+      ]},
+      { t:'الوظيفة النحوية', s:'قدوات ومثل عليا · النواسخ', lessons:[
+        { t:'الأفعال الناسخة (كان وأخواتها)', tag:'نحو', ref:'AR_LUGHATI_P6_U2_KANA' },
+        { t:'الحروف الناسخة (إنّ وأخواتها)', tag:'نحو', ref:'AR_LUGHATI_P6_U2_INNA' }
+      ]},
+      { t:'الصنف اللغوي', s:'قدوات ومثل عليا · المشتقات', lessons:[
+        { t:'اسم الفاعل واسم المفعول', tag:'صنف لغوي', ref:'AR_LUGHATI_P6_U3_FAIL' },
+        { t:'اسم الآلة', tag:'صنف لغوي', ref:'AR_LUGHATI_P6_U3_AALA' }
+      ]},
+      { t:'المهارات القرائية والكتابية', s:'قدوات ومثل عليا · استراتيجيات وبناء النص', lessons:[
+        { t:'قراءة التمشيط', tag:'قراءة', ref:'AR_LUGHATI_P6_U4_TAMSHIT' },
+        { t:'التلخيص', tag:'كتابة', ref:'AR_LUGHATI_P6_U4_TALKHIS' }
+      ]}
+    ]},
+
     'g1.s1.en':{ eyebrow:'English · Super Goal 1', units:[
       { t:'Good Morning!', s:'التحية والتعارف', lessons:[
         { t:'Grammar — الفعل be (am/is/are)', tag:'قواعد', ref:'EN_SG1_U1_VERBBE' },
