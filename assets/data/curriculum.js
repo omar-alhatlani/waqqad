@@ -126,6 +126,41 @@ window.CURRICULUM = {
         { t:'Grammar — Present Passive (المبنيّ للمجهول)', tag:'قواعد', ref:'EN_TG3_U1_PASSIVE' },
         { t:'Grammar — "where" clauses (جُمَل المكان)', tag:'قواعد', ref:'EN_TG3_U1_WHERE' },
         { t:'Vocabulary — Living Things (المفردات)', tag:'مفردات', ref:'EN_TG3_U1_VOCAB' }
+      ]},
+      { t:'Unit 2 — Lifestyles', s:'أنماط الحياة · قواعد ومفردات', lessons:[
+        { t:'Grammar — Zero & First Conditional (الشرط)', tag:'قواعد', ref:'EN_TG3_U2_COND' },
+        { t:'Grammar — a few / a little (الكميات)', tag:'قواعد', ref:'EN_TG3_U2_QUANT' },
+        { t:'Vocabulary — Lifestyles (المفردات)', tag:'مفردات', ref:'EN_TG3_U2_VOCAB' }
+      ]},
+      { t:'Unit 3 — Interests', s:'الاهتمامات · قواعد ومفردات', lessons:[
+        { t:'Grammar — Present Perfect + since / for', tag:'قواعد', ref:'EN_TG3_U3_PP' },
+        { t:'Grammar — Present Perfect vs Past (just)', tag:'قواعد', ref:'EN_TG3_U3_JUST' },
+        { t:'Vocabulary — Interests (المفردات)', tag:'مفردات', ref:'EN_TG3_U3_VOCAB' }
+      ]},
+      { t:'Unit 4 — Professions', s:'المهن · قواعد ومفردات', lessons:[
+        { t:'Grammar — Past Progressive (الماضي المستمرّ)', tag:'قواعد', ref:'EN_TG3_U4_PASTPROG' },
+        { t:'Grammar — Relative Clauses (who/which/that)', tag:'قواعد', ref:'EN_TG3_U4_RELATIVE' },
+        { t:'Vocabulary — Professions (المفردات)', tag:'مفردات', ref:'EN_TG3_U4_VOCAB' }
+      ]},
+      { t:'Unit 5 — World Sports', s:'الرياضات · قواعد ومفردات', lessons:[
+        { t:'Grammar — Comparatives & Superlatives', tag:'قواعد', ref:'EN_TG3_U5_COMPARE' },
+        { t:'Grammar — (not) as ... as (التساوي)', tag:'قواعد', ref:'EN_TG3_U5_ASAS' },
+        { t:'Vocabulary — World Sports (المفردات)', tag:'مفردات', ref:'EN_TG3_U5_VOCAB' }
+      ]},
+      { t:'Unit 6 — Environments', s:'البيئات · قواعد ومفردات', lessons:[
+        { t:'Grammar — Future: will / be going to', tag:'قواعد', ref:'EN_TG3_U6_FUTURE' },
+        { t:'Grammar — may / might / could (التوقّع)', tag:'قواعد', ref:'EN_TG3_U6_MODALS' },
+        { t:'Vocabulary — Environments (المفردات)', tag:'مفردات', ref:'EN_TG3_U6_VOCAB' }
+      ]},
+      { t:'Unit 7 — Styles', s:'الأزياء · قواعد ومفردات', lessons:[
+        { t:'Grammar — Reported Speech (say/tell)', tag:'قواعد', ref:'EN_TG3_U7_REPORTED' },
+        { t:'Grammar — Reporting Questions (نقل الأسئلة)', tag:'قواعد', ref:'EN_TG3_U7_REPORTEDQ' },
+        { t:'Vocabulary — Styles (المفردات)', tag:'مفردات', ref:'EN_TG3_U7_VOCAB' }
+      ]},
+      { t:'Unit 8 — Recent Events', s:'أحداث حديثة · قواعد ومفردات', lessons:[
+        { t:'Grammar — Present Perfect + adverbs', tag:'قواعد', ref:'EN_TG3_U8_PPADV' },
+        { t:'Grammar — Modal Verbs (الأفعال الناقصة)', tag:'قواعد', ref:'EN_TG3_U8_MODALS' },
+        { t:'Vocabulary — Recent Events (المفردات)', tag:'مفردات', ref:'EN_TG3_U8_VOCAB' }
       ]}
     ]},
 
