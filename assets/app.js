@@ -63,6 +63,7 @@ window.BRAND = {
     var c=$('#crumbs'); c.innerHTML='';
     if(screen==='home') return;
     var parts=[{label:'الرئيسية', go:function(){ setSubjectVars(null); go('home'); }}];
+    if(state.stage) parts.push({label:state.stage, go:function(){ setSubjectVars(null); renderGrades(state.stage); go('grade'); }});
     if(state.grade) parts.push({label:state.grade.name, go:function(){ openGrade(state.grade); }});
     if(state.sem)   parts.push({label:(state.sem.id==='s1'?'ف١':'ف٢'), go:function(){ openGrade(state.grade); }});
     if(state.subject) parts.push({label:state.subject.name, go:function(){ openSubjects(); }});
@@ -75,19 +76,32 @@ window.BRAND = {
     });
   }
 
-  /* ---------- الصفوف ---------- */
-  function renderGrades(){
-    var w=$('#gradeGrid'); w.innerHTML='';
+  /* ---------- المراحل ---------- */
+  function firstWord(s){ return (s||'').split(' ')[0]; }
+  function renderStages(){
+    var w=$('#stageGrid'); if(!w) return; w.innerHTML='';
     var stages=[]; C.grades.forEach(function(g){ var s=g.stage||''; if(stages.indexOf(s)<0) stages.push(s); });
     stages.forEach(function(st){
-      if(st){ var h=document.createElement('div'); h.className='grade-stage'; h.textContent=st;
-        h.style.cssText='grid-column:1/-1;font-family:var(--display);font-weight:800;color:var(--ink-soft);font-size:15px;margin:8px 2px 0;'; w.appendChild(h); }
-      C.grades.filter(function(g){ return (g.stage||'')===st; }).forEach(function(gr){
-        var el=document.createElement('button'); el.className='card';
-        el.innerHTML='<div class="top"><div class="badge">'+gr.num+'</div><span class="arrow">'+I.chev+'</span></div><h3>'+gr.name+'</h3><div class="desc">'+gr.desc+'</div>';
-        el.onclick=function(){ state.grade=gr; state.sem=null; state.subject=null; state.unit=null; openGrade(gr); };
-        w.appendChild(el);
-      });
+      var gs=C.grades.filter(function(g){ return (g.stage||'')===st; });
+      var emoji = /ابتدائ/.test(st) ? '🎒' : (/متوسط/.test(st) ? '📚' : '🏫');
+      var range = gs.length ? ('الصفوف '+firstWord(gs[0].name)+' – '+firstWord(gs[gs.length-1].name)) : '';
+      var el=document.createElement('button'); el.className='card';
+      el.innerHTML='<div class="top"><div class="badge">'+emoji+'</div><span class="arrow">'+I.chev+'</span></div><h3>'+st+'</h3><div class="desc">'+gs.length+' صفوف · '+range+'</div>';
+      el.onclick=function(){ state.stage=st; state.grade=null; state.sem=null; state.subject=null; state.unit=null; renderGrades(st); go('grade'); };
+      w.appendChild(el);
+    });
+  }
+
+  /* ---------- الصفوف ---------- */
+  function renderGrades(stageFilter){
+    var w=$('#gradeGrid'); w.innerHTML='';
+    var st = stageFilter || state.stage || '';
+    var sub=$('#gradeSub'); if(sub) sub.textContent = (st?st+' — ':'')+'اختر الصف لتظهر لك الفصول الدراسية.';
+    C.grades.filter(function(g){ return !st || (g.stage||'')===st; }).forEach(function(gr){
+      var el=document.createElement('button'); el.className='card';
+      el.innerHTML='<div class="top"><div class="badge">'+gr.num+'</div><span class="arrow">'+I.chev+'</span></div><h3>'+gr.name+'</h3><div class="desc">'+gr.desc+'</div>';
+      el.onclick=function(){ state.grade=gr; state.sem=null; state.subject=null; state.unit=null; openGrade(gr); };
+      w.appendChild(el);
     });
   }
   function openGrade(gr){
@@ -303,12 +317,13 @@ window.BRAND = {
 
     // أزرار الرجوع في كلّ شاشة (خطوةٌ واحدةٌ للخلف)
     var backChev = I.chev+' رجوع';
-    $('#gradeBack').innerHTML=backChev;   $('#gradeBack').onclick=function(){ setSubjectVars(null); go('home'); };
+    $('#stageBack').innerHTML=backChev;   $('#stageBack').onclick=function(){ setSubjectVars(null); go('home'); };
+    $('#gradeBack').innerHTML=backChev;   $('#gradeBack').onclick=function(){ setSubjectVars(null); renderStages(); go('stage'); };
     $('#semBack').innerHTML=backChev;     $('#semBack').onclick=function(){ state.grade=null; state.sem=null; setSubjectVars(null); go('grade'); };
     $('#subjectBack').innerHTML=backChev; $('#subjectBack').onclick=function(){ openGrade(state.grade); };
     $('#unitsBack').innerHTML=backChev;   $('#unitsBack').onclick=function(){ openSubjects(); };
     $('#lessonsBack').innerHTML=backChev; $('#lessonsBack').onclick=function(){ openSubject(state.subject); };
-    $('#startBtn').onclick=function(){ saveName(); setSubjectVars(null); renderGrades(); go('grade'); };
+    $('#startBtn').onclick=function(){ saveName(); setSubjectVars(null); renderStages(); go('stage'); };
     $('#resumeBtn').onclick=function(){
       saveName();
       state.grade=C.grades[0]; state.sem=C.semesters[0]; state.subject=C.subjects[3];
@@ -320,7 +335,7 @@ window.BRAND = {
     $('#aboutClose').onclick=closeAbout;
     $('#aboutModal').onclick=function(e){ if(e.target===$('#aboutModal')) closeAbout(); };
 
-    renderGrades();
+    renderStages();
     refreshTotals();
     go('home');
     visitorCounter();
