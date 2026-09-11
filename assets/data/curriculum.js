@@ -116,6 +116,49 @@ window.CURRICULUM = {
       ]}
     ]},
 
+    'p5.s1.en':{ eyebrow:'English · Top Goal 2', units:[
+      { t:'Unit 1 — Personal Interests', s:'الاهتمامات · قواعد ومفردات', lessons:[
+        { t:'Grammar — Simple Present vs. Simple Past', tag:'قواعد', ref:'EN_TG2_U1_TENSES' },
+        { t:'Grammar — State vs. Action Verbs', tag:'قواعد', ref:'EN_TG2_U1_STATEVERBS' },
+        { t:'Vocabulary — Personal Interests', tag:'مفردات', ref:'EN_TG2_U1_VOCAB' }
+      ]},
+      { t:'Unit 2 — House Designs', s:'تصميم المنازل · قواعد ومفردات', lessons:[
+        { t:'Grammar — Future with will', tag:'قواعد', ref:'EN_TG2_U2_WILL' },
+        { t:'Grammar — Will vs. be going to', tag:'قواعد', ref:'EN_TG2_U2_WILLGOING' },
+        { t:'Vocabulary — House Designs', tag:'مفردات', ref:'EN_TG2_U2_VOCAB' }
+      ]},
+      { t:'Unit 3 — Job Paths', s:'المهن · قواعد ومفردات', lessons:[
+        { t:'Grammar — may / might', tag:'قواعد', ref:'EN_TG2_U3_MAYMIGHT' },
+        { t:'Grammar — Question Tags', tag:'قواعد', ref:'EN_TG2_U3_TAGS' },
+        { t:'Vocabulary — Job Paths', tag:'مفردات', ref:'EN_TG2_U3_VOCAB' }
+      ]},
+      { t:'Unit 4 — Glorious Food', s:'الطعام · قواعد ومفردات', lessons:[
+        { t:'Grammar — should / had better', tag:'قواعد', ref:'EN_TG2_U4_ADVICE' },
+        { t:'Grammar — Zero Conditional', tag:'قواعد', ref:'EN_TG2_U4_ZEROCOND' },
+        { t:'Vocabulary — Glorious Food', tag:'مفردات', ref:'EN_TG2_U4_VOCAB' }
+      ]},
+      { t:'Unit 5 — Storylines', s:'القصص · قواعد ومفردات', lessons:[
+        { t:'Grammar — Past Progressive', tag:'قواعد', ref:'EN_TG2_U5_PASTPROG' },
+        { t:'Grammar — Making Suggestions', tag:'قواعد', ref:'EN_TG2_U5_SUGGEST' },
+        { t:'Vocabulary — Storylines', tag:'مفردات', ref:'EN_TG2_U5_VOCAB' }
+      ]},
+      { t:'Unit 6 — Outdoor Activities', s:'الأنشطة الخارجية · قواعد ومفردات', lessons:[
+        { t:'Grammar — Simple Past vs. Past Progressive', tag:'قواعد', ref:'EN_TG2_U6_PASTCONTRAST' },
+        { t:'Grammar — when and while', tag:'قواعد', ref:'EN_TG2_U6_WHENWHILE' },
+        { t:'Vocabulary — Outdoor Activities', tag:'مفردات', ref:'EN_TG2_U6_VOCAB' }
+      ]},
+      { t:'Unit 7 — Trips', s:'السفر · قواعد ومفردات', lessons:[
+        { t:'Grammar — Present Perfect Simple', tag:'قواعد', ref:'EN_TG2_U7_PRESENTPERFECT' },
+        { t:'Grammar — Present Perfect: already/just/yet', tag:'قواعد', ref:'EN_TG2_U7_ALREADYYET' },
+        { t:'Vocabulary — Trips', tag:'مفردات', ref:'EN_TG2_U7_VOCAB' }
+      ]},
+      { t:'Unit 8 — Outfits', s:'الأزياء · قواعد ومفردات', lessons:[
+        { t:'Grammar — Present Perfect Questions', tag:'قواعد', ref:'EN_TG2_U8_PPQUESTIONS' },
+        { t:'Grammar — Present Perfect vs. Simple Past', tag:'قواعد', ref:'EN_TG2_U8_PPVSPAST' },
+        { t:'Vocabulary — Outfits', tag:'مفردات', ref:'EN_TG2_U8_VOCAB' }
+      ]}
+    ]},
+
     /* ===== السادس الابتدائي · الفصل الأول ===== */
     'p6.s1.math':{ eyebrow:'رياضيات · السادس الابتدائي', units:[
       { t:'الجبر: الأنماط والدوال', s:'الفصل الأول', lessons:[
