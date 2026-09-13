@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>فحص ترتيب عرض الرياضيات — وقّاد</title>
+<!-- ============================================================
+  أداةُ ضمانِ جودة (لا تُشحن مع التطبيق، للمطوّر فقط).
+  الغرض: رصدُ انعكاس bidi في عرض الرياضيات (.mx) قبل النشر.
+
+  كيف تعمل: تحمّل المحرّكَ والأنماطَ الحقيقية، ثم تمرّر كلَّ نصٍّ رياضيّ
+  (p/ask/o/w/f/sol/words + حقول القاعدة) من كلّ درسٍ mathdir عبر M() الفعليّة
+  (بحقنه كمثالِ قاعدة)، وتقيس موضعَ كلِّ محرفٍ على الشاشة (getBoundingClientRect)،
+  فتُعلن الخطأ إذا خالف الترتيبُ المرئيُّ الترتيبَ المنطقيّ.
+  هذا يرصد بالضبط العطبَ الذي عُرِضت فيه «(−١، −٦)» كـ«(١، −٦ −)» و«٥ × ٣ = ١٥» معكوسةً.
+
+  التشغيل: قدّمِ المشروعَ عبر خادمٍ ثابت وافتح  /tools/render-check.html
+  (مثال: من جذر المشروع  `npx serve .`  ثم افتح http://localhost:PORT/tools/render-check.html).
+  ملاحظة: يفحص دروسَ الرياضيات (mathdir) — وهي وحدها تستعمل M()/.mx.
+============================================================ -->
+<link rel="stylesheet" href="../assets/styles.css">
+<style>
+  body{padding:22px 26px;font-family:system-ui,"Segoe UI",sans-serif;background:#fff;color:#1C2143;max-width:1100px;margin:auto}
+  h1{font-size:20px;margin:0 0 4px}
+  .sub{color:#7C82A8;font-size:13px;margin-bottom:16px}
+  #verdict{font-size:17px;font-weight:800;padding:14px 18px;border-radius:12px;margin:14px 0}
+  #verdict.pass{background:#E6F6EC;color:#0A7D3B;border:1px solid #9BD9B4}
+  #verdict.fail{background:#FDE9E7;color:#B4241B;border:1px solid #F0A9A2}
+  #verdict.run{background:#EEF0FB;color:#4B45C6;border:1px solid #C3C0EC}
+  table{border-collapse:collapse;width:100%;font-size:13px;margin-top:12px}
+  th,td{border:1px solid #E4E6F2;padding:7px 9px;text-align:right;vertical-align:top}
+  th{background:#F4F5FB;font-weight:700}
+  td.mono,.mono{font-family:"SFMono-Regular",Consolas,monospace;direction:ltr;unicode-bidi:isolate-override;white-space:nowrap}
+  .stat{display:inline-block;margin-inline-end:18px;font-size:13px;color:#5A5F80}
+  .stat b{color:#1C2143;font-size:15px}
+  code{background:#F1F1F6;padding:1px 5px;border-radius:5px}
+</style>
+</head>
+<body>
+<h1>فحص ترتيب عرض الرياضيات (.mx)</h1>
+<div class="sub">يمرّر كلَّ نصٍّ رياضيّ عبر <code>M()</code> الفعليّة، ويقيس موضعَ كلِّ محرفٍ، فيرصد أيَّ انعكاسِ bidi قبل النشر.</div>
+<div id="verdict" class="run">جارٍ التحميل والفحص…</div>
+<div id="stats"></div>
+<div id="details"></div>
+
+<script src="../assets/icons.js"></script>
+<script src="../assets/data/curriculum.js"></script>
+<script src="../assets/data/lesson-manifest.js"></script>
+<script src="../assets/engine.js"></script>
+<script>
+(async function(){
+  var verdict=document.getElementById('verdict');
+  var statsEl=document.getElementById('stats');
+  var detailsEl=document.getElementById('details');
+
+  function loadScript(src){
+    return new Promise(function(res,rej){
+      var s=document.createElement('script'); s.src=src;
+      s.onload=function(){res();}; s.onerror=function(){rej(src);};
+      document.head.appendChild(s);
+    });
+  }
+
+  // ١) حمّل ملفّاتِ دروس الرياضيات (ar-math-*) من الفهرس — وهي وحدها mathdir.
+  var files=[]; var seen={};
+  for(var ref in window.LMAN.lessons){
+    var f=window.LMAN.lessons[ref].f;
+    if(f && /ar-math/.test(f) && !seen[f]){ seen[f]=1; files.push(f); }
+  }
+  var loadErrors=[];
+  await Promise.all(files.map(function(f){
+    return loadScript('../'+f).catch(function(){ loadErrors.push(f); });
+  }));
+
+  // ٢) اجمعِ النصوصَ الرياضيّة من كلّ درسٍ mathdir.
+  var items=[]; // {ref, field, str}
+  function push(ref,field,s){ if(typeof s==='string' && s.length) items.push({ref:ref,field:field,str:s}); }
+  var mathLessons=0;
+  for(var r in window.LESSONS){
+    var L=window.LESSONS[r]; if(!L || !L.mathdir) continue; mathLessons++;
+    if(L.rule){
+      push(r,'rule.intro',L.rule.intro);
+      push(r,'rule.formula',L.rule.formula);
+      (L.rule.table||[]).forEach(function(row,i){ push(r,'rule.table['+i+'].0',row[0]); push(r,'rule.table['+i+'].1',row[1]); });
+      (L.rule.examples||[]).forEach(function(e,i){ push(r,'rule.examples['+i+']',e); });
+      push(r,'rule.trick',L.rule.trick);
+    }
+    (L.stages||[]).forEach(function(st,si){
+      (st.qs||[]).forEach(function(q,qi){
+        var tag='s'+si+'q'+qi;
+        push(r,tag+'.p',q.p); push(r,tag+'.ask',q.ask); push(r,tag+'.w',q.w); push(r,tag+'.f',q.f); push(r,tag+'.fix',q.fix);
+        (q.o||[]).forEach(function(o,oi){ push(r,tag+'.o['+oi+']',o); });
+        (q.sol||[]).forEach(function(s,i){ push(r,tag+'.sol['+i+']',s); });
+        (q.words||[]).forEach(function(w,i){ push(r,tag+'.words['+i+']',w); });
+      });
+    });
+  }
+
+  // ٣) اعرضِ النصوصَ دفعةً عبر M() الحقيقيّة (كأمثلةِ قاعدةٍ لدرسٍ صناعيّ)،
+  //    فتظهر كلُّ سلسلةٍ في <div class="example"> بترتيبها، وداخلها وسومُ .mx.
+  var mount=document.createElement('div');
+  mount.style.cssText='position:absolute;left:-99999px;top:0;width:820px;direction:rtl';
+  document.body.appendChild(mount);
+  var synth={ id:'__RENDER_CHECK__', title:'فحص', lang:'ar', mathdir:true,
+    rule:{ tag:'', title:'', examples: items.map(function(x){return x.str;}) },
+    stages:[{ name:'s', type:'choice', qs:[{p:'.', o:['.'], a:0, w:'.', f:'.'}] }] };
+  window.Engine.open(synth, { mount:mount, onExit:function(){}, toast:function(){}, scrollTop:function(){} });
+
+  var exampleDivs=mount.querySelectorAll('.examples > .example');
+
+  // قياسُ الترتيب المرئيّ لنصٍّ خالص (عقدةٌ نصّيّةٌ واحدة): يمين→يسار حسب x.
+  function plainVisual(textNode){
+    var s=textNode.textContent, arr=[];
+    for(var i=0;i<s.length;i++){
+      var rg=document.createRange(); rg.setStart(textNode,i); rg.setEnd(textNode,i+1);
+      var b=rg.getBoundingClientRect(); arr.push({ch:s[i], x:b.left, y:b.top});
+    }
+    arr.sort(function(a,b){ return (a.x-b.x) || (a.y-b.y); });
+    return arr.map(function(o){return o.ch;}).join('');
+  }
+  // ترتيبُ الأبناء المباشرين لِـ .mx متداخلة (كسر/أُس): يجب ألّا ينقلبَ ترتيبُهم أفقيًّا.
+  function childrenOrdered(mx){
+    var lefts=[];
+    mx.childNodes.forEach(function(k){
+      var rect; if(k.nodeType===3){ var rg=document.createRange(); rg.selectNode(k); rect=rg.getBoundingClientRect(); }
+      else rect=k.getBoundingClientRect();
+      if(rect.width>0) lefts.push(rect.left);
+    });
+    for(var i=1;i<lefts.length;i++){ if(lefts[i] < lefts[i-1]-0.75) return false; }
+    return true;
+  }
+
+  var checkedMx=0, bad=[];
+  function show(s){ return s.replace(/ /g,'·'); }
+  exampleDivs.forEach(function(div,idx){
+    var meta=items[idx]||{ref:'?',field:'?',str:div.textContent};
+    div.querySelectorAll('.mx').forEach(function(mx){
+      checkedMx++;
+      var plain = (mx.childNodes.length===1 && mx.firstChild.nodeType===3);
+      if(plain){
+        var s=mx.textContent; if(s.length<2) return;
+        var vis=plainVisual(mx.firstChild);
+        if(vis!==s) bad.push({ref:meta.ref, field:meta.field, kind:'نصّ', logical:show(s), visual:show(vis)});
+      } else {
+        if(!childrenOrdered(mx)) bad.push({ref:meta.ref, field:meta.field, kind:'متداخل', logical:show(mx.textContent), visual:'(ترتيبُ أبناءٍ منقلب)'});
+      }
+    });
+  });
+
+  // ٤) التقرير.
+  statsEl.innerHTML=
+    '<span class="stat">دروسُ الرياضيات: <b>'+mathLessons+'</b></span>'+
+    '<span class="stat">ملفّاتٌ حُمِّلت: <b>'+files.length+'</b></span>'+
+    '<span class="stat">سلاسلُ نصّيّة: <b>'+items.length+'</b></span>'+
+    '<span class="stat">وسومُ .mx مفحوصة: <b>'+checkedMx+'</b></span>'+
+    (loadErrors.length?'<span class="stat" style="color:#B4241B">فشلَ تحميلُ: <b>'+loadErrors.length+'</b></span>':'');
+
+  if(bad.length===0 && loadErrors.length===0){
+    verdict.className='pass'; verdict.textContent='✅ سليم — لا انعكاسَ في العرض ('+checkedMx+' وسمَ .mx، كلُّها بالترتيب المنطقيّ الصحيح).';
+  } else {
+    verdict.className='fail';
+    verdict.textContent='❌ رُصِد '+bad.length+' انعكاسًا'+(loadErrors.length?' و'+loadErrors.length+' فشلَ تحميل':'')+' — أصلِحْ قبل النشر.';
+    var rows=bad.map(function(b){
+      return '<tr><td>'+b.ref+'</td><td>'+b.field+'</td><td>'+b.kind+'</td><td class="mono">'+b.logical+'</td><td class="mono">'+b.visual+'</td></tr>';
+    }).join('');
+    detailsEl.innerHTML='<table><thead><tr><th>الدرس</th><th>الحقل</th><th>النوع</th><th>المنطقيّ (الصواب)</th><th>المرئيّ (كما يُعرَض)</th></tr></thead><tbody>'+rows+'</tbody></table>'+
+      (loadErrors.length?'<p style="color:#B4241B">ملفّاتٌ لم تُحمَّل: <span class="mono">'+loadErrors.join('، ')+'</span></p>':'');
+  }
+  document.body.removeChild(mount);
+  // إتاحةُ النتيجة برمجيًّا (لتشغيلٍ آليّ عند الحاجة)
+  window.__RENDER_CHECK__={ pass: bad.length===0 && loadErrors.length===0, checkedMx:checkedMx, mismatches:bad, loadErrors:loadErrors, mathLessons:mathLessons, strings:items.length };
+})().catch(function(e){
+  document.getElementById('verdict').className='fail';
+  document.getElementById('verdict').textContent='❌ خطأٌ في تشغيل الفحص: '+(e&&e.message||e);
+});
+</script>
+</body>
+</html>
