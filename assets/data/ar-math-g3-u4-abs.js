@@ -13,22 +13,22 @@
       tag:'القاعدة',
       title:'متبايناتُ القيمة المطلقة',
       intro:'لحلّ متباينةٍ فيها قيمةٌ مطلقة (ن موجبة): <b>|س| &lt; ن</b> تكافئ متباينةً مركبةً بـ<b>«و»</b>: <span class="mx">−ن &lt; س &lt; ن</span> (بين قيمتين). و<b>|س| &gt; ن</b> تكافئ متباينةً مركبةً بـ<b>«أو»</b>: <span class="mx">س &lt; −ن</span> أو <span class="mx">س &gt; ن</span> (خارج قيمتين).',
-      table:[['|س| &lt; ن','−ن &lt; س &lt; ن  («و»)'],['|س| &gt; ن','س &lt; −ن  أو  س &gt; ن  («أو»)'],['أصغر (<span class="mx">&lt;</span>)','بين قيمتين'],['أكبر (<span class="mx">&gt;</span>)','خارج قيمتين']],
+      table:[['|س| &lt; ن','−ن &lt; س &lt; ن  («و»)'],['|س| &gt; ن','س &lt; −ن  أو  س &gt; ن  («أو»)'],['أصغر (&lt;)','بين قيمتين'],['أكبر (&gt;)','خارج قيمتين']],
       examples:['<span class="mx">|س| &lt; ٤</span> ← <span class="mx">−٤ &lt; س &lt; ٤</span> (القيمُ بين −٤ و٤).','<span class="mx">|س| &gt; ٣</span> ← <span class="mx">س &lt; −٣</span> أو <span class="mx">س &gt; ٣</span>.'],
-      trick:'«أصغر من» (<span class="mx">&lt;</span>) ← «و» (بين القيمتين). «أكبر من» (<span class="mx">&gt;</span>) ← «أو» (خارجهما). تذكّرْ: أصغر ← داخل، أكبر ← خارج.'
+      trick:'«أصغر من» (&lt;) ← «و» (بين القيمتين). «أكبر من» (&gt;) ← «أو» (خارجهما). تذكّرْ: أصغر ← داخل، أكبر ← خارج.'
       },
       explore:{ sim:'absineq', title:'مختبر القيمة المطلقة', hint:'اختر العلاقةَ والقيمة: أصغرُ ← قطعةٌ داخلية (و)، أكبرُ ← شعاعان خارج (أو).' },
     stages:[
       { type:'choice', name:'أصغر ← بين', hint:'|س| &lt; ن ← −ن &lt; س &lt; ن', qs:[
         {p:'<span class="mx">|س| &lt; ٤</span>', ask:'الحلّ', o:['<span class="mx">−٤ &lt; س &lt; ٤</span>','<span class="mx">س &lt; ٤</span> فقط'], a:0, w:'أصغر ← بين −٤ و٤.', f:'← <u>−٤ &lt; س &lt; ٤</u>'},
         {p:'<span class="mx">|س| &lt; ٢</span>', ask:'الحلّ', o:['<span class="mx">−٢ &lt; س &lt; ٢</span>','<span class="mx">س &gt; ٢</span>'], a:0, w:'بين −٢ و٢.', f:'← <u>−٢ &lt; س &lt; ٢</u>'},
-        {p:'<span class="mx">|س| ≤ ٥</span>', ask:'الحلّ', o:['<span class="mx">−٥ ≤ س ≤ ٥</span>','<span class="mx">س ≤ ٥</span> فقط'], a:0, w:'<span class="mx">≤</span> ← بين شاملةً الطرفين.', f:'← <u>−٥ ≤ س ≤ ٥</u>'},
+        {p:'<span class="mx">|س| ≤ ٥</span>', ask:'الحلّ', o:['<span class="mx">−٥ ≤ س ≤ ٥</span>','<span class="mx">س ≤ ٥</span> فقط'], a:0, w:'≤ ← بين شاملةً الطرفين.', f:'← <u>−٥ ≤ س ≤ ٥</u>'},
         {p:'«أصغر من» في القيمة المطلقة تعطي:', ask:'اختر', o:['حلًّا بين قيمتين («و»)','حلًّا خارج قيمتين'], a:0, w:'بين ← «و».', f:'← <u>بين قيمتين</u>'}
       ]},
       { type:'choice', name:'أكبر ← خارج', hint:'|س| &gt; ن ← س &lt; −ن أو س &gt; ن', qs:[
         {p:'<span class="mx">|س| &gt; ٣</span>', ask:'الحلّ', o:['<span class="mx">س &lt; −٣</span> أو <span class="mx">س &gt; ٣</span>','<span class="mx">−٣ &lt; س &lt; ٣</span>'], a:0, w:'أكبر ← خارج.', f:'← <u>س &lt; −٣ أو س &gt; ٣</u>'},
         {p:'<span class="mx">|س| &gt; ٥</span>', ask:'الحلّ', o:['<span class="mx">س &lt; −٥</span> أو <span class="mx">س &gt; ٥</span>','<span class="mx">−٥ &lt; س &lt; ٥</span>'], a:0, w:'خارج −٥ و٥.', f:'← <u>س &lt; −٥ أو س &gt; ٥</u>'},
-        {p:'<span class="mx">|س| ≥ ٢</span>', ask:'الحلّ', o:['<span class="mx">س ≤ −٢</span> أو <span class="mx">س ≥ ٢</span>','<span class="mx">−٢ ≤ س ≤ ٢</span>'], a:0, w:'<span class="mx">≥</span> ← خارج شاملةً الطرفين.', f:'← <u>س ≤ −٢ أو س ≥ ٢</u>'},
+        {p:'<span class="mx">|س| ≥ ٢</span>', ask:'الحلّ', o:['<span class="mx">س ≤ −٢</span> أو <span class="mx">س ≥ ٢</span>','<span class="mx">−٢ ≤ س ≤ ٢</span>'], a:0, w:'≥ ← خارج شاملةً الطرفين.', f:'← <u>س ≤ −٢ أو س ≥ ٢</u>'},
         {p:'«أكبر من» في القيمة المطلقة تعطي:', ask:'اختر', o:['حلًّا خارج قيمتين («أو»)','حلًّا بين قيمتين'], a:0, w:'خارج ← «أو».', f:'← <u>خارج قيمتين</u>'}
       ]},
       { type:'choice', name:'داخلٌ أم خارج؟', hint:'أصغر داخل · أكبر خارج', qs:[
