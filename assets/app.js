@@ -233,6 +233,24 @@ window.BRAND = {
     });
   }
 
+  /* ---------- رابطٌ عميق: فتح درسٍ من صفحة سيو ثابتة (?lesson=REF) ---------- */
+  function findLessonLoc(ref){
+    for(var ck in C.content){ var pk=ck.split('.'), content=C.content[ck];
+      if(!content||!content.units) continue;
+      for(var ui=0;ui<content.units.length;ui++){ var u=content.units[ui], ll=u.lessons||[];
+        for(var li=0;li<ll.length;li++){ if(ll[li].ref===ref) return {gradeId:pk[0],semId:pk[1],subId:pk[2],unit:u,unitIdx:ui}; }
+      }
+    } return null;
+  }
+  function deepLink(){
+    var m=/[?&]lesson=([A-Za-z0-9_]+)/.exec(location.search); if(!m) return;
+    var ref=m[1], loc=findLessonLoc(ref); if(!loc) return;
+    var g=byId(C.grades,loc.gradeId), sm=byId(C.semesters,loc.semId), sub=byId(C.subjects,loc.subId);
+    if(!g||!sm||!sub||sm.locked||!built(ref)) return;
+    state.stage=g.stage; state.grade=g; state.sem=sm; state.subject=sub; state.unit=loc.unit; state.unitIdx=loc.unitIdx;
+    setSubjectVars(sub); openLesson(ref);
+  }
+
   /* ---------- إجماليّات النجوم ----------
      يُحسب الإجماليّ مسحًا كاملاً مرّةً عند الإقلاع، ثمّ يُحدَّث تفاضليًّا لدرسٍ واحدٍ
      عند كلّ تقدّم (بدلاً من إعادة مسحِ كلّ الدروس في كلّ حفظٍ للتقدّم). */
@@ -357,6 +375,7 @@ window.BRAND = {
     renderStages();
     refreshTotals();
     go('home');
+    deepLink();
     visitorCounter();
 
     // PWA — تسجيلٌ + تحديثٌ تلقائيّ: حين يتولّى عاملُ خدمةٍ جديدٌ التحكّم (بعد نشرِ نسخةٍ جديدة)
