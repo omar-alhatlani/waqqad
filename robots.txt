@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://waqqad.netlify.app/sitemap.xml

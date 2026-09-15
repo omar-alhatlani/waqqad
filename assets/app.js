@@ -316,7 +316,7 @@ window.BRAND = {
     $('#brandName').textContent=B.name; $('#brandTag').textContent=B.tagline;
     $('#footTeacher').textContent=B.teacher; $('#footSchool').textContent=B.school;
     $('#aboutTeacher').textContent=B.teacher; $('#aboutSchool').textContent=B.school;
-    document.title = 'منصّة '+B.name;
+    document.title = B.name + ' — شرحٌ وتمارينُ تفاعلية للرياضيات والعلوم واللغتين (ابتدائي ومتوسط)';
 
     // الاسم
     $('#playerName').value = loadName();
