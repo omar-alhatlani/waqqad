@@ -11,6 +11,8 @@ const ROOT = path.join(__dirname, '..');
 const DATA = path.join(ROOT, 'assets', 'data');
 const OUT = path.join(ROOT, 'lessons');
 const SITE = 'https://waqqad.netlify.app';
+const BEACON = '<script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon=\'{"token": "5659bcf9c15a4f9b9f742a16dcbbb34e"}\'></script>';
+const withBeacon = html => html.replace('</body>', BEACON+'\n</body>');
 
 // ---------- تحميل المنهج والدروس ----------
 global.window = {};
@@ -96,7 +98,7 @@ function head(o){
   return '<!doctype html>\n<html lang="ar" dir="rtl">\n<head>\n'+
   '<meta charset="utf-8">\n'+
   '<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">\n'+
-  '<meta http-equiv="Content-Security-Policy" content="default-src \'self\'; style-src \'self\' \'unsafe-inline\' https://fonts.googleapis.com; font-src \'self\' https://fonts.gstatic.com data:; img-src \'self\' data:; base-uri \'self\'; object-src \'none\'">\n'+
+  '<meta http-equiv="Content-Security-Policy" content="default-src \'self\'; script-src \'self\' https://static.cloudflareinsights.com; connect-src \'self\' https://cloudflareinsights.com; style-src \'self\' \'unsafe-inline\' https://fonts.googleapis.com; font-src \'self\' https://fonts.gstatic.com data:; img-src \'self\' data:; base-uri \'self\'; object-src \'none\'">\n'+
   '<title>'+esc(o.title)+'</title>\n'+
   '<meta name="description" content="'+esc(o.desc)+'">\n'+
   '<meta name="robots" content="index, follow, max-image-preview:large">\n'+
@@ -245,7 +247,7 @@ function mainIndex(groups){
 if (!fs.existsSync(OUT)) fs.mkdirSync(OUT, {recursive:true});
 var written = 0, urls = [SITE + '/', SITE + '/lessons/'];
 pages.forEach(function(p){
-  fs.writeFileSync(path.join(OUT, slug(p.ref) + '.html'), lessonPage(p));
+  fs.writeFileSync(path.join(OUT, slug(p.ref) + '.html'), withBeacon(lessonPage(p)));
   urls.push(SITE + '/lessons/' + slug(p.ref) + '.html');
   written++;
 });
@@ -254,11 +256,11 @@ var groups = {};
 pages.forEach(function(p){ var k=p.grade.id+'-'+p.subject.id; (groups[k]=groups[k]||{grade:p.grade,subject:p.subject,list:[]}).list.push(p); });
 Object.keys(groups).forEach(function(k){
   var g=groups[k];
-  fs.writeFileSync(path.join(OUT, k + '.html'), indexPage(g.grade.id, g.subject.id, g.list));
+  fs.writeFileSync(path.join(OUT, k + '.html'), withBeacon(indexPage(g.grade.id, g.subject.id, g.list)));
   urls.push(SITE + '/lessons/' + k + '.html');
 });
 // الفهرس الرئيسي
-fs.writeFileSync(path.join(OUT, 'index.html'), mainIndex(groups));
+fs.writeFileSync(path.join(OUT, 'index.html'), withBeacon(mainIndex(groups)));
 
 // خريطة الموقع
 var sm = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'+
