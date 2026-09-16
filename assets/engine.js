@@ -409,9 +409,11 @@ window.Engine = (function(){
       '<div class="sig">إشراف المعلّم: <b>'+(B.teacher||'')+'</b><br>'+(B.school||'')+'</div>'+
       '</div>'+
       '<div class="lp-actions" style="justify-content:center">'+
+      '<button class="btn ghost sm" id="engShare">📤 شارك إنجازك</button>'+
       '<button class="btn ghost sm" id="engAgain">↺ أعِد التحدي</button>'+
       '<button class="btn sm" id="engBackMap">إلى خريطة الدرس 🗺️</button></div></div></div>';
     mount.innerHTML=body;
+    $('engShare').onclick=function(){ var u=location.origin+'/?lesson='+encodeURIComponent(lesson.id); if(window.wqShare) window.wqShare(u, 'أتقنتُ درس «'+lesson.title+'» على منصّة وقّاد! 🎓⭐'); };
     $('engAgain').onclick=function(){ startStage(lesson.stages.length-1); };
     $('engBackMap').onclick=function(){ renderMap(); };
     if(opts.scrollTop) opts.scrollTop();

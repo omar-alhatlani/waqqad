@@ -274,6 +274,18 @@ window.BRAND = {
     clearTimeout(toastT); toastT=setTimeout(function(){ t.classList.remove('show'); },2000);
   }
 
+  /* ---------- المشاركة: قائمة الجوّال الأصليّة، وإلّا نسخُ الرابط ---------- */
+  function wqShare(url, text){
+    if(navigator.share){
+      navigator.share({title:'وقّاد', text:text||'', url:url}).catch(function(){});
+    } else {
+      var full=(text?text+'\n':'')+url;
+      try{ navigator.clipboard.writeText(full).then(function(){ toast('نُسِخ الرابط ✓ — الصقه في واتساب'); }, function(){ toast(url); }); }
+      catch(e){ toast(url); }
+    }
+  }
+  window.wqShare = wqShare;
+
   /* ---------- الوضع الليلي ---------- */
   function isDark(){ var c=document.documentElement.getAttribute('data-theme'); return c==='dark'||(!c&&window.matchMedia('(prefers-color-scheme:dark)').matches); }
   function applyTheme(mode){
@@ -371,6 +383,13 @@ window.BRAND = {
     $('#aboutLink').onclick=openAbout;
     $('#aboutClose').onclick=closeAbout;
     $('#aboutModal').onclick=function(e){ if(e.target===$('#aboutModal')) closeAbout(); };
+
+    // المشاركة + تثبيت التطبيق (PWA)
+    $('#shareBtn').onclick=function(){ wqShare(location.origin+'/', 'منصّة «وقّاد» التعليمية التفاعلية المجانية — رياضيات وعلوم ولغتي وإنجليزي، بلا تسجيل.'); };
+    var deferredPrompt=null;
+    window.addEventListener('beforeinstallprompt', function(e){ e.preventDefault(); deferredPrompt=e; var b=$('#installBtn'); if(b) b.hidden=false; });
+    $('#installBtn').onclick=function(){ if(!deferredPrompt) return; deferredPrompt.prompt(); if(deferredPrompt.userChoice) deferredPrompt.userChoice.then(function(){ deferredPrompt=null; var b=$('#installBtn'); if(b) b.hidden=true; }); };
+    window.addEventListener('appinstalled', function(){ deferredPrompt=null; var b=$('#installBtn'); if(b) b.hidden=true; });
 
     renderStages();
     refreshTotals();
