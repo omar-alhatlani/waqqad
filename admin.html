@@ -113,6 +113,29 @@
   .ed-opt{display:flex;gap:7px;align-items:center;margin-bottom:7px}
   .ed-opt input[type=radio]{flex:none;width:18px;height:18px;accent-color:var(--ok)}
   .ed-opt input[type=text]{flex:1;border:1px solid var(--line2);border-radius:9px;padding:8px 10px;font:inherit;font-size:14px;background:var(--surface);color:var(--ink)}
+  /* التبويبات والتقارير */
+  .tabs{display:flex;gap:8px;margin:14px 0}
+  .tabx{border:1px solid var(--line2);background:var(--surface);color:var(--soft);border-radius:10px;padding:9px 16px;font:inherit;font-weight:800;cursor:pointer}
+  .tabx.on{background:var(--brand);border-color:var(--brand);color:#fff}
+  .rep-sec{background:var(--surface);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);padding:16px 18px;margin-bottom:16px}
+  .rep-sec>h3{margin:0 0 12px;font-size:17px;color:var(--brand-deep);display:flex;align-items:center;gap:8px}
+  .kpis{display:flex;flex-wrap:wrap;gap:10px}
+  .kpi{flex:1;min-width:115px;background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:12px 14px;text-align:center}
+  .kpi b{display:block;font-size:25px;font-weight:900;color:var(--ink);font-variant-numeric:tabular-nums}
+  .kpi span{font-size:12px;color:var(--soft);font-weight:700}
+  .rep-scroll{overflow-x:auto}
+  .rep-tbl{width:100%;border-collapse:collapse;font-size:13px;margin-top:4px;min-width:440px}
+  .rep-tbl th,.rep-tbl td{border:1px solid var(--line);padding:7px 8px;text-align:center;font-variant-numeric:tabular-nums;white-space:nowrap}
+  .rep-tbl th{background:var(--bg);font-weight:800;color:var(--soft)}
+  .rep-tbl td.gh{background:var(--bg);font-weight:800;color:var(--ink);text-align:start}
+  .cov-full{background:var(--ok-bg);color:var(--ok);font-weight:800}
+  .cov-part{background:var(--warn-bg);color:var(--warn);font-weight:700}
+  .cov-none{color:var(--muted)}
+  .issue{display:flex;gap:9px;align-items:center;padding:8px 10px;border:1px solid var(--line);border-radius:9px;margin-bottom:7px;font-size:13.5px}
+  .issue .sev{flex:none;width:9px;height:9px;border-radius:50%}
+  .issue .loc{color:var(--muted);font-size:12px}
+  .issue .fixbtn{margin-inline-start:auto;border:1px solid var(--line2);background:var(--surface);color:var(--brand);border-radius:8px;padding:4px 11px;font:inherit;font-weight:800;cursor:pointer;flex:none}
+  .empty-ok{color:var(--ok);font-weight:700;padding:6px 2px}
 </style>
 </head>
 <body>
@@ -138,16 +161,22 @@
   </div></header>
 
   <div class="wrap">
-    <div class="bar"><h2>التحكّم بالمحتوى</h2></div>
-    <p class="hint">اضبط حالةَ كلّ عنصر (صفّ/فصل/مادّة/وحدة/درس)، أو أعِد تسميته وترتيبه. التغييراتُ لا تظهر للزوّار حتى تضغط «نشر».</p>
-    <div class="legend">
-      <span><b style="background:var(--ok-bg);color:var(--ok)">مفتوح</b> ظاهرٌ ويعمل</span>
-      <span><b style="background:var(--warn-bg);color:var(--warn)">قريبًا</b> ظاهرٌ مقفلٌ (إغلاق مؤقّت)</span>
-      <span><b style="background:var(--bad-bg);color:var(--bad)">مخفي</b> يُزال تمامًا</span>
+    <div class="tabs">
+      <button class="tabx on" id="tabControl">🗂 التحكّم بالمحتوى</button>
+      <button class="tabx" id="tabReports">📊 التقارير</button>
     </div>
-    <input id="search" type="search" placeholder="🔎 ابحث عن درسٍ بالعنوان أو المعرّف…" autocomplete="off"
-      style="width:100%;padding:10px 14px;border:1px solid var(--line2);border-radius:10px;font:inherit;font-size:15px;background:var(--surface);color:var(--ink);margin-bottom:10px">
-    <div class="tree" id="tree"></div>
+    <div id="controlView">
+      <p class="hint">اضبط حالةَ كلّ عنصر (صفّ/فصل/مادّة/وحدة/درس)، أو أعِد تسميته وترتيبه. التغييراتُ لا تظهر للزوّار حتى تضغط «نشر».</p>
+      <div class="legend">
+        <span><b style="background:var(--ok-bg);color:var(--ok)">مفتوح</b> ظاهرٌ ويعمل</span>
+        <span><b style="background:var(--warn-bg);color:var(--warn)">قريبًا</b> ظاهرٌ مقفلٌ (إغلاق مؤقّت)</span>
+        <span><b style="background:var(--bad-bg);color:var(--bad)">مخفي</b> يُزال تمامًا</span>
+      </div>
+      <input id="search" type="search" placeholder="🔎 ابحث عن درسٍ بالعنوان أو المعرّف…" autocomplete="off"
+        style="width:100%;padding:10px 14px;border:1px solid var(--line2);border-radius:10px;font:inherit;font-size:15px;background:var(--surface);color:var(--ink);margin-bottom:10px">
+      <div class="tree" id="tree"></div>
+    </div>
+    <div id="reportsView" hidden></div>
   </div>
 </div>
 
@@ -326,6 +355,103 @@
     var results=searchLessons(q);
     t.appendChild(el('div','ed-note', results.length ? (results.length+' نتيجة') : 'لا نتائج مطابقة.'));
     results.slice(0,120).forEach(function(n){ t.appendChild(renderNode(n,0)); });
+  }
+
+  /* ---------- التقارير ---------- */
+  function lessonLoc(ref){
+    for(var ck in C.content){ var content=C.content[ck], parts=ck.split('.'), g=byId(C.grades,parts[0]), sub=byId(C.subjects,parts[2]), units=content.units||[];
+      for(var ui=0;ui<units.length;ui++){ var ll=units[ui].lessons||[];
+        for(var li=0;li<ll.length;li++) if(ll[li].ref===ref) return { uid:ck+'#'+ui, txt:(g?g.name:'')+' · '+(sub?sub.name:'')+' · '+units[ui].t }; }
+    } return null;
+  }
+  function totals(){
+    var units=0, lessons=0, built=0;
+    for(var ck in C.content) (C.content[ck].units||[]).forEach(function(u){ units++; (u.lessons||[]).forEach(function(l){ lessons++; if(LMAN.lessons&&LMAN.lessons[l.ref]) built++; }); });
+    return { units:units, lessons:lessons, built:built, soon:lessons-built, sims:Object.keys(LMAN.sims||{}).length };
+  }
+  function covTable(sem){
+    var h='<div class="rep-scroll"><table class="rep-tbl"><tr><th>الصفّ \\ المادّة</th>'+C.subjects.map(function(s){return '<th>'+esc(s.name)+'</th>';}).join('')+'</tr>';
+    C.grades.forEach(function(g){ h+='<tr><td class="gh">'+esc(g.name)+'</td>'+
+      C.subjects.map(function(sub){ var content=C.content[g.id+'.'+sem+'.'+sub.id], total=0, built=0, units=content?content.units.length:0;
+        if(content) content.units.forEach(function(u){ (u.lessons||[]).forEach(function(l){ total++; if(LMAN.lessons&&LMAN.lessons[l.ref]) built++; }); });
+        if(!total) return '<td class="cov-none">—</td>';
+        var cls=built===total?'cov-full':(built>0?'cov-part':'cov-none');
+        return '<td class="'+cls+'">'+built+'/'+total+'<br><span style="font-size:11px;opacity:.7">'+units+' وحدة</span></td>';
+      }).join('')+'</tr>';
+    });
+    return h+'</table></div>';
+  }
+  function structuralIssues(){
+    var out=[];
+    for(var ck in C.content){ (C.content[ck].units||[]).forEach(function(u){
+      if(!(u.lessons&&u.lessons.length)) out.push({ sev:'#C9781A', msg:'وحدةٌ بلا دروس', loc:ck+' · '+u.t });
+      (u.lessons||[]).forEach(function(l){ if(!(LMAN.lessons&&LMAN.lessons[l.ref])) out.push({ sev:'#C9781A', msg:'درسٌ غير مبنيّ (يظهر «قريبًا»)', loc:u.t+' · '+l.t }); });
+    }); } return out;
+  }
+  function contentIssues(){
+    var out=[];
+    for(var ref in window.LESSONS){ var L=window.LESSONS[ref]; if(!L) continue; var loc=lessonLoc(ref), where=loc?loc.txt:'';
+      var push=function(sev,msg){ out.push({ sev:sev, msg:msg, loc:where, ref:ref }); };
+      if(L.rule && (!L.rule.intro || !String(L.rule.intro).trim())) push('#E7466B','مقدّمةُ القاعدة فارغة');
+      if(L.rule && (!L.rule.examples || !L.rule.examples.length)) push('#C9781A','بلا أمثلة');
+      (L.stages||[]).forEach(function(st,si){
+        if(!st.qs || !st.qs.length){ push('#E7466B','مرحلة '+(si+1)+' بلا أسئلة'); return; }
+        st.qs.forEach(function(q,qi){ var tag='م'+(si+1)+'/س'+(qi+1)+': ';
+          if(q.o){ if(!q.o.length) push('#E7466B',tag+'بلا خيارات');
+            else{ if(typeof q.a==='number' && (q.a<0||q.a>=q.o.length)) push('#E7466B',tag+'الإجابة الصحيحة خارج نطاق الخيارات');
+              if(q.o.some(function(o){return !String(o==null?'':o).trim();})) push('#C9781A',tag+'خيارٌ فارغ'); }
+          }
+        });
+      });
+    } return out;
+  }
+  async function loadAllLessons(onp){
+    var refs=Object.keys(LMAN.lessons||{});
+    for(var i=0;i<refs.length;i+=25){
+      await Promise.all(refs.slice(i,i+25).map(function(r){ return loadLessonFile(r).catch(function(){}); }));
+      if(onp) onp(Math.min(refs.length, i+25), refs.length);
+    }
+  }
+  function issueList(arr){
+    if(!arr.length) return '<div class="empty-ok">✓ لا ملاحظات</div>';
+    return arr.slice(0,300).map(function(it){
+      return '<div class="issue"><span class="sev" style="background:'+it.sev+'"></span><div><div>'+esc(it.msg)+'</div>'+(it.loc?'<div class="loc">'+esc(it.loc)+'</div>':'')+'</div>'+
+        (it.ref?'<button class="fixbtn" data-ref="'+esc(it.ref)+'">تحرير 📝</button>':'')+'</div>';
+    }).join('')+(arr.length>300?'<div class="loc">…و'+(arr.length-300)+' ملاحظةً أخرى</div>':'');
+  }
+  async function fetchVisitors(){
+    try{ var r=await fetch('https://abacus.jasoncameron.dev/get/waqqad-app-1448/visitors'); var d=await r.json(); return (d&&typeof d.value==='number')?d.value:null; }catch(e){ return null; }
+  }
+  function renderReports(){
+    var v=$('#reportsView'), T=totals();
+    v.innerHTML=
+      '<div class="rep-sec"><h3>📈 نظرةٌ عامّة</h3><div class="kpis">'+
+        '<div class="kpi"><b>'+T.lessons+'</b><span>درسًا</span></div>'+
+        '<div class="kpi"><b>'+T.built+'</b><span>مبنيّ</span></div>'+
+        '<div class="kpi"><b>'+T.soon+'</b><span>قريبًا</span></div>'+
+        '<div class="kpi"><b>'+T.units+'</b><span>وحدة</span></div>'+
+        '<div class="kpi"><b>'+T.sims+'</b><span>محاكاة</span></div>'+
+        '<div class="kpi"><b id="visKpi">…</b><span>زائرًا (إجمالي)</span></div>'+
+      '</div></div>'+
+      '<div class="rep-sec"><h3>🗺 التغطية — الفصل الأول</h3>'+covTable('s1')+'</div>'+
+      '<div class="rep-sec"><h3>🗺 التغطية — الفصل الثاني</h3>'+covTable('s2')+'</div>'+
+      '<div class="rep-sec"><h3>🧱 ملاحظاتٌ بنيويّة</h3>'+issueList(structuralIssues())+'</div>'+
+      '<div class="rep-sec"><h3>🔎 فحصُ جودة المحتوى</h3>'+
+        '<p class="hint" style="margin:0 0 10px">يحمّل كلَّ الدروس ويفحص الحقولَ والأسئلة. قد يستغرق ثوانٍ.</p>'+
+        '<button class="btn primary" id="qaRun">افحصِ المحتوى الآن</button><div id="qaOut" style="margin-top:12px"></div></div>';
+    fetchVisitors().then(function(n){ var e=$('#visKpi'); if(e) e.textContent=(n==null?'—':String(n)); });
+    $('#qaRun').onclick=async function(){
+      var btn=this, out=$('#qaOut'); btn.disabled=true;
+      await loadAllLessons(function(d,t){ btn.textContent='جارِ الفحص… '+d+'/'+t; });
+      var issues=contentIssues(); btn.textContent='أعِدِ الفحص'; btn.disabled=false;
+      out.innerHTML='<div class="loc" style="margin-bottom:8px">'+issues.length+' ملاحظة</div>'+issueList(issues);
+      out.querySelectorAll('.fixbtn').forEach(function(b){ b.onclick=function(){ openEditor(b.dataset.ref); }; });
+    };
+  }
+  function showTab(which){
+    var c=(which==='control'); $('#controlView').hidden=!c; $('#reportsView').hidden=c;
+    $('#tabControl').className='tabx'+(c?' on':''); $('#tabReports').className='tabx'+(c?'':' on');
+    if(!c) renderReports();
   }
 
   /* ---------- النشر ---------- */
@@ -615,6 +741,8 @@
   $('#publishBtn').onclick=publish;
   $('#logoutBtn').onclick=logout;
   $('#search').addEventListener('input', function(){ var q=this.value.trim(); if(q) renderSearch(q); else renderTree(); });
+  $('#tabControl').onclick=function(){ showTab('control'); };
+  $('#tabReports').onclick=function(){ showTab('reports'); };
   window.addEventListener('beforeunload', function(e){ if(dirty || (EDIT && EDIT.dirty)){ e.preventDefault(); e.returnValue=''; } });
 
   // جلسةٌ محفوظة؟
