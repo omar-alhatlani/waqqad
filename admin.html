@@ -422,6 +422,20 @@
   async function fetchVisitors(){
     try{ var r=await fetch('https://abacus.jasoncameron.dev/get/waqqad-app-1448/visitors'); var d=await r.json(); return (d&&typeof d.value==='number')?d.value:null; }catch(e){ return null; }
   }
+  async function apiCall(action, extra){
+    var res=await fetch(API, { method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify(Object.assign({ action:action, password:PASS }, extra||{})) });
+    return { status:res.status, data: await res.json().catch(function(){return{};}) };
+  }
+  function slugMap(){ var m={}; for(var ck in C.content) (C.content[ck].units||[]).forEach(function(u){ (u.lessons||[]).forEach(function(l){ if(l.ref) m[l.ref.toLowerCase().replace(/_/g,'-')]=l.t; }); }); return m; }
+  function pathTitle(path, sm){
+    if(path==='/'||path==='') return '🏠 الرئيسية';
+    if(/^\/lessons\/?$/.test(path)) return '📚 فهرس الدروس';
+    var m=path.match(/\/lessons\/([a-z0-9-]+)\.html/);
+    if(m && sm[m[1]]) return sm[m[1]];
+    if(m) return '📄 '+m[1];
+    return path;
+  }
   function renderReports(){
     var v=$('#reportsView'), T=totals();
     v.innerHTML=
@@ -438,7 +452,10 @@
       '<div class="rep-sec"><h3>🧱 ملاحظاتٌ بنيويّة</h3>'+issueList(structuralIssues())+'</div>'+
       '<div class="rep-sec"><h3>🔎 فحصُ جودة المحتوى</h3>'+
         '<p class="hint" style="margin:0 0 10px">يحمّل كلَّ الدروس ويفحص الحقولَ والأسئلة. قد يستغرق ثوانٍ.</p>'+
-        '<button class="btn primary" id="qaRun">افحصِ المحتوى الآن</button><div id="qaOut" style="margin-top:12px"></div></div>';
+        '<button class="btn primary" id="qaRun">افحصِ المحتوى الآن</button><div id="qaOut" style="margin-top:12px"></div></div>'+
+      '<div class="rep-sec"><h3>🌐 Cloudflare — الأكثرُ زيارة</h3>'+
+        '<p class="hint" style="margin:0 0 10px">أكثرُ الصفحات زيارةً خلال ٧ أيام (يتطلّب ضبطَ مفتاح Cloudflare في الخادم).</p>'+
+        '<button class="btn primary" id="cfRun">اجلبِ الأرقام</button><div id="cfOut" style="margin-top:12px"></div></div>';
     fetchVisitors().then(function(n){ var e=$('#visKpi'); if(e) e.textContent=(n==null?'—':String(n)); });
     $('#qaRun').onclick=async function(){
       var btn=this, out=$('#qaOut'); btn.disabled=true;
@@ -446,6 +463,17 @@
       var issues=contentIssues(); btn.textContent='أعِدِ الفحص'; btn.disabled=false;
       out.innerHTML='<div class="loc" style="margin-bottom:8px">'+issues.length+' ملاحظة</div>'+issueList(issues);
       out.querySelectorAll('.fixbtn').forEach(function(b){ b.onclick=function(){ openEditor(b.dataset.ref); }; });
+    };
+    $('#cfRun').onclick=async function(){
+      var btn=this, out=$('#cfOut'); btn.disabled=true; btn.textContent='جارِ الجلب…';
+      var r=await apiCall('analytics', { days:7 }); btn.disabled=false; btn.textContent='تحديث';
+      if(r.status!==200 || !r.data.ok){ out.innerHTML='<div class="loc">تعذّر: '+esc(r.data.detail||r.data.hint||r.data.error||('HTTP '+r.status))+'</div>'; return; }
+      var sm=slugMap(), top=r.data.top||[];
+      var h='<div class="kpi" style="max-width:240px;margin:0 0 12px"><b>'+(r.data.total||0)+'</b><span>مشاهدة (٧ أيام، تقديريّ)</span></div>';
+      if(!top.length){ out.innerHTML=h+'<div class="loc">لا بيانات بعد.</div>'; return; }
+      h+='<div class="rep-scroll"><table class="rep-tbl"><tr><th>#</th><th style="text-align:start">الصفحة</th><th>مشاهدات</th></tr>';
+      top.forEach(function(row,i){ var p=(row.dimensions&&row.dimensions.requestPath)||''; h+='<tr><td>'+(i+1)+'</td><td class="gh">'+esc(pathTitle(p,sm))+'</td><td>'+row.count+'</td></tr>'; });
+      out.innerHTML=h+'</table></div>';
     };
   }
   function showTab(which){

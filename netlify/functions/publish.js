@@ -65,6 +65,30 @@ exports.handler = async function(event){
   // تحقّقٌ فقط (بوّابةُ دخول اللوحة)
   if(body.action === 'verify') return json(200, { ok: true });
 
+  // تحليلاتُ Cloudflare Web Analytics: أكثرُ الصفحات زيارةً (عبر GraphQL)
+  if(body.action === 'analytics'){
+    var cfToken = process.env.CF_API_TOKEN, cfAccount = process.env.CF_ACCOUNT_ID;
+    var siteTag = process.env.CF_SITE_TAG || '5659bcf9c15a4f9b9f742a16dcbbb34e';
+    if(!cfToken || !cfAccount) return json(500, { error: 'cf-not-configured', hint: 'CF_API_TOKEN/CF_ACCOUNT_ID غير مضبوط' });
+    var days = Math.min(90, Math.max(1, parseInt(body.days, 10) || 7));
+    var end = new Date(), start = new Date(end.getTime() - days*86400000);
+    var query = 'query($a:String!,$s:String!,$start:Time!,$end:Time!){viewer{accounts(filter:{accountTag:$a}){'+
+      'top:rumPageloadEventsAdaptiveGroups(limit:20,filter:{siteTag:$s,datetime_geq:$start,datetime_leq:$end},orderBy:[count_DESC]){count dimensions{requestPath}}'+
+      'total:rumPageloadEventsAdaptiveGroups(limit:1,filter:{siteTag:$s,datetime_geq:$start,datetime_leq:$end}){count}'+
+      '}}}';
+    try{
+      var cfr = await fetch('https://api.cloudflare.com/client/v4/graphql', {
+        method: 'POST',
+        headers: { 'Authorization': 'Bearer ' + cfToken, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ query: query, variables: { a: cfAccount, s: siteTag, start: start.toISOString(), end: end.toISOString() } })
+      });
+      var cd = await cfr.json();
+      if(cd.errors && cd.errors.length) return json(502, { error: 'cf-query', detail: cd.errors.map(function(e){ return e.message; }).join(' | ') });
+      var acct = (cd.data && cd.data.viewer && cd.data.viewer.accounts && cd.data.viewer.accounts[0]) || {};
+      return json(200, { ok: true, days: days, top: acct.top || [], total: (acct.total && acct.total[0] && acct.total[0].count) || 0 });
+    } catch(err){ return json(502, { error: 'cf', detail: String(err && err.message || err) }); }
+  }
+
   if(body.action === 'publish'){
     var files = Array.isArray(body.files) ? body.files : [];
     if(!files.length) return json(400, { error: 'no-files' });
