@@ -145,11 +145,14 @@
       <span><b style="background:var(--warn-bg);color:var(--warn)">قريبًا</b> ظاهرٌ مقفلٌ (إغلاق مؤقّت)</span>
       <span><b style="background:var(--bad-bg);color:var(--bad)">مخفي</b> يُزال تمامًا</span>
     </div>
+    <input id="search" type="search" placeholder="🔎 ابحث عن درسٍ بالعنوان أو المعرّف…" autocomplete="off"
+      style="width:100%;padding:10px 14px;border:1px solid var(--line2);border-radius:10px;font:inherit;font-size:15px;background:var(--surface);color:var(--ink);margin-bottom:10px">
     <div class="tree" id="tree"></div>
   </div>
 </div>
 
 <div id="editorModal" class="modal" hidden></div>
+<div id="previewModal" class="modal" hidden></div>
 <div id="toast"></div>
 
 <script src="assets/data/curriculum.js"></script>
@@ -302,6 +305,29 @@
     t._rebuild();
   }
 
+  /* ---------- البحث ---------- */
+  function byId(arr,id){ for(var i=0;i<(arr||[]).length;i++) if(arr[i].id===id) return arr[i]; return null; }
+  function searchLessons(q){
+    q=q.toLowerCase(); var out=[];
+    for(var ck in C.content){ var content=C.content[ck], parts=ck.split('.'), g=byId(C.grades,parts[0]), sub=byId(C.subjects,parts[2]);
+      (content.units||[]).forEach(function(u,ui){ var uid=ck+'#'+ui, refs=(u.lessons||[]).map(function(l){ return l.ref; });
+        (u.lessons||[]).forEach(function(l){ var title=label(l.ref, l.t)||'';
+          if(title.toLowerCase().indexOf(q)>-1 || (l.ref||'').toLowerCase().indexOf(q)>-1)
+            out.push({ id:l.ref, def:l.t, kind:'درس', parent:uid, sibs:refs, leaf:true,
+              built:!!(LMAN.lessons&&LMAN.lessons[l.ref]),
+              note:((g?g.name:'')+' · '+(sub?sub.name:'')+' · '+u.t) });
+        });
+      });
+    }
+    return out;
+  }
+  function renderSearch(q){
+    var t=$('#tree'); t._rebuild=function(){ renderSearch(q); }; t.innerHTML='';
+    var results=searchLessons(q);
+    t.appendChild(el('div','ed-note', results.length ? (results.length+' نتيجة') : 'لا نتائج مطابقة.'));
+    results.slice(0,120).forEach(function(n){ t.appendChild(renderNode(n,0)); });
+  }
+
   /* ---------- النشر ---------- */
   function prune(o){
     var out={ v:o.v||1, nodes:{}, order:{}, labels:{} };
@@ -361,6 +387,14 @@
   }
   function fT(labelText, get, set, ph){ var f=el('div','ed-f'); f.appendChild(el('label',null,labelText)); var t=el('textarea'); t.value=get()==null?'':get(); if(ph)t.placeholder=ph; t.oninput=function(){ set(t.value); edDirty(); }; f.appendChild(t); return f; }
   function fI(labelText, get, set){ var f=el('div','ed-f'); f.appendChild(el('label',null,labelText)); var i=el('input'); i.type='text'; i.value=get()==null?'':get(); i.oninput=function(){ set(i.value); edDirty(); }; f.appendChild(i); return f; }
+  function fCheck(labelText, get, set){ var f=el('div','ed-f'); var lab=el('label'); lab.style.cssText='display:flex;align-items:center;gap:8px;cursor:pointer;color:var(--ink);font-weight:700';
+    var c=el('input'); c.type='checkbox'; c.checked=!!get(); c.style.cssText='width:18px;height:18px;accent-color:var(--brand)';
+    c.onchange=function(){ set(c.checked); edDirty(); }; lab.appendChild(c); lab.appendChild(document.createTextNode(labelText)); f.appendChild(lab); return f; }
+  function simSelect(E){ var f=el('div','ed-f'); f.appendChild(el('label',null,'المحاكاة (sim)')); var sel=el('select');
+    sel.style.cssText='width:100%;padding:8px 10px;border:1px solid var(--line2);border-radius:9px;font:inherit;font-size:14px;background:var(--bg);color:var(--ink)';
+    var none=el('option',null,'— بلا محاكاة —'); none.value=''; sel.appendChild(none);
+    Object.keys(LMAN.sims||{}).sort().forEach(function(name){ var o=el('option',null,name); o.value=name; sel.appendChild(o); });
+    sel.value=E.sim||''; sel.onchange=function(){ if(sel.value) E.sim=sel.value; else delete E.sim; edDirty(); }; f.appendChild(sel); return f; }
   function listE(labelText, arr, itemLabel){
     var f=el('div','ed-f'); f.appendChild(el('label',null,labelText)); var host=el('div');
     function draw(){ host.innerHTML='';
@@ -414,10 +448,15 @@
     var card=el('div','ed'), head=el('div','ed-head');
     head.appendChild(el('h3',null,'تحرير: '+(L.title||EDIT.ref)));
     var sp=el('div'); sp.style.flex='1'; head.appendChild(sp);
+    var prev=el('button','btn ghost','👁 معاينة'); prev.onclick=previewLesson; head.appendChild(prev);
     var save=el('button','btn primary','حفظ ونشر'); save.onclick=saveEditor; head.appendChild(save);
     head.appendChild((function(){ var c=el('button','btn ghost','إغلاق'); c.onclick=closeEditor; return c; })());
     card.appendChild(head);
     var body=el('div','ed-body');
+    var meta=el('div','ed-sec'); meta.appendChild(el('h4',null,'⚙ إعدادات الدرس'));
+    meta.appendChild(fI('عنوان الدرس (title)', function(){return L.title;}, function(v){L.title=v;}));
+    meta.appendChild(fCheck('اتجاهٌ رياضيّ (mathdir) — يعزل الأرقام والرموز LTR', function(){return L.mathdir;}, function(v){ if(v)L.mathdir=true; else delete L.mathdir; }));
+    body.appendChild(meta);
     if(L.rule){ var R=L.rule, r=el('div','ed-sec'); r.appendChild(el('h4',null,'📘 القاعدة'));
       r.appendChild(fI('العنوان', function(){return R.title;}, function(v){R.title=v;}));
       r.appendChild(fT('المقدّمة', function(){return R.intro;}, function(v){R.intro=v;}));
@@ -428,9 +467,9 @@
       body.appendChild(r);
     }
     if(L.explore){ var E=L.explore, ex=el('div','ed-sec'); ex.appendChild(el('h4',null,'🔬 المختبر'));
-      ex.appendChild(el('div','ed-note','المحاكاة: '+(E.sim||'—')+' (لا تُحرَّر هنا)'));
+      ex.appendChild(simSelect(E));
       ex.appendChild(fI('عنوان المختبر', function(){return E.title;}, function(v){E.title=v;}));
-      if('hint' in E) ex.appendChild(fT('التلميح', function(){return E.hint;}, function(v){E.hint=v;}));
+      ex.appendChild(fT('التلميح', function(){return E.hint;}, function(v){E.hint=v;}));
       body.appendChild(ex);
     }
     if(L.stages){ var st=el('div','ed-sec'); st.appendChild(el('h4',null,'🎯 المراحل ('+L.stages.length+')'));
@@ -454,6 +493,31 @@
     var ok=await publishFiles([{ path:EDIT.file, content:lessonFileContent(EDIT.ref, EDIT.L) }], 'لوحة الإدارة: تحرير درس '+EDIT.ref);
     if(ok){ window.LESSONS[EDIT.ref]=JSON.parse(JSON.stringify(EDIT.L)); toast('حُفِظ ونُشِر ✓ — يظهر بعد إعادة البناء (~دقيقة)'); EDIT.dirty=false; closeEditor(); }
     else if(save){ save.disabled=false; save.textContent='حفظ ونشر'; }
+  }
+  function previewLesson(){
+    var L=EDIT.L, ref=EDIT.ref;
+    var sim=(L.explore && L.explore.sim && LMAN.sims && LMAN.sims[L.explore.sim]) ? LMAN.sims[L.explore.sim] : '';
+    var LJSON=JSON.stringify(L).replace(/<\/(script)/gi,'<\\/$1'), S='scr'+'ipt';
+    var doc='<!doctype html><html lang="ar" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">'+
+      '<link rel="stylesheet" href="assets/styles.css">'+
+      '<style>body{background:var(--bg);color:var(--ink);margin:0;padding:14px;font-family:"IBM Plex Sans Arabic",sans-serif}</style></head><body>'+
+      '<div id="lessonMount"></div>'+
+      '<'+S+' src="assets/icons.js"></'+S+'>'+
+      '<'+S+' src="assets/engine.js"></'+S+'>'+
+      (sim?'<'+S+' src="'+sim+'"></'+S+'>':'')+
+      '<'+S+'>window.LESSONS={};window.LESSONS['+JSON.stringify(ref)+']='+LJSON+';'+
+      'try{Engine.open(window.LESSONS['+JSON.stringify(ref)+'],{mount:document.getElementById("lessonMount"),toast:function(){},onExit:function(){},onProgress:function(){},scrollTop:function(){}});}'+
+      'catch(e){document.getElementById("lessonMount").textContent="خطأ في المعاينة: "+e.message;}</'+S+'>'+
+      '</body></html>';
+    var modal=$('#previewModal'); modal.innerHTML='';
+    var card=el('div','ed'); card.style.maxWidth='880px';
+    var head=el('div','ed-head'); head.appendChild(el('h3',null,'معاينة: '+(L.title||ref)));
+    var sp=el('div'); sp.style.flex='1'; head.appendChild(sp);
+    var close=el('button','btn ghost','إغلاق المعاينة'); close.onclick=function(){ modal.hidden=true; modal.innerHTML=''; };
+    head.appendChild(close); card.appendChild(head);
+    var wrap=el('div'); var frame=el('iframe'); frame.style.cssText='width:100%;height:72vh;border:0;display:block;border-radius:0 0 16px 16px;background:#fff';
+    frame.srcdoc=doc; wrap.appendChild(frame); card.appendChild(wrap);
+    modal.appendChild(card); modal.hidden=false;
   }
 
   /* ---------- إضافة/حذف الدروس والوحدات (المرحلة ٢ب) ---------- */
@@ -550,6 +614,7 @@
   $('#pass').addEventListener('keydown', function(e){ if(e.key==='Enter') doLogin(); });
   $('#publishBtn').onclick=publish;
   $('#logoutBtn').onclick=logout;
+  $('#search').addEventListener('input', function(){ var q=this.value.trim(); if(q) renderSearch(q); else renderTree(); });
   window.addEventListener('beforeunload', function(e){ if(dirty || (EDIT && EDIT.dirty)){ e.preventDefault(); e.returnValue=''; } });
 
   // جلسةٌ محفوظة؟
