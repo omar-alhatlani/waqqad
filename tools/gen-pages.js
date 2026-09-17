@@ -51,16 +51,18 @@ function M(s, mathdir){
   var RE=new RegExp(CL+'*[٠-٩]'+C2+'*','g');
   var T='(?:[٠-٩]+(?:٫[٠-٩]+)?|[ء-ي]ـ?)(?:<sup>[^<]*<\\/sup>)?';
   var FRAC=new RegExp('(^|[^ء-ي٠-٩])([-−]?'+T+')\\/('+T+')(?=$|[^ء-ي٠-٩])','g');
+  var PP0=String.fromCharCode(0xE010), PP1=String.fromCharCode(0xE011), FR0=String.fromCharCode(0xE000), FR1=String.fromCharCode(0xE001);
   var prot=[];
-  s=s.replace(/(?:[٠-٩]+(?:٫[٠-٩]+)?|[ء-ي]ـ?)(?:\/(?:[٠-٩]+(?:٫[٠-٩]+)?|[ء-ي]ـ?)){2,}/g,function(m){ prot.push(m); return ''+(prot.length-1)+''; });
+  s=s.replace(/(?:[٠-٩]+(?:٫[٠-٩]+)?|[ء-ي]ـ?)(?:\/(?:[٠-٩]+(?:٫[٠-٩]+)?|[ء-ي]ـ?)){2,}/g,function(m){ prot.push(m); return PP0+(prot.length-1)+PP1; });
   var frs=[];
-  s=s.replace(FRAC,function(_m,b,nu,de){ var sg='', c=nu.charAt(0); if(c==='-'||c==='−'){ sg='−'; nu=nu.slice(1); } frs.push(fracHTML(sg,nu,de)); return b+''+(frs.length-1)+''; });
-  s=s.replace(/(\d+)/g,function(_m,i){ return prot[+i]; });
+  s=s.replace(FRAC,function(_m,b,nu,de){ var sg='', c=nu.charAt(0); if(c==='-'||c==='−'){ sg='−'; nu=nu.slice(1); } frs.push(fracHTML(sg,nu,de)); return b+FR0+(frs.length-1)+FR1; });
+  s=s.replace(new RegExp(PP0+'(\\d+)'+PP1,'g'),function(_m,i){ return prot[+i]; });
   var PE0=String.fromCharCode(0xE020), PE1=String.fromCharCode(0xE021), exps=[];
-  s=s.replace(/([٠-٩]+(?:٫[٠-٩]+)?|[ء-ي])(<sup>[^<]*<\/sup>)/g,function(_m,base,sup){ exps.push('<span class="mx">'+base+sup+'</span>'); return PE0+(exps.length-1)+PE1; });
+  s=s.replace(/([٠-٩]+(?:٫[٠-٩]+)?|[ء-ي])(<sup>[^<]*<\/sup>)/g,function(_m,base,sup){ exps.push(sup); return base+PE0+(exps.length-1)+PE1; });
   s=s.replace(/(<[^>]+>)|([^<]+)/g, function(_x,tag,text){ if(tag) return tag; return text.replace(RE, function(m){ return isoRun(m); }); });
-  s=s.replace(/(\d+)/g,function(_m,i){ return frs[+i]; });
-  return s.replace(new RegExp(PE0+'(\\d+)'+PE1,'g'),function(_m,i){ return exps[+i]; });
+  s=s.replace(new RegExp(PE0+'(\\d+)'+PE1,'g'),function(_m,i){ return exps[+i]; });
+  s=s.replace(new RegExp(FR0+'(\\d+)'+FR1,'g'),function(_m,i){ return frs[+i]; });
+  return s;
 }
 
 // ---------- أدوات ----------

@@ -91,17 +91,20 @@ window.Engine = (function(){
     });
     // ٣) أعِدِ السلاسل المحميّة كي تُعزَل رقميًّا كالمعتاد
     s=s.replace(/(\d+)/g,function(_m,i){ return prot[+i]; });
-    // ٣.٥) الأُسّ المفرد: أساسٌ (رقمٌ أو متغيّرٌ) يتبعه <sup> يُعزَل وحدةً LTR كي يظهر الأُسُّ أعلى يمينِ الأساس لا يساره
+    // ٣.٥) الأُسّ: يُسحَب <sup> وحدَه ويبقى الأساسُ في التيّار ليُعزَل رقميًّا مع جيرانه («٣٫٢ × ١٠»)،
+    //      فيقعُ الأُسُّ — بعد العزل وفي سياقٍ RTL — أعلى يسارِ الأساس كما في كتاب الوزارة، لا يمينه.
     var PE0=String.fromCharCode(0xE020), PE1=String.fromCharCode(0xE021), exps=[];
-    s=s.replace(/([٠-٩]+(?:٫[٠-٩]+)?|[ء-ي])(<sup>[^<]*<\/sup>)/g,function(_m,base,sup){ exps.push('<span class="mx">'+base+sup+'</span>'); return PE0+(exps.length-1)+PE1; });
+    s=s.replace(/([٠-٩]+(?:٫[٠-٩]+)?|[ء-ي])(<sup>[^<]*<\/sup>)/g,function(_m,base,sup){ exps.push(sup); return base+PE0+(exps.length-1)+PE1; });
     // ٤) اعزل بقيّة التعبيرات الرقمية LTR (متجاوزًا الوسوم والعناصرَ النائبة)
     s=s.replace(/(<[^>]+>)|([^<]+)/g, function(_x,tag,text){
       if(tag) return tag;
       return text.replace(RE, function(m){ return isoRun(m); });
     });
-    // ٥) استبدلِ العناصرَ النائبة بالكسور بعد العزل
+    // ٥) أعِدِ الأُسَ أوّلًا (المحاطَ بـPE) ثمّ الكسورَ؛ فترتيبُ الأُسّ قبلَ الكسور
+    //     يمنعُ استعادةَ الكسور من ابتلاعِ فهرسِ الأُسّ الرقميِّ داخلَ عنصرِه النائب.
+    s=s.replace(new RegExp(PE0+'(\\d+)'+PE1,'g'),function(_m,i){ return exps[+i]; });
     s=s.replace(/(\d+)/g,function(_m,i){ return frs[+i]; });
-    return s.replace(new RegExp(PE0+'(\\d+)'+PE1,'g'),function(_m,i){ return exps[+i]; });
+    return s;
   }
   function shuffle(a){ a=a.slice(); for(var i=a.length-1;i>0;i--){ var j=Math.floor(Math.random()*(i+1)); var t=a[i];a[i]=a[j];a[j]=t; } return a; }
   function starStr(n,max){ max=max||3; var s=''; for(var i=0;i<max;i++) s+=(i<n?'★':'<span class="off">★</span>'); return s; }
