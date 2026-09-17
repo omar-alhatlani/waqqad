@@ -59,12 +59,13 @@ window.SIMS['scinote'] = (function(){
       var toks=[aS,'×','١٠']; ctx.font=BF;
       var ws=toks.map(function(t){ return ctx.measureText(t).width; });
       ctx.font=EF; var we=ctx.measureText(sig(n)).width;
-      var total=ws[0]+g+ws[1]+g+ws[2]+3+we, sx=150-total/2, cx=sx;
-      ctx.fillStyle=css('--brand-deep','#3833A0');
-      ctx.font=BF; ctx.fillText(toks[0],cx,62); cx+=ws[0]+g;
+      // الأُسّ يُرسَم قبلَ «١٠» (بين «×» و«١٠») فيقعُ أعلى يسارِ العدد كما في كتاب الوزارة، لا يمينه
+      var total=ws[0]+g+ws[1]+g+we+3+ws[2], sx=150-total/2, cx=sx;
+      var BC=css('--brand-deep','#3833A0');
+      ctx.font=BF; ctx.fillStyle=BC; ctx.fillText(toks[0],cx,62); cx+=ws[0]+g;
       ctx.fillText(toks[1],cx,62); cx+=ws[1]+g;
-      ctx.fillText(toks[2],cx,62); cx+=ws[2]+3;
-      ctx.font=EF; ctx.fillStyle= big?css('--s-ar-deep','#1F7D52'):css('--ember-deep','#E4681B'); ctx.fillText(sig(n),cx,50);
+      ctx.font=EF; ctx.fillStyle= big?css('--s-ar-deep','#1F7D52'):css('--ember-deep','#E4681B'); ctx.fillText(sig(n),cx,50); cx+=we+3;
+      ctx.font=BF; ctx.fillStyle=BC; ctx.fillText(toks[2],cx,62);
       ctx.restore();
       // سهم يساوي
       drawNum(150,92,'=',css('--muted','#7C82A8'),'800 18px Poppins');

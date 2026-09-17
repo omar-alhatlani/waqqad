@@ -67,7 +67,7 @@ window.SIMS['sqrtarea'] = (function(){
     function refresh(){
       var s=+sIn.value, area=s*s;
       q('.js-sv').textContent=toAr(s);
-      q('.js-area').textContent=toAr(s)+'² = '+toAr(area);
+      q('.js-area').innerHTML='<span style="unicode-bidi:isolate"><sup>٢</sup>'+toAr(s)+'</span> = '+toAr(area);   // ٥² بالأُسّ أعلى يسار ٥ (sup قبل الأساس داخل عزل)
       q('.js-side').textContent='√'+toAr(area)+' = '+toAr(s);
       elRoot.textContent='√'+toAr(area)+' = '+toAr(s); elRoot.style.color=css('--ember-deep','#E4681B'); elRoot.style.direction='ltr'; elRoot.style.unicodeBidi='isolate';
       elIc.style.background=css('--s-math-deep','#2551B8'); elIc.innerHTML=ICN;
