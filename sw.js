@@ -11,6 +11,7 @@ var ASSETS = [
   './assets/app.js',
   './assets/data/curriculum.js',
   './assets/data/lesson-manifest.js',
+  './assets/data/control.js',
   './icons/icon.svg',
   './manifest.webmanifest'
 ];
@@ -32,6 +33,18 @@ self.addEventListener('fetch', function(e){
   var req = e.request;
   if(req.method !== 'GET') return;
   var url = new URL(req.url);
+
+  // طبقة التحكّم: من الشبكة أوّلًا كي تصل تبديلاتُ لوحة الإدارة فورَ النشر، ثمّ المخزن أوفلاين
+  if(url.origin === self.location.origin && url.pathname.indexOf('/assets/data/control.js') > -1){
+    e.respondWith(
+      fetch(req).then(function(res){
+        var copy = res.clone();
+        caches.open(CACHE).then(function(c){ c.put(req, copy); }).catch(function(){});
+        return res;
+      }).catch(function(){ return caches.match(req); })
+    );
+    return;
+  }
 
   // ملفّات المنصّة نفسها: من المخزن أولًا ثم الشبكة
   if(url.origin === self.location.origin){

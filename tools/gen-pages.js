@@ -28,6 +28,18 @@ const C = window.CURRICULUM;
 const LMAN = window.LMAN || window.LESSON_MANIFEST || {};
 const LESSONS = window.LESSONS;
 
+// ---------- طبقة التحكّم (لوحة الإدارة) ----------
+// نقرأ نفس control.js الذي يقرؤه التطبيق الحيّ، فتتطابق صفحاتُ SEO مع التنقّل.
+try { require(path.join(DATA, 'control.js')); } catch (e) {}
+var CTRL = window.WQ_CONTROL || { nodes:{}, order:{}, labels:{} };
+function cstat(id){ var n = CTRL.nodes && CTRL.nodes[id]; return (n && n.status) || 'open'; }
+function clabel(id, def){ var l = CTRL.labels && CTRL.labels[id]; return (l && l.title) || def; }
+function corder(parentId, items, idOf){
+  var ord = CTRL.order && CTRL.order[parentId]; if(!ord || !ord.length) return items;
+  var pos={}; for(var i=0;i<ord.length;i++) pos[ord[i]]=i;
+  return items.slice().sort(function(a,b){ var pa=pos[idOf(a)], pb=pos[idOf(b)]; if(pa==null&&pb==null) return 0; if(pa==null) return 1; if(pb==null) return -1; return pa-pb; });
+}
+
 // ---------- منطق العرض المنقول من engine.js ----------
 function fracHTML(sign, num, den){
   return '<span class="frac">'+(sign?'<span class="fsg">'+sign+'</span>':'')+
@@ -82,16 +94,23 @@ for (var ck in C.content) {
   var grade = byId(C.grades, parts[0]);
   var subject = byId(C.subjects, parts[2]);
   if (!grade || !subject) continue;
+  // طبقة التحكّم: أسقِطِ المادّةَ كاملةً إن كانت هي أو أيُّ سلفٍ لها مخفيًّا/مؤقَّتًا
+  if ([ 'st:'+grade.stage, parts[0], parts[0]+'.'+parts[1], ck ].some(function(id){ return cstat(id) !== 'open'; })) continue;
   var content = C.content[ck];
-  (content.units || []).forEach(function(u){
-    var sibs = (u.lessons||[]).filter(function(ls){ return ls.ref && LESSONS[ls.ref]; })
-                              .map(function(ls){ return {t:ls.t, ref:ls.ref}; });
-    (u.lessons || []).forEach(function(ls){
+  var units = corder(ck, (content.units||[]).map(function(u,i){ return {u:u, oi:i}; }), function(x){ return ck+'#'+x.oi; });
+  units.forEach(function(x){
+    var u = x.u, uid = ck+'#'+x.oi;
+    if (cstat(uid) !== 'open') return;              // وحدةٌ مخفيّة/مؤقّتة ← تُسقَط من SEO
+    var lessons = corder(uid, (u.lessons||[]), function(ls){ return ls.ref; });
+    var sibs = lessons.filter(function(ls){ return ls.ref && LESSONS[ls.ref] && cstat(ls.ref)==='open'; })
+                      .map(function(ls){ return {t:clabel(ls.ref, ls.t), ref:ls.ref}; });
+    lessons.forEach(function(ls){
       if (!ls.ref || !LESSONS[ls.ref]) return;      // بلا درسٍ مبنيٍّ ← «قريبًا»، نتخطّاه
+      if (cstat(ls.ref) !== 'open') return;         // درسٌ مخفيّ/مؤقّت ← يُسقَط من SEO والخريطة
       var L = LESSONS[ls.ref];
       pages.push({ ref:ls.ref, L:L, mathdir:!!L.mathdir, grade:grade, subject:subject,
-        unitTitle:u.t, unitSem:u.s||'', title:ls.t||L.title||ls.ref,
-        siblings:sibs.filter(function(x){return x.ref!==ls.ref;}) });
+        unitTitle:clabel(uid, u.t), unitSem:u.s||'', title:clabel(ls.ref, ls.t||L.title||ls.ref),
+        siblings:sibs.filter(function(y){return y.ref!==ls.ref;}) });
     });
   });
 }
@@ -248,6 +267,8 @@ function mainIndex(groups){
 
 // ---------- الكتابة ----------
 if (!fs.existsSync(OUT)) fs.mkdirSync(OUT, {recursive:true});
+// نظّفِ صفحاتِ الدروس القديمةَ أوّلًا كي تختفيَ صفحاتُ الدروس المخفيّة بدل بقائها منشورةً (نجدّد المجموعةَ كاملة)
+fs.readdirSync(OUT).forEach(function(f){ if(/\.html$/.test(f)){ try{ fs.unlinkSync(path.join(OUT, f)); }catch(e){} } });
 var written = 0, urls = [SITE + '/', SITE + '/lessons/'];
 pages.forEach(function(p){
   fs.writeFileSync(path.join(OUT, slug(p.ref) + '.html'), withBeacon(lessonPage(p)));

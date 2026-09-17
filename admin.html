@@ -1,0 +1,318 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>لوحة إدارة وقّاد</title>
+<style>
+  :root{
+    --bg:#F5F6FB; --surface:#FFFFFF; --ink:#1C2143; --soft:#5A6088; --muted:#8891B4;
+    --line:#E7E9F5; --line2:#D6D9EC; --brand:#4B45C6; --brand-deep:#3833A0; --brand-soft:#ECEBFA;
+    --ember:#E4681B; --ok:#14A06B; --ok-bg:#E4F7EE; --warn:#C9781A; --warn-bg:#FCF0DF;
+    --bad:#E7466B; --bad-bg:#FDE9EE; --radius:14px; --shadow:0 8px 26px rgba(28,33,67,.08);
+  }
+  @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+    --bg:#12142A; --surface:#1B1E3A; --ink:#EDEFFB; --soft:#B7BEE0; --muted:#8A93BE;
+    --line:#2A2E52; --line2:#3A3F6C; --brand-soft:#25264F; --ok-bg:#123727; --warn-bg:#3A2A12; --bad-bg:#3A1A26;
+  }}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:"Segoe UI","Noto Kufi Arabic","Tahoma",system-ui,sans-serif;line-height:1.6;-webkit-text-size-adjust:100%}
+  a{color:var(--brand)}
+  .wrap{max-width:1000px;margin:0 auto;padding:0 16px}
+  /* ترويسة */
+  header.top{position:sticky;top:0;z-index:20;background:var(--surface);border-bottom:1px solid var(--line);box-shadow:var(--shadow)}
+  header.top .wrap{display:flex;align-items:center;gap:12px;padding:12px 16px;flex-wrap:wrap}
+  .logo{font-weight:900;font-size:20px;display:flex;align-items:center;gap:6px}
+  .flame{color:var(--ember)}
+  .spacer{flex:1}
+  .btn{border:1px solid var(--line2);background:var(--surface);color:var(--ink);border-radius:10px;
+    padding:9px 16px;font:inherit;font-weight:700;cursor:pointer;transition:.15s}
+  .btn:hover{border-color:var(--brand)}
+  .btn.primary{background:var(--brand);border-color:var(--brand);color:#fff}
+  .btn.primary:hover{background:var(--brand-deep)}
+  .btn.primary:disabled{opacity:.5;cursor:not-allowed}
+  .btn.ghost{background:transparent}
+  .pill{font-size:12.5px;font-weight:800;padding:4px 10px;border-radius:999px}
+  .pill.dirty{background:var(--warn-bg);color:var(--warn)}
+  .pill.clean{background:var(--ok-bg);color:var(--ok)}
+  /* دخول */
+  .login{max-width:380px;margin:12vh auto;background:var(--surface);border:1px solid var(--line);
+    border-radius:var(--radius);box-shadow:var(--shadow);padding:28px 24px;text-align:center}
+  .login h1{margin:6px 0 4px;font-size:22px}
+  .login p{color:var(--soft);margin:0 0 18px;font-size:14px}
+  .login input{width:100%;padding:12px 14px;border:1px solid var(--line2);border-radius:10px;
+    font:inherit;background:var(--bg);color:var(--ink);text-align:center;margin-bottom:12px}
+  .login .btn{width:100%}
+  .err{color:var(--bad);font-size:13.5px;min-height:20px;margin-top:8px}
+  /* شريط الأدوات */
+  .bar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:16px 0 8px}
+  .bar h2{margin:0;font-size:18px}
+  .hint{color:var(--soft);font-size:13px;margin:4px 0 14px}
+  .legend{display:flex;gap:14px;flex-wrap:wrap;font-size:12.5px;color:var(--soft);margin-bottom:10px}
+  .legend b{padding:2px 8px;border-radius:6px;font-weight:800}
+  /* الشجرة */
+  .tree{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);
+    box-shadow:var(--shadow);padding:6px;margin-bottom:40px}
+  .row{display:flex;align-items:center;gap:8px;padding:7px 8px;border-radius:9px;min-height:44px}
+  .row:hover{background:var(--bg)}
+  .caret{width:24px;height:24px;flex:none;border:none;background:transparent;cursor:pointer;color:var(--muted);
+    font-size:13px;display:flex;align-items:center;justify-content:center;transition:.15s}
+  .caret.open{transform:rotate(-90deg)}
+  .caret.leaf{visibility:hidden}
+  .nm{flex:1;min-width:0;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  .nm .t{font-weight:700;overflow:hidden;text-overflow:ellipsis}
+  .kind{font-size:11px;color:var(--muted);background:var(--bg);border:1px solid var(--line);
+    padding:1px 7px;border-radius:999px;font-weight:800;flex:none}
+  .badge-soon{font-size:11px;font-weight:800;color:#fff;background:var(--muted);padding:1px 7px;border-radius:999px}
+  .seg{display:flex;border:1px solid var(--line2);border-radius:9px;overflow:hidden;flex:none}
+  .seg button{border:none;background:var(--surface);color:var(--soft);font:inherit;font-size:12.5px;font-weight:800;
+    padding:6px 10px;cursor:pointer;border-inline-start:1px solid var(--line2)}
+  .seg button:first-child{border-inline-start:none}
+  .seg button.on[data-v="open"]{background:var(--ok-bg);color:var(--ok)}
+  .seg button.on[data-v="soon"]{background:var(--warn-bg);color:var(--warn)}
+  .seg button.on[data-v="hidden"]{background:var(--bad-bg);color:var(--bad)}
+  .mini{border:1px solid var(--line2);background:var(--surface);color:var(--soft);border-radius:8px;
+    width:30px;height:30px;flex:none;cursor:pointer;font-size:13px;font-weight:800}
+  .mini:hover{border-color:var(--brand);color:var(--brand)}
+  .kids{margin-inline-start:16px;border-inline-start:2px dashed var(--line);padding-inline-start:4px}
+  .state-hidden > .row .nm .t{opacity:.5;text-decoration:line-through}
+  .built0{color:var(--muted);font-size:11px;font-weight:800}
+  /* توست */
+  #toast{position:fixed;bottom:20px;inset-inline:0;margin:auto;width:max-content;max-width:90%;
+    background:var(--ink);color:#fff;padding:12px 20px;border-radius:12px;font-weight:700;
+    opacity:0;transform:translateY(12px);transition:.25s;pointer-events:none;z-index:50}
+  #toast.show{opacity:1;transform:none}
+  @media (max-width:640px){ .row{flex-wrap:wrap} .nm{flex-basis:100%;margin-bottom:2px} .seg button{padding:6px 9px} .kind{display:none} }
+</style>
+</head>
+<body>
+
+<div id="loginView">
+  <div class="login">
+    <div class="logo" style="justify-content:center"><span>وقّـ<span class="flame">🔥</span>ـاد</span></div>
+    <h1>لوحة الإدارة</h1>
+    <p>الدخول لمدير الموقع فقط.</p>
+    <input id="pass" type="password" placeholder="كلمة المرور" autocomplete="current-password">
+    <button class="btn primary" id="loginBtn">دخول</button>
+    <div class="err" id="loginErr"></div>
+  </div>
+</div>
+
+<div id="appView" hidden>
+  <header class="top"><div class="wrap">
+    <div class="logo">وقّـ<span class="flame">🔥</span>ـاد <span style="color:var(--muted);font-weight:700;font-size:15px">· الإدارة</span></div>
+    <div class="spacer"></div>
+    <span class="pill clean" id="dirtyPill">لا تغييرات</span>
+    <button class="btn primary" id="publishBtn" disabled>نشر التغييرات</button>
+    <button class="btn ghost" id="logoutBtn">خروج</button>
+  </div></header>
+
+  <div class="wrap">
+    <div class="bar"><h2>التحكّم بالمحتوى</h2></div>
+    <p class="hint">اضبط حالةَ كلّ عنصر (صفّ/فصل/مادّة/وحدة/درس)، أو أعِد تسميته وترتيبه. التغييراتُ لا تظهر للزوّار حتى تضغط «نشر».</p>
+    <div class="legend">
+      <span><b style="background:var(--ok-bg);color:var(--ok)">مفتوح</b> ظاهرٌ ويعمل</span>
+      <span><b style="background:var(--warn-bg);color:var(--warn)">قريبًا</b> ظاهرٌ مقفلٌ (إغلاق مؤقّت)</span>
+      <span><b style="background:var(--bad-bg);color:var(--bad)">مخفي</b> يُزال تمامًا</span>
+    </div>
+    <div class="tree" id="tree"></div>
+  </div>
+</div>
+
+<div id="toast"></div>
+
+<script src="assets/data/curriculum.js"></script>
+<script src="assets/data/lesson-manifest.js"></script>
+<script src="assets/data/control.js"></script>
+<script>
+(function(){
+  var API='/.netlify/functions/publish';
+  var C=window.CURRICULUM, LMAN=window.LMAN||{lessons:{}};
+  var CTRL, PASS='', dirty=false;
+  var $=function(s){return document.querySelector(s);};
+
+  function clone(o){ return JSON.parse(JSON.stringify(o||{})); }
+  function toast(m){ var t=$('#toast'); t.textContent=m; t.classList.add('show'); clearTimeout(t._t); t._t=setTimeout(function(){t.classList.remove('show');},2600); }
+  function esc(s){ return String(s==null?'':s).replace(/[&<>"]/g,function(c){return({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]);}); }
+
+  /* ---------- حالة طبقة التحكّم (نسخة عمل) ---------- */
+  function initCtrl(){ var s=window.WQ_CONTROL||{}; CTRL={ v:s.v||1, nodes:clone(s.nodes), order:clone(s.order), labels:clone(s.labels) }; }
+  function stat(id){ var n=CTRL.nodes[id]; return (n&&n.status)||'open'; }
+  function setStat(id,v){
+    if(v==='open'){ if(CTRL.nodes[id]){ delete CTRL.nodes[id].status; if(!Object.keys(CTRL.nodes[id]).length) delete CTRL.nodes[id]; } }
+    else { CTRL.nodes[id]=CTRL.nodes[id]||{}; CTRL.nodes[id].status=v; }
+    markDirty();
+  }
+  function label(id,def){ var l=CTRL.labels[id]; return (l&&l.title)||def; }
+  function setLabel(id,title,def){ title=(title||'').trim(); if(!title||title===def) delete CTRL.labels[id]; else CTRL.labels[id]={title:title}; markDirty(); }
+  function ordered(parentId, ids){ var o=CTRL.order[parentId]; if(!o||!o.length) return ids.slice();
+    var pos={}; o.forEach(function(id,i){pos[id]=i;});
+    return ids.slice().sort(function(a,b){var pa=pos[a],pb=pos[b]; if(pa==null&&pb==null)return 0; if(pa==null)return 1; if(pb==null)return -1; return pa-pb;}); }
+  function move(parentId, ids, id, dir){ var cur=ordered(parentId,ids), i=cur.indexOf(id), j=i+dir; if(j<0||j>=cur.length) return false;
+    var t=cur[i];cur[i]=cur[j];cur[j]=t; CTRL.order[parentId]=cur; markDirty(); return true; }
+  function markDirty(){ dirty=true; $('#publishBtn').disabled=false; var p=$('#dirtyPill'); p.className='pill dirty'; p.textContent='تغييراتٌ غير منشورة'; }
+  function markClean(){ dirty=false; $('#publishBtn').disabled=true; var p=$('#dirtyPill'); p.className='pill clean'; p.textContent='منشور ✓'; }
+
+  /* ---------- بناء الشجرة ---------- */
+  function stages(){ var a=[]; C.grades.forEach(function(g){ if(a.indexOf(g.stage)<0) a.push(g.stage); }); return a; }
+  function nodeStages(){
+    var st=stages(), ids=st.map(function(s){return 'st:'+s;});
+    return ordered('stages',ids).map(function(id){ var s=id.slice(3); return { id:id, def:s, kind:'مرحلة', parent:'stages', sibs:ids,
+      kids:function(){ return nodeGrades(s); } }; });
+  }
+  function nodeGrades(stg){
+    var gs=C.grades.filter(function(g){return g.stage===stg;}), ids=gs.map(function(g){return g.id;});
+    var byId={}; gs.forEach(function(g){byId[g.id]=g;});
+    return ordered('st:'+stg,ids).map(function(id){ var g=byId[id]; return { id:id, def:g.name, kind:'صفّ', parent:'st:'+stg, sibs:ids,
+      kids:function(){ return nodeSems(g); } }; });
+  }
+  function nodeSems(g){
+    var ids=C.semesters.map(function(sm){return g.id+'.'+sm.id;}), byId={}; C.semesters.forEach(function(sm){byId[g.id+'.'+sm.id]=sm;});
+    return ordered(g.id,ids).map(function(id){ var sm=byId[id]; return { id:id, def:sm.name, kind:'فصل', parent:g.id, sibs:ids,
+      kids:function(){ return nodeSubs(g,sm); } }; });
+  }
+  function nodeSubs(g,sm){
+    var pre=g.id+'.'+sm.id, ids=C.subjects.map(function(s){return pre+'.'+s.id;}), byId={}; C.subjects.forEach(function(s){byId[pre+'.'+s.id]=s;});
+    return ordered(pre,ids).map(function(id){ var sub=byId[id], has=!!(C.content[id]&&C.content[id].units); return { id:id, def:sub.name, kind:'مادّة', parent:pre, sibs:ids,
+      note: has?'':'لا محتوى', kids:function(){ return nodeUnits(id); } }; });
+  }
+  function nodeUnits(ck){
+    var content=C.content[ck]; if(!content||!content.units) return [];
+    var ids=content.units.map(function(u,i){return ck+'#'+i;}), byId={}; content.units.forEach(function(u,i){byId[ck+'#'+i]={u:u,oi:i};});
+    return ordered(ck,ids).map(function(id){ var x=byId[id]; return { id:id, def:x.u.t, prefix:'و'+(x.oi+1)+' · ', kind:'وحدة', parent:ck, sibs:ids,
+      kids:function(){ return nodeLessons(id, x.u); } }; });
+  }
+  function nodeLessons(uid,u){
+    var lessons=u.lessons||[], ids=lessons.map(function(l){return l.ref;}), byId={}; lessons.forEach(function(l){byId[l.ref]=l;});
+    return ordered(uid,ids).map(function(id){ var l=byId[id], built=!!(LMAN.lessons&&LMAN.lessons[id]); return { id:id, def:l.t, kind:'درس', parent:uid, sibs:ids, leaf:true, built:built }; });
+  }
+
+  /* ---------- عرض الشجرة ---------- */
+  function renderNode(n, depth){
+    var wrap=document.createElement('div'); wrap.className='node';
+    var st=stat(n.id); if(st==='hidden') wrap.className+=' state-hidden';
+    var row=document.createElement('div'); row.className='row';
+
+    var caret=document.createElement('button'); caret.className='caret'+(n.leaf?' leaf':''); caret.innerHTML='▾';
+    row.appendChild(caret);
+
+    var nm=document.createElement('div'); nm.className='nm';
+    nm.innerHTML='<span class="t"></span><span class="kind">'+n.kind+'</span>'+
+      (n.leaf && !n.built ? '<span class="built0">غير مبنيّ</span>' : '')+
+      (n.note ? '<span class="built0">'+esc(n.note)+'</span>' : '');
+    row.appendChild(nm);
+
+    // مبدّل الحالة
+    var seg=document.createElement('div'); seg.className='seg';
+    [['open','مفتوح'],['soon','قريبًا'],['hidden','مخفي']].forEach(function(o){
+      var b=document.createElement('button'); b.dataset.v=o[0]; b.textContent=o[1];
+      b.onclick=function(){ setStat(n.id,o[0]); refreshRow(); };
+      seg.appendChild(b);
+    });
+    row.appendChild(seg);
+
+    // تسمية
+    var ren=document.createElement('button'); ren.className='mini'; ren.title='إعادة تسمية'; ren.innerHTML='✎';
+    ren.onclick=function(){ var v=prompt('الاسم الظاهر:', label(n.id,n.def)); if(v!==null){ setLabel(n.id,v,n.def); refreshRow(); } };
+    row.appendChild(ren);
+
+    // ترتيب
+    var up=document.createElement('button'); up.className='mini'; up.title='لأعلى'; up.innerHTML='▲';
+    up.onclick=function(){ if(move(n.parent,n.sibs,n.id,-1) && wrap.parentNode._rebuild) wrap.parentNode._rebuild(); };
+    var dn=document.createElement('button'); dn.className='mini'; dn.title='لأسفل'; dn.innerHTML='▼';
+    dn.onclick=function(){ if(move(n.parent,n.sibs,n.id,1) && wrap.parentNode._rebuild) wrap.parentNode._rebuild(); };
+    row.appendChild(up); row.appendChild(dn);
+
+    wrap.appendChild(row);
+
+    function refreshRow(){
+      wrap.classList.toggle('state-hidden', stat(n.id)==='hidden');
+      seg.querySelectorAll('button').forEach(function(b){ b.className=(b.dataset.v===stat(n.id))?'on':''; });
+      nm.querySelector('.t').textContent=(n.prefix||'')+label(n.id,n.def);
+    }
+    refreshRow();
+
+    if(!n.leaf){
+      var kids=document.createElement('div'); kids.className='kids'; kids.hidden=true;
+      kids._rebuild=function(){ kids.innerHTML=''; kids._built=true; n.kids().forEach(function(c){ kids.appendChild(renderNode(c,depth+1)); }); };
+      wrap.appendChild(kids);
+      caret.onclick=function(){
+        if(!kids._built) kids._rebuild();
+        kids.hidden=!kids.hidden; caret.classList.toggle('open', !kids.hidden);
+      };
+    }
+    return wrap;
+  }
+
+  function renderTree(){
+    var t=$('#tree');
+    t._rebuild=function(){ t.innerHTML=''; nodeStages().forEach(function(n){ t.appendChild(renderNode(n,0)); }); };
+    t._rebuild();
+  }
+
+  /* ---------- النشر ---------- */
+  function prune(o){
+    var out={ v:o.v||1, nodes:{}, order:{}, labels:{} };
+    for(var k in o.nodes){ if(o.nodes[k] && o.nodes[k].status && o.nodes[k].status!=='open') out.nodes[k]={status:o.nodes[k].status}; }
+    for(var k2 in o.order){ if(Array.isArray(o.order[k2]) && o.order[k2].length) out.order[k2]=o.order[k2]; }
+    for(var k3 in o.labels){ if(o.labels[k3] && o.labels[k3].title) out.labels[k3]={title:o.labels[k3].title}; }
+    return out;
+  }
+  function controlFile(){
+    var clean=prune(CTRL);
+    return '/* وقّاد — طبقة التحكّم (مُولَّدة من لوحة الإدارة). لا تُحرَّر يدويًّا. */\n'+
+      'window.WQ_CONTROL = '+JSON.stringify(clean, null, 2)+';\n';
+  }
+  async function publish(){
+    var btn=$('#publishBtn'); btn.disabled=true; btn.textContent='جارِ النشر…';
+    try{
+      var res=await fetch(API, { method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ action:'publish', password:PASS,
+          message:'لوحة الإدارة: تحديثُ حالة المحتوى',
+          files:[{ path:'assets/data/control.js', content:controlFile() }] }) });
+      var d=await res.json().catch(function(){return{};});
+      if(res.status===401){ toast('انتهت الجلسة، أعِد الدخول'); return logout(); }
+      if(!res.ok || !d.ok){ toast('تعذّر النشر: '+(d.detail||d.error||res.status)); btn.disabled=false; btn.textContent='نشر التغييرات'; return; }
+      window.WQ_CONTROL = prune(CTRL); // حدّثِ المرجعَ المحليّ
+      markClean(); btn.textContent='نشر التغييرات';
+      toast('تمّ النشر ✓ — يظهر للزوّار خلال ~دقيقة بعد إعادة البناء');
+    }catch(e){ toast('خطأُ شبكة: '+e.message); btn.disabled=false; btn.textContent='نشر التغييرات'; }
+  }
+
+  /* ---------- الدخول ---------- */
+  async function verify(pw){
+    var res=await fetch(API, { method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ action:'verify', password:pw }) });
+    return res.status;
+  }
+  function showApp(){ $('#loginView').hidden=true; $('#appView').hidden=false; initCtrl(); renderTree(); markClean(); }
+  function logout(){ PASS=''; try{sessionStorage.removeItem('wq_admin');}catch(e){} $('#appView').hidden=true; $('#loginView').hidden=false; $('#pass').value=''; }
+  async function doLogin(){
+    var pw=$('#pass').value, e=$('#loginErr'); e.textContent=''; if(!pw){ e.textContent='أدخل كلمة المرور'; return; }
+    var btn=$('#loginBtn'); btn.disabled=true; btn.textContent='جارِ التحقّق…';
+    try{
+      var st=await verify(pw);
+      if(st===200){ PASS=pw; try{sessionStorage.setItem('wq_admin',pw);}catch(e2){} showApp(); }
+      else if(st===401) e.textContent='كلمة المرور غير صحيحة';
+      else if(st===500) e.textContent='الخادمُ غيرُ مُهيَّأ (متغيّرات البيئة). راجع الإعداد.';
+      else e.textContent='تعذّر التحقّق ('+st+')';
+    }catch(err){ e.textContent='خطأُ شبكة: '+err.message; }
+    btn.disabled=false; btn.textContent='دخول';
+  }
+
+  // ربط الأحداث
+  $('#loginBtn').onclick=doLogin;
+  $('#pass').addEventListener('keydown', function(e){ if(e.key==='Enter') doLogin(); });
+  $('#publishBtn').onclick=publish;
+  $('#logoutBtn').onclick=logout;
+  window.addEventListener('beforeunload', function(e){ if(dirty){ e.preventDefault(); e.returnValue=''; } });
+
+  // جلسةٌ محفوظة؟
+  var saved=''; try{ saved=sessionStorage.getItem('wq_admin')||''; }catch(e){}
+  if(saved){ PASS=saved; verify(saved).then(function(st){ if(st===200) showApp(); else logout(); }).catch(logout); }
+})();
+</script>
+</body>
+</html>

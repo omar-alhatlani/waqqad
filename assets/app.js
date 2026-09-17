@@ -44,6 +44,32 @@ window.BRAND = {
     });
   }
 
+  /* ---------- طبقة التحكّم (لوحة الإدارة) ----------
+     WQ_CONTROL يُحمَّل من assets/data/control.js قبل هذا الملفّ (سكربت متزامن).
+     status: 'open' (افتراضيّ) | 'soon' (ظاهرٌ مقفلٌ «قريبًا») | 'hidden' (يُزال). */
+  var CTRL = window.WQ_CONTROL || { nodes:{}, order:{}, labels:{} };
+  function wqStat(id){ var n=CTRL.nodes && CTRL.nodes[id]; return (n && n.status) || 'open'; }
+  function wqLabel(id, def){ var l=CTRL.labels && CTRL.labels[id]; return (l && l.title) || def; }
+  /* يعيد ترتيب عناصرٍ حسب order[parentId] (قائمةُ معرّفات)، والغائبُ يبقى في الذيل بترتيبه الأصليّ */
+  function wqOrder(parentId, items, idOf){
+    var ord = CTRL.order && CTRL.order[parentId]; if(!ord || !ord.length) return items;
+    var pos={}; for(var i=0;i<ord.length;i++) pos[ord[i]]=i;
+    return items.slice().sort(function(a,b){
+      var pa=pos[idOf(a)], pb=pos[idOf(b)];
+      if(pa==null && pb==null) return 0; if(pa==null) return 1; if(pb==null) return -1; return pa-pb;
+    });
+  }
+  /* يحوّل بطاقةً عاديّة (.badge/.desc/.arrow) إلى بطاقة «قريبًا» مقفلة عند status==='soon' */
+  function wqSoonify(el, stat, msg){
+    if(stat!=='soon') return false;
+    el.classList.add('locked');
+    var b=el.querySelector('.badge'); if(b) b.innerHTML=I.lock;
+    var d=el.querySelector('.desc'); if(d) d.textContent='يُفتح قريبًا بإذن الله';
+    var a=el.querySelector('.arrow'); if(a) a.parentNode.removeChild(a);
+    el.onclick=function(){ toast(msg||'سيُفتح هذا القسم قريبًا بإذن الله 🌟'); };
+    return true;
+  }
+
   /* ---------- متغيّرات لون المادة ---------- */
   function setSubjectVars(sub){
     var s=document.body.style;
@@ -82,13 +108,16 @@ window.BRAND = {
   function renderStages(){
     var w=$('#stageGrid'); if(!w) return; w.innerHTML='';
     var stages=[]; C.grades.forEach(function(g){ var s=g.stage||''; if(stages.indexOf(s)<0) stages.push(s); });
+    stages = wqOrder('stages', stages, function(s){ return 'st:'+s; });
     stages.forEach(function(st){
+      var stat=wqStat('st:'+st); if(stat==='hidden') return;
       var gs=C.grades.filter(function(g){ return (g.stage||'')===st; });
       var icon = /ابتدائ/.test(st) ? I.bag : (/متوسط/.test(st) ? I.cap : I.book);
       var range = gs.length ? ('الصفوف '+firstWord(gs[0].name)+' – '+firstWord(gs[gs.length-1].name)) : '';
       var el=document.createElement('button'); el.className='card';
-      el.innerHTML='<div class="top"><div class="badge">'+icon+'</div><span class="arrow">'+I.chev+'</span></div><h3>'+st+'</h3><div class="desc">'+toAr(gs.length)+' صفوف · '+range+'</div>';
+      el.innerHTML='<div class="top"><div class="badge">'+icon+'</div><span class="arrow">'+I.chev+'</span></div><h3>'+wqLabel('st:'+st,st)+'</h3><div class="desc">'+toAr(gs.length)+' صفوف · '+range+'</div>';
       el.onclick=function(){ state.stage=st; state.grade=null; state.sem=null; state.subject=null; state.unit=null; renderGrades(st); go('grade'); };
+      wqSoonify(el, stat, 'سيُفتح هذا القسم قريبًا بإذن الله 🌟');
       w.appendChild(el);
     });
   }
@@ -98,10 +127,14 @@ window.BRAND = {
     var w=$('#gradeGrid'); w.innerHTML='';
     var st = stageFilter || state.stage || '';
     var sub=$('#gradeSub'); if(sub) sub.textContent = (st?st+' — ':'')+'اختر الصف لتظهر لك الفصول الدراسية.';
-    C.grades.filter(function(g){ return !st || (g.stage||'')===st; }).forEach(function(gr){
+    var grades = C.grades.filter(function(g){ return !st || (g.stage||'')===st; });
+    grades = wqOrder('st:'+st, grades, function(g){ return g.id; });
+    grades.forEach(function(gr){
+      var stat=wqStat(gr.id); if(stat==='hidden') return;
       var el=document.createElement('button'); el.className='card';
-      el.innerHTML='<div class="top"><div class="badge">'+gr.num+'</div><span class="arrow">'+I.chev+'</span></div><h3>'+gr.name+'</h3><div class="desc">'+toAr(C.subjects.length)+' موادّ دراسية</div>';
+      el.innerHTML='<div class="top"><div class="badge">'+gr.num+'</div><span class="arrow">'+I.chev+'</span></div><h3>'+wqLabel(gr.id,gr.name)+'</h3><div class="desc">'+toAr(C.subjects.length)+' موادّ دراسية</div>';
       el.onclick=function(){ state.grade=gr; state.sem=null; state.subject=null; state.unit=null; openGrade(gr); };
+      wqSoonify(el, stat, 'سيُفتح هذا الصفّ قريبًا بإذن الله 🌟');
       w.appendChild(el);
     });
   }
@@ -109,13 +142,17 @@ window.BRAND = {
     state.grade=gr;
     $('#semTitle').textContent=gr.name+' — اختر الفصل';
     var w=$('#semGrid'); w.innerHTML='';
-    C.semesters.forEach(function(sm){
-      var el=document.createElement('button'); el.className='card'+(sm.locked?' locked':'');
-      var badge = sm.locked ? I.lock : (sm.id==='s1'?'١':'٢');
-      var desc  = sm.locked ? 'يُفتح قريبًا بإذن الله' : sm.desc;
-      el.innerHTML='<div class="top"><div class="badge">'+badge+'</div>'+(sm.locked?'':'<span class="arrow">'+I.chev+'</span>')+'</div><h3>'+sm.name+'</h3><div class="desc">'+desc+'</div>';
-      if(sm.locked){
-        el.onclick=function(){ toast('سيُفتح الفصل الدراسي الثاني قريبًا بإذن الله 🌟'); };
+    var sems = wqOrder(state.grade.id, C.semesters, function(sm){ return state.grade.id+'.'+sm.id; });
+    sems.forEach(function(sm){
+      var sid=state.grade.id+'.'+sm.id, cstat=wqStat(sid);
+      if(cstat==='hidden') return;
+      var locked = sm.locked || cstat==='soon';
+      var el=document.createElement('button'); el.className='card'+(locked?' locked':'');
+      var badge = locked ? I.lock : (sm.id==='s1'?'١':'٢');
+      var desc  = locked ? 'يُفتح قريبًا بإذن الله' : sm.desc;
+      el.innerHTML='<div class="top"><div class="badge">'+badge+'</div>'+(locked?'':'<span class="arrow">'+I.chev+'</span>')+'</div><h3>'+wqLabel(sid,sm.name)+'</h3><div class="desc">'+desc+'</div>';
+      if(locked){
+        el.onclick=function(){ toast('سيُفتح هذا الفصل قريبًا بإذن الله 🌟'); };
       } else {
         el.onclick=function(){ state.sem=sm; state.subject=null; state.unit=null; openSubjects(); };
       }
@@ -128,18 +165,22 @@ window.BRAND = {
   function openSubjects(){
     $('#subjSub').textContent=state.grade.name+' · '+state.sem.name+' — اختر المادة.';
     var w=$('#subjectGrid'); w.innerHTML='';
-    C.subjects.forEach(function(sub){
+    var semKey=state.grade.id+'.'+state.sem.id;
+    var subs = wqOrder(semKey, C.subjects, function(sub){ return semKey+'.'+sub.id; });
+    subs.forEach(function(sub){
+      var sid=semKey+'.'+sub.id, stat=wqStat(sid); if(stat==='hidden') return;
       var el=document.createElement('button'); el.className='card subject-card';
       el.style.setProperty('--sc','var('+sub.c+')'); el.style.setProperty('--scd','var('+sub.cd+')'); el.style.setProperty('--scs','var('+sub.cs+')');
       /* عددُ الوحدات من محتوى الصفّ/الفصل الحاليّ إن وُجد، وإلّا العددُ العامّ للمادة */
-      var ck=state.grade.id+'.'+state.sem.id+'.'+sub.id;
+      var ck=sid;
       var content=C.content[ck];
       var uCount=(content&&content.units)?content.units.length:sub.units;
       /* العنوان الفرعيّ للإنجليزي واعٍ بالصفّ: يُشتقّ من إيبرو المحتوى (سلسلةُ الكتاب) إن وُجد */
       var desc=sub.en;
       if(sub.id==='en' && content && content.eyebrow) desc=content.eyebrow.replace(/^English\s*·\s*/,'');
-      el.innerHTML='<div class="top"><div class="badge">'+I[sub.icon]+'</div><span class="arrow">'+I.chev+'</span></div><h3>'+sub.name+'</h3><div class="desc en">'+desc+'</div><span class="pill">'+toAr(uCount)+' وحدات دراسية</span>';
+      el.innerHTML='<div class="top"><div class="badge">'+I[sub.icon]+'</div><span class="arrow">'+I.chev+'</span></div><h3>'+wqLabel(sid,sub.name)+'</h3><div class="desc en">'+desc+'</div><span class="pill">'+toAr(uCount)+' وحدات دراسية</span>';
       el.onclick=function(){ state.subject=sub; state.unit=null; openSubject(sub); };
+      wqSoonify(el, stat, 'ستُفتح هذه المادّة قريبًا بإذن الله 🌟');
       w.appendChild(el);
     });
     setSubjectVars(null);
@@ -162,17 +203,24 @@ window.BRAND = {
       w.innerHTML='<div class="soon"><div class="si">'+I.book+'</div><b>محتوى هذا الفصل قيد الإعداد</b><span>نضيف بقيّة الفصول تباعًا بإذن الله. تابعنا قريبًا.</span></div>';
       go('units'); return;
     }
-    data.units.forEach(function(u,i){
+    var ck=contentKey();
+    var units = data.units.map(function(u,i){ return {u:u, oi:i}; });
+    units = wqOrder(ck, units, function(x){ return ck+'#'+x.oi; });
+    units.forEach(function(x){
+      var u=x.u, oi=x.oi, uid=ck+'#'+oi, cstat=wqStat(uid);
+      if(cstat==='hidden') return;
+      var soon = cstat==='soon';
       var hasLessons=(u.lessons&&u.lessons.length>0);
-      var prog=unitProgress(u), st = !hasLessons ? 'locked' : (prog.pct>=100 ? 'done' : 'current');
+      var prog=unitProgress(u), st = (!hasLessons||soon) ? 'locked' : (prog.pct>=100 ? 'done' : 'current');
       var el=document.createElement('div'); el.className='unit '+(st==='locked'?'locked':(st==='done'?'done':''));
       var right = st==='locked'
-        ? '<div class="prog"><span class="lock-txt">قيد الإعداد</span></div>'
+        ? '<div class="prog"><span class="lock-txt">'+(soon?'قريبًا':'قيد الإعداد')+'</span></div>'
         : '<div class="prog"><span class="stars">'+starStr(prog.stars,3)+'</span><div class="mini-bar"><i style="width:'+prog.pct+'%"></i></div></div>';
-      el.innerHTML='<div class="node"><div class="dot">'+(st==='locked'?I.lock:toAr(i+1))+'</div></div>'+
-        '<button class="body"><div class="info"><b>الوحدة '+toAr(i+1)+' · '+u.t+'</b><span>'+u.s+'</span></div>'+right+'</button>';
+      el.innerHTML='<div class="node"><div class="dot">'+(st==='locked'?I.lock:toAr(oi+1))+'</div></div>'+
+        '<button class="body"><div class="info"><b>الوحدة '+toAr(oi+1)+' · '+wqLabel(uid,u.t)+'</b><span>'+u.s+'</span></div>'+right+'</button>';
       var body=el.querySelector('.body');
-      if(hasLessons){ body.onclick=function(){ openUnit(u,i); }; }
+      if(hasLessons && !soon){ body.onclick=function(){ openUnit(u,oi); }; }
+      else if(soon){ body.onclick=function(){ toast('هذه الوحدة ستُفتح قريبًا 🌟'); }; }
       else{ body.onclick=function(){ toast('هذه الوحدة قيد الإعداد 🔒'); }; }
       w.appendChild(el);
     });
@@ -196,8 +244,12 @@ window.BRAND = {
       w.innerHTML='<div class="soon"><div class="si">'+I.book+'</div><b>دروس هذه الوحدة قيد الإعداد</b><span>سنضيفها قريبًا بإذن الله.</span></div>';
       go('lessons'); return;
     }
-    u.lessons.forEach(function(ls){
-      var playable = built(ls.ref);
+    var uid=contentKey()+'#'+state.unitIdx;
+    var lessons = wqOrder(uid, u.lessons, function(ls){ return ls.ref; });
+    lessons.forEach(function(ls){
+      var cstat=wqStat(ls.ref); if(cstat==='hidden') return;
+      var soon = cstat==='soon';
+      var playable = built(ls.ref) && !soon;
       var s = playable ? lstats(ls.ref) : null;
       var doneState = s && s.complete;
       var el=document.createElement('button'); el.className='lesson'+(doneState?' done':'')+(playable?'':' locked');
@@ -205,8 +257,9 @@ window.BRAND = {
       var stateTag = !playable ? '<span class="tag state-soon">قريبًا</span>'
                     : (doneState ? '<span class="tag state-done">مكتمل ✓</span>'
                     : (s.started ? '<span class="stars">'+starStr(Math.round(s.stars/s.max*3),3)+'</span>' : '<span class="tag">ابدأ الآن</span>'));
-      el.innerHTML='<div class="lic">'+icon+'</div><div class="lmeta"><b>'+ls.t+'</b><div class="tags"><span class="tag">'+ls.tag+'</span>'+stateTag+'</div></div>'+(playable?'<span class="chev">'+I.chev+'</span>':'');
+      el.innerHTML='<div class="lic">'+icon+'</div><div class="lmeta"><b>'+wqLabel(ls.ref,ls.t)+'</b><div class="tags"><span class="tag">'+ls.tag+'</span>'+stateTag+'</div></div>'+(playable?'<span class="chev">'+I.chev+'</span>':'');
       if(playable){ el.onclick=function(){ openLesson(ls.ref); }; }
+      else if(soon){ el.onclick=function(){ toast('هذا الدرس سيُفتح قريبًا 🌟'); }; }
       else{ el.onclick=function(){ toast('هذا الدرس قيد الإعداد 🔒'); }; }
       w.appendChild(el);
     });
@@ -247,6 +300,9 @@ window.BRAND = {
     var ref=m[1], loc=findLessonLoc(ref); if(!loc) return;
     var g=byId(C.grades,loc.gradeId), sm=byId(C.semesters,loc.semId), sub=byId(C.subjects,loc.subId);
     if(!g||!sm||!sub||sm.locked||!built(ref)) return;
+    /* ارفضِ الرابطَ المباشر إن كان الدرسُ أو أيُّ عقدةٍ في مساره مخفيًّا/مؤقَّتًا (تطابقٌ مع التنقّل) */
+    var ckk=g.id+'.'+sm.id+'.'+sub.id, path=['st:'+g.stage, g.id, g.id+'.'+sm.id, ckk, ckk+'#'+loc.unitIdx, ref];
+    for(var pi=0;pi<path.length;pi++){ if(wqStat(path[pi])!=='open') return; }
     state.stage=g.stage; state.grade=g; state.sem=sm; state.subject=sub; state.unit=loc.unit; state.unitIdx=loc.unitIdx;
     setSubjectVars(sub); openLesson(ref);
   }
