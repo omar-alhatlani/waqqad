@@ -4,7 +4,7 @@
 
 [build]
   publish = "."
-  command = "node tools/gen-pages.js"
+  command = "node tools/gen-manifest.js && node tools/gen-pages.js"
 
 # الدوالّ الخادميّة (لوحة الإدارة: التحقّق من كلمة المرور والالتزام في GitHub).
 [functions]
