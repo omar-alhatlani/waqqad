@@ -259,6 +259,21 @@
       edb.onclick=function(){ openEditor(n.id); };
       row.appendChild(edb);
     }
+    // إضافة/حذف (المرحلة ٢ب)
+    if(n.kind==='مادّة' && C.content[n.id]){
+      var au=document.createElement('button'); au.className='mini'; au.title='إضافة وحدة'; au.textContent='➕';
+      au.onclick=function(){ addUnit(n.id); }; row.appendChild(au);
+    }
+    if(n.kind==='وحدة'){
+      var al=document.createElement('button'); al.className='mini'; al.title='إضافة درس'; al.textContent='➕';
+      al.onclick=function(){ addLesson(n.id); }; row.appendChild(al);
+      var du=document.createElement('button'); du.className='mini'; du.title='حذف الوحدة'; du.textContent='🗑'; du.style.color='var(--bad)';
+      du.onclick=function(){ delUnit(n.id); }; row.appendChild(du);
+    }
+    if(n.leaf){
+      var dl=document.createElement('button'); dl.className='mini'; dl.title='حذف الدرس'; dl.textContent='🗑'; dl.style.color='var(--bad)';
+      dl.onclick=function(){ delLesson(n.id, n.parent); }; row.appendChild(dl);
+    }
 
     wrap.appendChild(row);
 
@@ -431,12 +446,82 @@
     }
     card.appendChild(body); modal.appendChild(card); modal.hidden=false;
   }
+  function lessonFileContent(ref, L){
+    return '/* درس '+ref+' — يُدار من لوحة الإدارة */\n(function(){window.LESSONS=window.LESSONS||{};window.LESSONS['+JSON.stringify(ref)+']='+JSON.stringify(L,null,2)+';})();\n';
+  }
   async function saveEditor(){
     var save=$('#editorModal').querySelector('.ed-head .primary'); if(save){ save.disabled=true; save.textContent='جارِ الحفظ…'; }
-    var content='/* درس '+EDIT.ref+' — حُرِّر من لوحة الإدارة */\n(function(){window.LESSONS=window.LESSONS||{};window.LESSONS['+JSON.stringify(EDIT.ref)+']='+JSON.stringify(EDIT.L,null,2)+';})();\n';
-    var ok=await publishFiles([{ path:EDIT.file, content:content }], 'لوحة الإدارة: تحرير درس '+EDIT.ref);
+    var ok=await publishFiles([{ path:EDIT.file, content:lessonFileContent(EDIT.ref, EDIT.L) }], 'لوحة الإدارة: تحرير درس '+EDIT.ref);
     if(ok){ window.LESSONS[EDIT.ref]=JSON.parse(JSON.stringify(EDIT.L)); toast('حُفِظ ونُشِر ✓ — يظهر بعد إعادة البناء (~دقيقة)'); EDIT.dirty=false; closeEditor(); }
     else if(save){ save.disabled=false; save.textContent='حفظ ونشر'; }
+  }
+
+  /* ---------- إضافة/حذف الدروس والوحدات (المرحلة ٢ب) ---------- */
+  function curriculumContent(){
+    return '/* وقّاد — المنهج (يُدار من لوحة الإدارة؛ قابلٌ للتحرير كـJSON عند اللزوم). */\nwindow.CURRICULUM = '+JSON.stringify(C,null,2)+';\n';
+  }
+  function genRef(subId, gradeId){
+    var base=(subId+'_'+gradeId+'_L'+Date.now().toString(36)).toUpperCase().replace(/[^A-Z0-9_]/g,'');
+    var ref=base, i=1; while(window.LESSONS && window.LESSONS[ref]){ ref=base+i; i++; } return ref;
+  }
+  function genFile(subId, gradeId, ref){
+    var stem=(subId==='en'?'en-'+gradeId:'ar-'+subId+'-'+gradeId)+'-'+ref.toLowerCase().replace(/[^a-z0-9]+/g,'-');
+    return 'assets/data/'+stem+'.js';
+  }
+  function placeholderLesson(ref, title, subId){
+    var L={ id:ref, title:title, lang:(subId==='en'?'en':'ar') };
+    if(subId==='math') L.mathdir=true;
+    L.rule={ tag:'القاعدة', title:title, intro:'اكتبِ الشرحَ هنا…', table:[], examples:[], trick:'' };
+    L.stages=[{ type:'choice', name:'تدريب ١', hint:'', qs:[{ p:'اكتبِ السؤال…', ask:'', o:['خيار ١','خيار ٢'], a:0, w:'', f:'' }] }];
+    return L;
+  }
+  function parseUnitId(uid){ var i=uid.lastIndexOf('#'); return { ck:uid.slice(0,i), idx:parseInt(uid.slice(i+1),10) }; }
+  async function addUnit(ck){
+    var t=prompt('عنوان الوحدة الجديدة:'); if(t===null) return; t=(t||'').trim(); if(!t) return;
+    var s=((prompt('العنوان الفرعيّ (الفصل/الباب) — اختياريّ:')||'')).trim();
+    var content=C.content[ck]; if(!content){ toast('لا توجد مادّةٌ بهذا المفتاح'); return; }
+    content.units=content.units||[]; content.units.push({ t:t, s:s, lessons:[] });
+    var ok=await publishFiles([{ path:'assets/data/curriculum.js', content:curriculumContent() }], 'لوحة الإدارة: إضافة وحدة «'+t+'»');
+    if(ok){ toast('أُضيفت الوحدة ✓ — تظهر بعد إعادة البناء'); renderTree(); } else { content.units.pop(); }
+  }
+  async function addLesson(uid){
+    var p=parseUnitId(uid), ck=p.ck, parts=ck.split('.');
+    var content=C.content[ck], unit=content&&content.units&&content.units[p.idx]; if(!unit){ toast('وحدةٌ غير موجودة'); return; }
+    var t=prompt('عنوان الدرس الجديد:'); if(t===null) return; t=(t||'').trim(); if(!t) return;
+    var tag=((prompt('وسمٌ قصير (اختياريّ):')||'')).trim()||'درس';
+    var subId=parts[2], gradeId=parts[0], ref=genRef(subId,gradeId), file=genFile(subId,gradeId,ref), L=placeholderLesson(ref,t,subId);
+    unit.lessons=unit.lessons||[]; unit.lessons.push({ t:t, tag:tag, ref:ref });
+    var ok=await publishFiles([
+      { path:'assets/data/curriculum.js', content:curriculumContent() },
+      { path:file, content:lessonFileContent(ref, L) }
+    ], 'لوحة الإدارة: إضافة درس «'+t+'»');
+    if(ok){
+      window.LESSONS=window.LESSONS||{}; window.LESSONS[ref]=JSON.parse(JSON.stringify(L));
+      LMAN.lessons[ref]={ f:file, n:L.stages.length, id:ref };
+      toast('أُضيف الدرس ✓ — اضغط 📝 لتعبئته، ويظهر بعد إعادة البناء'); renderTree();
+    } else { unit.lessons.pop(); }
+  }
+  async function delLesson(ref, uid){
+    if(!confirm('حذفُ الدرس نهائيًّا؟ يُزال من المنصّة والملفّ (يبقى في سجلّ Git للاسترجاع).')) return;
+    var p=parseUnitId(uid), content=C.content[p.ck], unit=content&&content.units&&content.units[p.idx]; if(!unit) return;
+    var li=-1; for(var k=0;k<unit.lessons.length;k++){ if(unit.lessons[k].ref===ref){ li=k; break; } } if(li<0) return;
+    var m=LMAN.lessons[ref], file=m&&m.f, removed=unit.lessons.splice(li,1)[0];
+    var files=[{ path:'assets/data/curriculum.js', content:curriculumContent() }];
+    if(file) files.push({ path:file, del:true });
+    var ok=await publishFiles(files, 'لوحة الإدارة: حذف درس «'+(removed.t||ref)+'»');
+    if(ok){ if(window.LESSONS) delete window.LESSONS[ref]; delete LMAN.lessons[ref]; toast('حُذف الدرس ✓'); renderTree(); }
+    else { unit.lessons.splice(li,0,removed); }
+  }
+  async function delUnit(uid){
+    var p=parseUnitId(uid), content=C.content[p.ck], unit=content&&content.units&&content.units[p.idx]; if(!unit) return;
+    var n=(unit.lessons||[]).length;
+    if(!confirm('حذفُ الوحدة «'+unit.t+'» وكلّ دروسها ('+n+') نهائيًّا؟')) return;
+    var files=[]; (unit.lessons||[]).forEach(function(l){ var m=LMAN.lessons[l.ref]; if(m&&m.f) files.push({ path:m.f, del:true }); });
+    var removed=content.units.splice(p.idx,1)[0];
+    files.unshift({ path:'assets/data/curriculum.js', content:curriculumContent() });
+    var ok=await publishFiles(files, 'لوحة الإدارة: حذف وحدة «'+removed.t+'»');
+    if(ok){ (removed.lessons||[]).forEach(function(l){ if(window.LESSONS) delete window.LESSONS[l.ref]; delete LMAN.lessons[l.ref]; }); toast('حُذفت الوحدة ✓'); renderTree(); }
+    else { content.units.splice(p.idx,0,removed); }
   }
 
   /* ---------- الدخول ---------- */

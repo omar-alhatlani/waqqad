@@ -69,8 +69,9 @@ exports.handler = async function(event){
     var files = Array.isArray(body.files) ? body.files : [];
     if(!files.length) return json(400, { error: 'no-files' });
     for(var i=0;i<files.length;i++){
-      var fpath = files[i] && files[i].path, fcontent = files[i] && files[i].content;
-      if(typeof fpath !== 'string' || typeof fcontent !== 'string' || !ALLOWED.test(fpath))
+      var fpath = files[i] && files[i].path;
+      var isDel = files[i] && (files[i].del === true || files[i].content === null);
+      if(typeof fpath !== 'string' || !ALLOWED.test(fpath) || (!isDel && typeof files[i].content !== 'string'))
         return json(400, { error: 'bad-path', path: fpath });
     }
     var token = process.env.GITHUB_TOKEN;
@@ -86,8 +87,12 @@ exports.handler = async function(event){
       var baseCommit = await gh(token, 'GET', '/repos/' + repo + '/git/commits/' + baseSha);
       var treeItems = [];
       for(var j=0;j<files.length;j++){
-        var blob = await gh(token, 'POST', '/repos/' + repo + '/git/blobs', { content: files[j].content, encoding: 'utf-8' });
-        treeItems.push({ path: files[j].path, mode: '100644', type: 'blob', sha: blob.sha });
+        if(files[j].del === true || files[j].content === null){
+          treeItems.push({ path: files[j].path, mode: '100644', type: 'blob', sha: null }); // sha:null = حذفُ الملفّ
+        } else {
+          var blob = await gh(token, 'POST', '/repos/' + repo + '/git/blobs', { content: files[j].content, encoding: 'utf-8' });
+          treeItems.push({ path: files[j].path, mode: '100644', type: 'blob', sha: blob.sha });
+        }
       }
       var tree = await gh(token, 'POST', '/repos/' + repo + '/git/trees', { base_tree: baseCommit.tree.sha, tree: treeItems });
       var commit = await gh(token, 'POST', '/repos/' + repo + '/git/commits', { message: message, tree: tree.sha, parents: [baseSha] });
